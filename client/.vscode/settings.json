@@ -1,0 +1,10 @@
+{
+    "css.lint.unknownAtRules": "ignore",
+    "scss.lint.unknownAtRules": "ignore",
+    "path-autocomplete.pathMappings": {
+        "@": "${folder}/app",
+        "assets": "${folder}/app/assets",
+        "public": "${folder}/public"
+    },
+    "path-autocomplete.enableFolderTrailingSlash": false
+}

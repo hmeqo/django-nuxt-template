@@ -1,0 +1,7 @@
+{
+  "name": "@workspace/page-history",
+  "dependencies": {
+    "@nuxt/kit": "catalog:",
+    "@workspace/naive-ui": "workspace:"
+  }
+}

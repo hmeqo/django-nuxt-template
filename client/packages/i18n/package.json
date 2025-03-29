@@ -1,0 +1,7 @@
+{
+  "name": "@workspace/i18n",
+  "dependencies": {
+    "@nuxt/kit": "catalog:",
+    "@nuxtjs/i18n": "9.4.0"
+  }
+}

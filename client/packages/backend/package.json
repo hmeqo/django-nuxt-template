@@ -1,0 +1,17 @@
+{
+  "name": "@workspace/backend",
+  "dependencies": {
+    "@hmeqo/easymodel": "0.1.0-beta.6",
+    "@nuxt/kit": "catalog:",
+    "alova": "^3.2.10",
+    "async-validator": "^4.2.5",
+    "nuxt-csurf": "1.6.5",
+    "string-format": "^2.0.0"
+  },
+  "peerDependencies": {
+    "naive-ui": "^2.41.0"
+  },
+  "devDependencies": {
+    "@types/string-format": "^2.0.3"
+  }
+}

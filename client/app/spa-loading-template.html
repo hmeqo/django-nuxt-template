@@ -1,0 +1,60 @@
+<div class="loader"></div>
+<style>
+  :root {
+    --loader-primary-color: #000;
+    --loader-secondary-color: #efefef;
+    --loader-bg-color: transparent;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --loader-primary-color: #fff;
+      --loader-secondary-color: #333;
+      --loader-bg-color: #18181c;
+    }
+  }
+
+  body {
+    background-color: var(--loader-bg-color);
+  }
+
+  .loader {
+    display: block;
+    position: fixed;
+    z-index: 1031;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 18px;
+    height: 18px;
+    box-sizing: border-box;
+    border: solid 2px transparent;
+    border-top-color: var(--loader-primary-color);
+    border-left-color: var(--loader-primary-color);
+    border-bottom-color: var(--loader-secondary-color);
+    border-right-color: var(--loader-secondary-color);
+    border-radius: 50%;
+    -webkit-animation: loader 400ms linear infinite;
+    animation: loader 400ms linear infinite;
+  }
+
+  @-webkit-keyframes loader {
+    0% {
+      -webkit-transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+      -webkit-transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  @keyframes loader {
+    0% {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+</style>

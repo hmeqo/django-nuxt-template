@@ -1,0 +1,13 @@
+{
+    "recommendations": [
+        "skyboost.nuxt-3-goto",
+        "alimozdemir.vscode-nuxt-dx-tools",
+        "dbaeumer.vscode-eslint",
+        "antfu.unocss",
+        "nuxtr.nuxtr-vscode",
+        "vue.volar",
+        "esbenp.prettier-vscode",
+        "tarrow.css-class-intellisense",
+        "ionutvmi.path-autocomplete"
+    ]
+}

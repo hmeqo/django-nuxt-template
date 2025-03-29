@@ -1,0 +1,6 @@
+{
+  "name": "@workspace/watermark",
+  "dependencies": {
+    "@nuxt/kit": "catalog:"
+  }
+}

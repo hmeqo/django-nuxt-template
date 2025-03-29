@@ -1,0 +1,2 @@
+# Backup DB
+0 0 * * * /srv/http/www/django-nuxt-template/manage.sh backupdb

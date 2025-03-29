@@ -1,0 +1,5 @@
+packages:
+  - 'packages/*'
+
+catalog:
+  '@nuxt/kit': '^3.16.1'

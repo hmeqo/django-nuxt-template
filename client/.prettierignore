@@ -1,0 +1,6 @@
+/.vscode
+pnpm-lock.yaml
+
+/packages/backend/lib/sdk/
+/app/types/auto-imports.d.ts
+/app/types/components.d.ts
