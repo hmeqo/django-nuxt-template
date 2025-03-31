@@ -42,6 +42,7 @@
     "eslint": "^9.23.0",
     "lodash": "^4.17.21",
     "nuxt": "^3.16.1",
+    "nuxt-og-image": "5.1.1",
     "pinia": "^3.0.1",
     "pinia-plugin-persistedstate": "4.2.0",
     "prettier": "^3.5.3",

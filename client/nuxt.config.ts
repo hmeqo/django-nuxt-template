@@ -21,6 +21,7 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@hmeqo/nuxt-web-kit',
     '@nuxtjs/seo',
+    'nuxt-og-image',
     'nuxt-csurf',
     '@nuxtjs/i18n',
     '@vueuse/nuxt',
@@ -68,7 +69,7 @@ export default defineNuxtConfig({
     },
     registerWebManifestInRouteRules: false,
     devOptions: {
-      enabled: true,
+      enabled: false,
       type: 'module'
     }
   },

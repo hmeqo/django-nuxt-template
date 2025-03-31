@@ -25,6 +25,9 @@ class User(AbstractUser):
 
     display_name = models.CharField(_("Display Name"), max_length=150, blank=True)
 
+    def __str__(self):
+        return f"{self.username} ({self.display_name})" if self.display_name else self.username
+
     class Meta:
         db_table = "auth_user"
         verbose_name = _("User")
@@ -51,3 +54,20 @@ class User(AbstractUser):
 
 
 # User._meta.get_field("username").max_length = 20
+
+
+# class UserInfo(models.Model):
+#     """用户信息"""
+
+#     user = models.OneToOneField(
+#         User, on_delete=models.CASCADE, primary_key=True, related_name="user_info", verbose_name=_("User")
+#     )
+#     phone = models.CharField(_("Phone Number"), blank=True, max_length=20, validators=[MinLengthValidator(11)])
+
+#     class Meta:
+#         db_table = "main_user_info"
+#         verbose_name = _("User Info")
+#         verbose_name_plural = _("User Infos")
+
+#     def __str__(self):
+#         return f"{self.user.username}'s info"

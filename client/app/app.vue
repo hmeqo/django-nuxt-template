@@ -1,3 +1,13 @@
+<script setup lang="ts">
+useHead({
+  titleTemplate: `%s %separator %siteName`,
+  templateParams: {
+    separator: '-',
+    siteName: 'Django Nuxt Template'
+  }
+})
+</script>
+
 <template>
   <div>
     <I18nProvider />
