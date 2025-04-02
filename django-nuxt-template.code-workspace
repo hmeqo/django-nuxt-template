@@ -4,13 +4,13 @@
             "path": "."
         },
         {
-            "path": "./server"
+            "path": "./backend"
         },
         {
-            "path": "./client"
+            "path": "./frontend"
         }
     ],
     "settings": {
-        "typescript.tsdk": "node_modules/typescript/lib"
+        "typescript.tsdk": "frontend/node_modules/typescript/lib"
     }
 }

@@ -4,7 +4,7 @@ Config `conf/crontab.conf` `conf/website.service` before run manage.sh
 
 ### Usage
 
-- Sync to sync server and client environment
+- Sync to sync backend and frontend environment
 
   ```bash
   ./manage.sh sync

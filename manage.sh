@@ -6,7 +6,7 @@ set -e
 
 backupdb() {
     echo "Backing up database..."
-    cd server || exit
+    cd backend || exit
     uv run ./manage.py dbbackup --clean
     uv run ./manage.py mediabackup --clean
     cd ..
@@ -15,8 +15,8 @@ backupdb() {
 
 # sync
 
-sync_server() {
-    cd server || exit
+sync_backend() {
+    cd backend || exit
     uv sync --frozen
     uv run ./manage.py migrate
     uv run ./manage.py compilemessages --ignore=.venv
@@ -24,43 +24,43 @@ sync_server() {
     cd ..
 }
 
-sync_client() {
-    cd client || exit
+sync_frontend() {
+    cd frontend || exit
     pnpm install --frozen-lockfile
     pnpm build
 
-    cd ../server || exit
+    cd ../backend || exit
     uv run ./manage.py collectstatic --noinput -v=0
     cd ..
 }
 
 sync() {
-    sync_server
-    sync_client
+    sync_backend
+    sync_frontend
 }
 
 # batch
 
-start_server() {
-    cd server || exit
+start_backend() {
+    cd backend || exit
     uv run serve
     cd ..
 }
 
-start_client() {
-    cd client || exit
-    node .output/server/index.mjs
+start_frontend() {
+    cd frontend || exit
+    node .output/backend/index.mjs
     cd ..
 }
 
-stop_client() {
-    if pgrep -f 'node .output/server/index.mjs'; then
-        pkill -f 'node .output/server/index.mjs'
+stop_frontend() {
+    if pgrep -f 'node .output/backend/index.mjs'; then
+        pkill -f 'node .output/backend/index.mjs'
     fi
     wait
 }
 
-stop_server() {
+stop_backend() {
     if pgrep -f granian; then
         pkill -f granian
     fi
@@ -68,21 +68,21 @@ stop_server() {
 }
 
 stop() {
-    stop_client &
-    stop_server &
+    stop_frontend &
+    stop_backend &
     wait
 }
 
 start() {
-    start_server &
-    start_client &
+    start_backend &
+    start_frontend &
     wait
 }
 
 start_bg() {
-    start_server &
+    start_backend &
     disown %1
-    start_client &
+    start_frontend &
     disown %1
 }
 
@@ -124,8 +124,8 @@ restart_service() {
 # launch scripts
 
 dev() {
-    tmux new-session -d -s dev -n server 'cd server && uv run dev'
-    tmux new-window -t dev:1 -n client 'cd client && pnpm dev'
+    tmux new-session -d -s dev -n backend 'cd backend && uv run dev'
+    tmux new-window -t dev:1 -n frontend 'cd frontend && pnpm dev'
     tmux attach -t dev
 }
 
