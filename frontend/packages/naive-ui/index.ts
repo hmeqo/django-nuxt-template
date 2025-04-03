@@ -26,13 +26,10 @@ export default defineNuxtModule<ModuleOptions>({
     // @ts-expect-error icon size can be number or string
     nuxt.options.runtimeConfig.public = defu(nuxt.options.runtimeConfig.public, {
       naiveUi: options,
-      naiveui: defu(
-        {
-          colorModePreference: options.colorModePreference,
-          colorModePreferenceCookieName: options.colorModePreferenceCookieName
-        },
-        options
-      )
+      naiveui: defu(nuxt.options.runtimeConfig.public.naiveui, options),
+      colorMode: {
+        storageKey: options.colorModePreferenceCookieName
+      }
     })
 
     // Add components

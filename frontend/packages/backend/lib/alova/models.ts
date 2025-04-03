@@ -38,7 +38,7 @@ export class User extends Model {
   @stringField display_name!: string
   @stringField first_name!: string
   @stringField last_name!: string
-  @booleanField is_active!: boolean
+  @booleanField is_active: boolean = true
   @booleanField is_superuser!: boolean
   @booleanField is_staff!: boolean
   @enumField({ type: RolesEnum, many: true }) roles!: RolesEnum[]

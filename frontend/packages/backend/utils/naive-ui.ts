@@ -60,7 +60,7 @@ export const naiveRulePresets = {
     trigger: ['input', 'blur']
   }),
   notNull: (): FormItemRule => ({ validator: (_, value) => value !== null, message: '不能为空值', trigger: ['blur'] }),
-  required: (): FormItemRule => ({ required: true, message: '不能为空', trigger: ['blur'] }),
+  required: (): FormItemRule => ({ validator: (_, value) => !!value, message: '不能为空', trigger: ['blur'] }),
   number: (opts: { min?: number; max?: number }): FormItemRule => {
     if (opts.min !== undefined && opts.max !== undefined)
       return {

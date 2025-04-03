@@ -25,7 +25,7 @@ export default defineNuxtConfig({
     'nuxt-csurf',
     '@nuxtjs/i18n',
     '@vueuse/nuxt',
-    '@nuxtjs/color-mode',
+    // '@nuxtjs/color-mode',
     '@vite-pwa/nuxt',
     '@workspace/backend',
     '@workspace/i18n',
@@ -48,7 +48,7 @@ export default defineNuxtConfig({
     }
   },
   sitemap: {
-    exclude: ['/management/**']
+    exclude: ['/a/**']
   },
 
   pwa: {
@@ -85,7 +85,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/api/**': { proxy: `${backendBaseUrl}/api/**` },
     '/media/**': { proxy: `${backendBaseUrl}/media/**` },
-    '/management/**': { ssr: false }
+    '/a/**': { ssr: false }
   },
 
   nitro: {
@@ -103,12 +103,15 @@ export default defineNuxtConfig({
 
   build: { transpile: process.env.NODE_ENV === 'production' ? ['vueuc', 'lodash'] : [] },
 
-  colorMode: {
-    storageKey: 'color-mode'
-  },
+  // colorMode: {
+  //   storage: 'cookie',
+  //   storageKey: 'color-mode',
+  //   classSuffix: ''
+  // },
 
   naiveUi: {
     colorModePreference: 'light',
+    colorModePreferenceCookieName: 'color-mode',
     themeConfig: {
       shared: {
         common: {

@@ -46,7 +46,7 @@ function hasSegmented() {
   >
     <div>
       <NCard
-        class="max-w-[95vw] max-h-[90vh] overflow-hidden"
+        class="max-w-[95vw] max-h-[90vh] mx-auto overflow-hidden"
         content-class="grid h-full overflow-hidden"
         :content-style="{ padding: 0, margin: 0 }"
         :class="containerClass"
