@@ -1,6 +1,5 @@
 import { booleanField, enumField, integerField, Model, ModelSet, stringField } from '@hmeqo/easymodel'
 import format from 'string-format'
-import { $UserOut, RolesEnum, type LoginStateOut } from '../sdk'
 import { alovaInst } from './core'
 
 const urls = urlsEnsureEndSlash(
@@ -41,7 +40,7 @@ export class User extends Model {
   @booleanField is_active: boolean = true
   @booleanField is_superuser!: boolean
   @booleanField is_staff!: boolean
-  @enumField({ type: RolesEnum, many: true }) roles!: RolesEnum[]
+  @enumField({ type: UserRole, many: true }) roles!: UserRole[]
 
   static $rules = schemaToNaiveRules($UserOut)
 

@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from drf_spectacular.utils import extend_schema_field, extend_schema_serializer
 from rest_framework import serializers
 
-from .enums import UserRole
+from .choices import UserRole
 
 # Create your models here.
 
@@ -22,6 +22,9 @@ class TimeStampMixin(models.Model):
 
 class User(AbstractUser):
     """用户"""
+
+    # Type hints for related fields
+    # user_info: "UserInfo"
 
     display_name = models.CharField(_("Display Name"), max_length=150, blank=True)
 

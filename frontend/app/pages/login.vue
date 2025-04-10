@@ -1,7 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'login',
-  middleware: () => routeAuth({ auth: [FA] }, { auth: [IsStaff], redirect: Urls.admin.index }),
+  middleware: () => routeAuth({ auth: [FA] }, { auth: [IsSuperuser], redirect: Urls.admin.index }),
   title: '登录',
   tags: [Urls.login]
 })
@@ -12,6 +12,6 @@ definePageMeta({
     <template #header>
       <div class="text-center">登录</div>
     </template>
-    <LoginForm />
+    <UserLoginForm />
   </NCard>
 </template>

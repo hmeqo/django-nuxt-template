@@ -43,7 +43,7 @@ export const $UserOut = {
         roles: {
             type: 'array',
             contains: {
-                type: 'RolesEnum',
+                type: 'UserRole',
             },
             isRequired: true,
         },

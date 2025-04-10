@@ -4,7 +4,7 @@ definePageMeta({
   layout: 'admin',
   title: 'Test',
   icon: 'i-ic:baseline-dashboard',
-  tags: [Urls.admin.test]
+  tags: [Urls.admin.user]
 })
 </script>
 

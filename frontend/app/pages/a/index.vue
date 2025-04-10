@@ -1,17 +1,21 @@
 <script setup lang="ts">
 definePageMeta({
-  middleware: () => routeAuth({ auth: [FA] }, { auth: [IsStaff], showError: true }),
+  middleware: () => routeAuth({ auth: [FA] }, { auth: [IsSuperuser], showError: true }),
   layout: 'admin',
   title: '仪表盘',
-  icon: 'i-ic:baseline-dashboard',
+  icon: 'i-material-symbols:dashboard-outline',
   tags: [Urls.admin.index]
 })
 </script>
 
 <template>
-  <ComCtl>
-    <NButton>{{ $t(i18nKeys.welcome) }}</NButton>
-    <NDatePicker />
-    <LangSwitch />
-  </ComCtl>
+  <PageBase>
+    <NCard>
+      <NFlex>
+        <NButton>{{ $t(i18nKeys.welcome) }}</NButton>
+        <NDatePicker />
+        <LangSwitch />
+      </NFlex>
+    </NCard>
+  </PageBase>
 </template>

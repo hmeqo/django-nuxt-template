@@ -561,17 +561,10 @@
                     "roles": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/RolesEnum"
+                            "$ref": "#/components/schemas/UserRole"
                         }
                     }
                 }
-            },
-            "RolesEnum": {
-                "enum": [
-                    "Employee"
-                ],
-                "type": "string",
-                "description": "* `Employee` - Employee"
             },
             "UserIn": {
                 "type": "object",
@@ -665,7 +658,7 @@
                     "roles": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/RolesEnum"
+                            "$ref": "#/components/schemas/UserRole"
                         }
                     }
                 },
@@ -688,6 +681,13 @@
                 "required": [
                     "password"
                 ]
+            },
+            "UserRole": {
+                "enum": [
+                    "Employee"
+                ],
+                "type": "string",
+                "description": "* `Employee` - Employee"
             }
         },
         "securitySchemes": {

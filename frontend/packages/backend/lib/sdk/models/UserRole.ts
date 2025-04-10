@@ -5,6 +5,6 @@
 /**
  * * `Employee` - Employee
  */
-export enum RolesEnum {
+export enum UserRole {
     EMPLOYEE = 'Employee',
 }

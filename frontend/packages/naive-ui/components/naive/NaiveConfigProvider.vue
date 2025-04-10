@@ -12,7 +12,12 @@ const { theme, themeOverrides, locale, dateLocale } = useNaiveConfig({
 </script>
 
 <template>
-  <NaiveConfig :theme="theme" :theme-overrides="themeOverrides" :locale="locale" :date-locale="dateLocale">
+  <NaiveConfig
+    :theme="theme"
+    :theme-overrides="themeOverrides"
+    :locale="locale"
+    :date-locale="dateLocale"
+  >
     <slot />
   </NaiveConfig>
 </template>

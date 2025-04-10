@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { RolesEnum } from './RolesEnum';
+import type { UserRole } from './UserRole';
 export type UserOut = {
     readonly id: number;
     /**
@@ -24,6 +24,6 @@ export type UserOut = {
      * Designates whether the user can log into this admin site.
      */
     is_staff?: boolean;
-    roles: Array<RolesEnum>;
+    roles: Array<UserRole>;
 };
 

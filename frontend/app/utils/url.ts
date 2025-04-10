@@ -1,3 +1,13 @@
+export const Urls = createUrls('', {
+  login: 'login',
+  admin: createUrls('a', {
+    profile: createUrls('profile', {}),
+    user: 'user'
+  })
+})
+
+export const HomeUrl = Urls.index
+
 export function withOriginUrl(url: string) {
   return `${location.origin}${url}`
 }

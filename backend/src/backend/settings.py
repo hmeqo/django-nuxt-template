@@ -247,6 +247,9 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
     "SCHEMA_PATH_PREFIX": "/api",
     "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
+    "ENUM_NAME_OVERRIDES": {
+        "UserRole": "apps.main.choices.UserRole",
+    },
 }
 
 

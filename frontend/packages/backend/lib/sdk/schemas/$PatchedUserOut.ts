@@ -41,7 +41,7 @@ export const $PatchedUserOut = {
         roles: {
             type: 'array',
             contains: {
-                type: 'RolesEnum',
+                type: 'UserRole',
             },
         },
     },

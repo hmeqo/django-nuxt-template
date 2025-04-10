@@ -4,7 +4,7 @@ withDefaults(
     loadingBarProps?: { navigation?: boolean }
   }>(),
   {
-    loadingBarProps: () => ({ navigation: true })
+    loadingBarProps: () => ({})
   }
 )
 </script>

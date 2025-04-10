@@ -1,6 +1,6 @@
 from rest_framework.permissions import BasePermission, IsAdminUser, IsAuthenticated
 
-from .enums import UserRole
+from .choices import UserRole
 
 IsStaff = IsAdminUser
 

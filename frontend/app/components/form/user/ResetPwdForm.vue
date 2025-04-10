@@ -17,7 +17,7 @@ const { send, loading } = useRequest(() => user.value.resetPassword(model), {
   }
 })
 
-const model = reactive({
+const model = reactive<UserResetPwdIn & { confirmPassword: string }>({
   password: '',
   confirmPassword: ''
 })
@@ -43,12 +43,14 @@ const formRef = useTemplateRef('form')
     label-placement="left"
     @submit.prevent="send"
   >
-    <NFormItem label="密码" path="password">
+    <NFormItem label="密码" path="password" first>
       <NInput v-model:value="model.password" />
     </NFormItem>
-    <NFormItem label="确认密码" path="confirmPassword">
+    <NFormItem label="确认密码" path="confirmPassword" first>
       <NInput v-model:value="model.confirmPassword" />
     </NFormItem>
-    <NButton class="w-full" :loading="loading" attr-type="submit">确认</NButton>
+    <NFlex>
+      <NButton class="ml-auto" type="primary" :loading="loading" attr-type="submit">重置</NButton>
+    </NFlex>
   </NForm>
 </template>

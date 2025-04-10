@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-const backendBaseUrl = process.env.BACKEND_BASE_URL || 'http://localhost:8000/'
+const backendBaseUrl = process.env.BACKEND_BASE_URL || 'http://localhost:8000'
 
 export default defineNuxtConfig({
   future: {
@@ -34,8 +34,11 @@ export default defineNuxtConfig({
     '@workspace/watermark'
   ],
   components: [
-    { path: '@/components' }
-    // { path: '@/components/forms', pathPrefix: false },
+    { path: '@/components' },
+    { path: '@/components/common' },
+    { path: '@/components/template' },
+    { path: '@/components/part' },
+    { path: '@/components/form' }
   ],
   css: ['assets/css/main.css'],
 
