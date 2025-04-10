@@ -14,6 +14,7 @@ const props = withDefaults(
 )
 
 const route = useRoute()
+const darkMode = useNaiveDarkMode()
 
 const collapsed = ref(false)
 const showDrawer = ref(false)
@@ -59,7 +60,7 @@ const menuValue = computed(() => {
           <LayoutAdminTemplateHeader v-model:collapsed="collapsed" v-model:show-drawer="showDrawer" />
           <div class="grid rows-[auto_1fr] w-full h-full overflow-hidden">
             <NaivePageNavigator />
-            <NLayoutContent class="bg-gray-100 dark:bg-transparent">
+            <NLayoutContent :theme-overrides="darkMode ? {} : { color: '#f3f4f6' }">
               <slot />
             </NLayoutContent>
           </div>
