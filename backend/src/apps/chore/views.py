@@ -1,13 +1,13 @@
 from io import BytesIO
 from pathlib import Path
-from typing import cast
+from typing import Optional, cast
 
 from django.conf import settings
 from django.http import FileResponse, HttpRequest
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 from django.views.static import serve
-from drf_apischema import ASRequest, apischema
+from drf_apischema import apischema
 from drf_spectacular.utils import OpenApiResponse
 from PIL import Image
 from rest_framework.decorators import api_view
@@ -17,16 +17,16 @@ from .serializers import *
 # Create your views here.
 
 
-def serve_template_root(request: HttpRequest, path: str):
-    if (settings.TEMPLATE_ROOT / path).is_file():
-        return serve(request, path, document_root=settings.TEMPLATE_ROOT)
-    return serve(request, "index.html", document_root=settings.TEMPLATE_ROOT)
+def serve_app_root(request: HttpRequest, path: str):
+    if (settings.APP_DIR / path).is_file():
+        return serve(request, path, document_root=settings.APP_DIR)
+    return serve(request, "index.html", document_root=settings.APP_DIR)
 
 
 @apischema(query=MediaQuery, response=OpenApiResponse(str, description=_("Media File")), transaction=False)
 @api_view(["get"])
-def media_view(request: ASRequest[MediaQuery], path: str):
-    size: int | None = request.validated_data.get("size")
+def media_view(request, path: str):
+    size: Optional[int] = request.validated_data.get("size")
     if not size:
         return serve(cast(HttpRequest, request), path, document_root=settings.MEDIA_ROOT)
     fp: Path = (settings.MEDIA_ROOT / path).resolve()

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const model = reactive(schemaToDefaults<LoginIn>($LoginIn))
+
 const { send, loading } = useRequest(() => Auth.login(model), {
   immediate: false,
   middleware: formValidationMiddleware(() => formRef.value)
@@ -23,14 +24,14 @@ const formRef = useTemplateRef('form')
     <NFormItem path="username" label="用户名" first>
       <NInput v-model:value="model.username">
         <template #prefix>
-          <NIcon class="i-ic:baseline-person mr-2" />
+          <NIcon class="i-material-symbols:person-outline mr-2" />
         </template>
       </NInput>
     </NFormItem>
     <NFormItem path="password" label="密码" first>
-      <NInput v-model:value="model.password" type="password">
+      <NInput v-model:value="model.password" type="password" show-password-toggle>
         <template #prefix>
-          <NIcon class="i-ic:baseline-lock mr-2" />
+          <NIcon class="i-material-symbols:lock-outline mr-2" />
         </template>
       </NInput>
     </NFormItem>

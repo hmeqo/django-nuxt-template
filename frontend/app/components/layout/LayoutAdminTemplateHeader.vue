@@ -76,7 +76,7 @@ function menuButton() {
     <div class="invisible sm:visible mx-auto text-xl">{{ route.meta.title }}</div>
     <NPopover trigger="hover" :disabled="!responsive.small">
       <template #trigger>
-        <NaiveColorModeSwitch class="px-3.5 self-stretch justify-stretch" quaternary :text="false" />
+        <ColorModeSwitch class="px-3.5 self-stretch justify-stretch" quaternary :text="false" iconify />
       </template>
       <div>主题</div>
     </NPopover>

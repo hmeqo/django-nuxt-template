@@ -6,6 +6,11 @@ import django.utils.timezone
 from django.db import migrations, models
 
 
+def create_superuser(apps, schema_editor):
+    User = apps.get_model('main', 'User')
+    User.objects.create_superuser('admin', email='admin@example.com', password='12345678', display_name='Admin')
+
+
 class Migration(migrations.Migration):
 
     initial = True
@@ -42,4 +47,5 @@ class Migration(migrations.Migration):
                 ('objects', django.contrib.auth.models.UserManager()),
             ],
         ),
+        migrations.RunPython(create_superuser),
     ]

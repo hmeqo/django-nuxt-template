@@ -1,4 +1,5 @@
-import { booleanField, enumField, integerField, Model, ModelSet, stringField } from '@hmeqo/easymodel'
+import { booleanField, enumField, integerField, Model, ModelSet, StringField, stringField } from '@hmeqo/easymodel'
+import type { FormRules } from 'naive-ui'
 import format from 'string-format'
 import { alovaInst } from './core'
 
@@ -57,7 +58,9 @@ export class User extends Model {
   }
 
   update() {
-    return alovaInst.Put<User>(format(urls.users.detail.index, { id: this.id }), this, { meta: { model: User } })
+    return alovaInst.Put<User>(format(urls.users.detail.index, { id: this.id }), this, {
+      meta: { model: User, instance: this }
+    })
   }
 
   destroy() {
@@ -70,3 +73,32 @@ export class User extends Model {
 }
 
 export class UserSet extends ModelSet.fromModel(User) {}
+
+export class UserResetPwd extends Model {
+  @stringField password!: string
+  @stringField confirmPassword!: string
+
+  static $getRules(model: UserResetPwd): FormRules {
+    return {
+      ...schemaToNaiveRules($UserResetPwdIn),
+      confirmPassword: {
+        required: true,
+        validator: (_, value) => value === model.password,
+        message: '两次密码不一致',
+        trigger: ['blur']
+      }
+    }
+  }
+}
+
+export class UserCreate extends User.include({
+  password: StringField.init(),
+  confirmPassword: StringField.init()
+}) {
+  static $getRules(model: UserCreate): FormRules {
+    return {
+      ...schemaToNaiveRules($UserOut),
+      ...UserResetPwd.$getRules(model as unknown as UserResetPwd)
+    }
+  }
+}

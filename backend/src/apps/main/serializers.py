@@ -43,6 +43,11 @@ class UserOut(serializers.ModelSerializer):
             "roles",
         ]
 
+    def validate(self, attrs):
+        if attrs.get("is_superuser") and not attrs.get("is_staff"):
+            attrs["is_staff"] = True
+        return super().validate(attrs)
+
 
 class LoginStateOut(serializers.Serializer):
     user = UserOut(allow_null=True)
@@ -72,7 +77,7 @@ class UserIn(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs.get("is_superuser") and not attrs.get("is_staff"):
-            raise serializers.ValidationError({"is_staff": _("Superuser must be admin.")})
+            attrs["is_staff"] = True
         return super().validate(attrs)
 
     def create(self, validated_data: dict):

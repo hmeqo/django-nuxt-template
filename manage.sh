@@ -20,7 +20,7 @@ sync_backend() {
     uv sync --frozen
     uv run ./manage.py migrate
     uv run ./manage.py compilemessages --ignore=.venv
-    uv run ./manage.py collectstatic --noinput --clear -v=0
+    uv run ./manage.py collectresources --clear -v=0
     cd ..
 }
 
@@ -30,7 +30,7 @@ sync_frontend() {
     pnpm build
 
     cd ../backend || exit
-    uv run ./manage.py collectstatic --noinput -v=0
+    uv run ./manage.py collectresources -v=0
     cd ..
 }
 

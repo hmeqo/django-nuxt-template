@@ -6,12 +6,10 @@
     --loader-bg-color: transparent;
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --loader-primary-color: #fff;
-      --loader-secondary-color: #333;
-      --loader-bg-color: #18181c;
-    }
+  :root.dark {
+    --loader-primary-color: #fff;
+    --loader-secondary-color: #333;
+    --loader-bg-color: #18181c;
   }
 
   body {
@@ -58,3 +56,15 @@
     }
   }
 </style>
+
+<script>
+  (function () {
+    const colorMode = document.cookie.split(';').find(row => row.trim().startsWith('color-mode='))?.split('=')[1];
+    if (colorMode === 'light') {
+    } else if (colorMode === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else if (colorMode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark')
+    }
+  })();
+</script>

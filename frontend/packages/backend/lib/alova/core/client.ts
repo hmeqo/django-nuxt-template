@@ -50,7 +50,7 @@ export const alovaInst = createAlova({
         }
         if (method.meta?.model) {
           data = method.meta.model.init(data)
-          if (method.type === 'PUT' || method.type === 'PATCH') Object.assign(method.data!, data)
+          if (method.meta.instance) Object.assign(method.meta.instance!, data)
         }
         new RequestSuccessEvent(response, method, data).emit()
         return data

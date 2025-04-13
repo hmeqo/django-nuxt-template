@@ -17,18 +17,22 @@ class GranianSettings(BaseSettings):
     host: str = "::"
     port: int = 8000
 
+    capture_log: bool = True
+
 
 class DBSettings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="DB_")
 
     sqlite_file: str = "db.sqlite3"
 
-    engine: str = "mysql"
+    engine: str = "sqlite3"
     name: str = "django-nuxt-template"
     user: str = "django-nuxt-template"
     password: str = ""
     host: str = "127.0.0.1"
     port: int = 3306
+
+    use_cache: bool = False
 
 
 django_settings = DjangoSettings()

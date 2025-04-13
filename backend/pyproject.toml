@@ -1,43 +1,47 @@
 [project]
-name = "backend"
+name = "django-nuxt-template"
 version = "0.1.0"
-description = "Add your description here"
+description = ""
 readme = "README.md"
 authors = [{ name = "hmeqo", email = "hmeqou@gmail.com" }]
 requires-python = ">=3.13"
 dependencies = [
     "setuptools",
-    "pydantic-settings>=2.8.1",
-    "django[argon2]>=5.1.7",
-    "djangorestframework>=3.15.2",
-    "djangorestframework-simplejwt>=5.5.0",
-    "django-simpleui>=2025.1.13",
-    "django-redis>=5.4.0",
-    "django-cleanup>=9.0.0",
-    "django-dbbackup>=4.2.1",
-    "django-unused-media>=0.2.2",
-    "drf-apischema>=0.2.2",
-    "mysqlclient>=2.2.7",
-    "whitenoise>=6.9.0",
-    "granian[uvloop]>=2.1.1",
-    "pillow>=11.1.0",
+    "pydantic-settings",
+    "django[argon2]",
+    "djangorestframework",
+    "djangorestframework-simplejwt",
+    "django-simpleui",
+    "django-cleanup",
+    "django-dbbackup",
+    "django-unused-media",
+    "drf-apischema",
+    "whitenoise",
+    "pillow",
 ]
 
 [dependency-groups]
-dev = [
-    "django-stubs-ext>=5.1.3",
-    "django-stubs[compatible-mypy]>=5.1.3",
-    "django-types>=0.20.0",
-    "djangorestframework-stubs[compatible-mypy]>=3.15.3",
+types = [
+    "django-stubs-ext",
+    "django-stubs[compatible-mypy]",
+    "django-types",
+    "djangorestframework-stubs[compatible-mypy]",
 ]
+server = ["granian", "mysqlclient", "django-redis"]
+app = ["granian", "pywebview[qt6]"]
+build = ["nuitka", "patchelf; platform_system == 'Linux'"]
 
 [project.scripts]
-dev = "project.scripts:dev"
-serve = "project.scripts:serve"
+dev = "project.scripts.dev:dev"
+serve = "project.scripts.serve:serve"
+app = "project.app:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/apps", "src/backend", "src/project"]
 
 [tool.hatch.metadata]
 allow-direct-references = true

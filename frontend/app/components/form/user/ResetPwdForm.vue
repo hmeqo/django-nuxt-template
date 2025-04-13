@@ -1,26 +1,25 @@
 <script setup lang="ts">
 const props = defineProps<{ user?: User }>()
 
+const emit = defineEmits<{
+  (e: 'success'): void
+}>()
+
 const { user: loginUser } = useLoginState()
 
 const user = computed(() => props.user || loginUser.value!)
 
 const { send, loading } = useRequest(() => user.value.resetPassword(model), {
   immediate: false,
-  middleware: middlewares([
-    formValidationMiddleware(() => formRef.value),
-    dialogMiddleware(naiveDialogOptionPresets.resetPwd)
-  ])
+  middleware: middlewares([formValidationMiddleware(() => formRef.value)])
 }).onSuccess(() => {
   if (user.value.id === loginUser.value?.id) {
     routerRedirect(HomeUrl)
   }
+  emit('success')
 })
 
-const model = reactive<UserResetPwdIn & { confirmPassword: string }>({
-  password: '',
-  confirmPassword: ''
-})
+const model = reactive<UserResetPwd>(UserResetPwd.init())
 
 const formRef = useTemplateRef('form')
 </script>
@@ -29,25 +28,20 @@ const formRef = useTemplateRef('form')
   <NForm
     ref="form"
     :model="model"
-    :rules="{
-      ...schemaToNaiveRules($UserResetPwdIn),
-      confirmPassword: {
-        required: true,
-        validator: (_, value) => value === model.password,
-        message: '两次密码不一致',
-        trigger: ['blur']
-      }
-    }"
+    :rules="UserResetPwd.$getRules(model)"
     :show-require-mark="false"
     label-width="auto"
     label-placement="left"
     @submit.prevent="send"
   >
     <NFormItem label="密码" path="password" first>
-      <NInput v-model:value="model.password" />
+      <div class="flex flex-col w-full">
+        <NInput v-model:value="model.password" type="password" show-password-toggle />
+        <PasswordStrengthIndicator :password="model.password" show-message />
+      </div>
     </NFormItem>
     <NFormItem label="确认密码" path="confirmPassword" first>
-      <NInput v-model:value="model.confirmPassword" />
+      <NInput v-model:value="model.confirmPassword" type="password" show-password-toggle />
     </NFormItem>
     <NFlex>
       <NButton class="ml-auto" type="primary" :loading="loading" attr-type="submit">重置</NButton>

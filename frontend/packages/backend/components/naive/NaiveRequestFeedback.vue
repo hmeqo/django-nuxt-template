@@ -32,7 +32,8 @@ function onRequestError(e: RequestErrorEvent) {
     notification.error({
       title: `${$t(i18nKeys.status_code)}: ${e.response.status}`,
       content: `${$t(i18nKeys.detail_message)}: ${JSON.stringify(e.error.detail)}`,
-      duration: 5000
+      duration: 5000,
+      keepAliveOnHover: true
     })
   }
   loadingBar.error()

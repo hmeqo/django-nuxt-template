@@ -1,8 +1,9 @@
 export const Urls = createUrls('', {
   login: 'login',
+  profile: createUrls('profile', {}),
   admin: createUrls('a', {
     profile: createUrls('profile', {}),
-    user: 'user'
+    user: createUrls('user', {})
   })
 })
 

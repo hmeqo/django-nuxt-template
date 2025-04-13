@@ -1,7 +1,7 @@
 {
   "name": "@workspace/backend",
   "dependencies": {
-    "@hmeqo/easymodel": "0.1.0-beta.9",
+    "@hmeqo/easymodel": "0.1.0-beta.14",
     "@nuxt/kit": "catalog:",
     "alova": "^3.2.10",
     "async-validator": "^4.2.5",

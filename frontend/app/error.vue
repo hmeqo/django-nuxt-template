@@ -10,13 +10,13 @@ const error = useError()
       <NaiveErrorInfo
         v-if="error.statusCode === 403"
         title="403 禁止访问"
-        description="总有些门是对你关闭的"
+        description="您没有权限访问该页面"
         :home-url="HomeUrl"
       />
       <NaiveErrorInfo
         v-else-if="error.statusCode === 404"
         title="404 资源不存在"
-        description="请确认您输入的地址是否正确"
+        description="您访问的资源不存在"
         :home-url="HomeUrl"
       />
       <NaiveErrorInfo

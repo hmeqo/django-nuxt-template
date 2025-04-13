@@ -10,17 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-import os
-from pathlib import Path
-
 from django.utils.translation import gettext_lazy as _
 
-from project.env import db_settings
+from project.env import db_settings, django_settings, granian_settings
+from project.utils import get_base_dir
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = get_base_dir()
 
 DIST_DIR = BASE_DIR.joinpath("..", "frontend", ".output", "public").resolve()
+
+RESOURCES_DIR = BASE_DIR / "resources"
+
+APP_DIR = RESOURCES_DIR / "app"
 
 
 # Quick-start development settings - unsuitable for production
@@ -30,7 +33,7 @@ DIST_DIR = BASE_DIR.joinpath("..", "frontend", ".output", "public").resolve()
 SECRET_KEY = "django-insecure-0$(n^h270d#qbmgy%$08iaka57y*=ci1t=nta4$cr5t)$nt5c3"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DJANGO_DEBUG", "") != "False"
+DEBUG = django_settings.debug
 
 ALLOWED_HOSTS = ["*"]
 
@@ -71,12 +74,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "backend.urls"
 
-TEMPLATE_ROOT = DIST_DIR
-
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [TEMPLATE_ROOT],
+        "DIRS": [APP_DIR],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -113,15 +114,16 @@ DATABASES = {
     },
 }
 
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://localhost:6379/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        },
+if db_settings.use_cache:
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": "redis://localhost:6379/1",
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            },
+        }
     }
-}
 
 STORAGES = {
     "default": {
@@ -190,11 +192,9 @@ LANGUAGE_COOKIE_NAME = "language"
 
 STATIC_URL = "static/"
 
-STATIC_ROOT = BASE_DIR / "static"
+STATIC_ROOT = APP_DIR / "static"
 
-STATICFILES_DIRS = [
-    DIST_DIR / "static",
-]
+STATICFILES_DIRS = []
 
 
 # Default primary key field type
@@ -216,7 +216,8 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
-SESSION_CACHE_ALIAS = "default"
+if db_settings.use_cache:
+    SESSION_CACHE_ALIAS = "default"
 
 
 # Csrf
@@ -275,11 +276,8 @@ WHITENOISE_GZIP = True
 LOGIN_URL = "/login"
 
 
-def _init():
+if granian_settings.capture_log:
     if not DEBUG:
         from .common.capturelog import capture_log
 
         capture_log()
-
-
-_init()

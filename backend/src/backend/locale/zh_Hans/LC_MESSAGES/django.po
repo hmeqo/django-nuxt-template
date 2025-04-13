@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-01 07:30+0000\n"
+"POT-Creation-Date: 2025-04-13 15:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,7 +36,7 @@ msgstr ""
 msgid "Important dates"
 msgstr ""
 
-#: src/apps/main/admin.py:42 src/apps/main/models.py:38
+#: src/apps/main/admin.py:42 src/apps/main/models.py:41
 #: src/apps/main/serializers.py:28
 msgid "Roles"
 msgstr "角色"
@@ -45,7 +45,7 @@ msgstr "角色"
 msgid "Database"
 msgstr "数据库"
 
-#: src/apps/main/enums.py:6
+#: src/apps/main/choices.py:6
 msgid "Employee"
 msgstr "员工"
 
@@ -57,40 +57,40 @@ msgstr "创建时间"
 msgid "Update Time"
 msgstr "更新时间"
 
-#: src/apps/main/models.py:26
+#: src/apps/main/models.py:29
 msgid "Display Name"
 msgstr "名称"
 
 # Django
-#: src/apps/main/models.py:33
+#: src/apps/main/models.py:36
 msgid "User"
 msgstr ""
 
-#: src/apps/main/models.py:34
+#: src/apps/main/models.py:37
 msgid "Users"
 msgstr "用户"
-
-#: src/apps/main/serializers.py:75
-msgid "Superuser must be admin."
-msgstr "超级用户必须是管理员。"
 
 # Django
 #: src/apps/main/validators.py:11
 msgid "Enter a valid value."
 msgstr ""
 
-#: src/apps/main/views.py:34
+#: src/apps/main/views.py:33
 msgid "Invalid username or password"
 msgstr "用户名或密码无效。"
 
-#: src/apps/main/views.py:73
+#: src/apps/main/views.py:65
+msgid "Permission denied"
+msgstr "权限被拒绝"
+
+#: src/apps/main/views.py:68
 msgid "The new password cannot be the same as the old password."
 msgstr "新密码不能与旧密码相同。"
 
-#: src/backend/settings.py:181
+#: src/backend/settings.py:182
 msgid "English"
 msgstr "英语"
 
-#: src/backend/settings.py:182
+#: src/backend/settings.py:183
 msgid "Chinese (simplified)"
 msgstr "中文 (简体)"

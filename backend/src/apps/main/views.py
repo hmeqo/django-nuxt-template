@@ -1,4 +1,4 @@
-from typing import Any, cast
+from typing import Any, Optional, cast
 
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpRequest
@@ -28,8 +28,7 @@ class AuthViewSet(ViewSet):
     @apischema(body=LoginIn, transaction=False)
     @action(methods=["post"], detail=False)
     def login(self, request: ASRequest[LoginIn]) -> Any:
-        """登录"""
-        user: User | None = cast(User | None, authenticate(request, **request.validated_data))
+        user = cast(Optional[User], authenticate(request, **request.validated_data))
         if not user:
             raise HttpError(_("Invalid username or password"), status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         login(request, user)
@@ -38,13 +37,11 @@ class AuthViewSet(ViewSet):
     @apischema()
     @action(methods=["post"], detail=False)
     def logout(self, request: HttpRequest) -> Any:
-        """退出登录"""
         logout(request)
 
     @apischema(response=LoginStateOut)
     @action(methods=["get"], detail=False)
     def loginstate(self, request) -> Any:
-        """登录信息"""
         user: User = request.user
         if not user.is_authenticated:
             return LoginStateOut({"user": None}).data
@@ -53,21 +50,19 @@ class AuthViewSet(ViewSet):
 
 @apischema_view()
 class UserViewSet(ModelViewSet):
-    """用户管理"""
-
     queryset = User.objects.all()
     serializer_class = UserOut
 
     @apischema(body=UserIn)
     def create(self, request: ASRequest[UserIn]) -> Any:
-        """创建用户"""
         return self.get_serializer(request.serializer.save()).data
 
     @apischema(body=UserResetPwdIn)
     @action(methods=["post"], detail=True)
     def reset_password(self, request: ASRequest[UserResetPwdIn], pk: int) -> Any:
-        """重置用户密码"""
         user: User = self.get_object()
+        if request.user.pk != user.pk and not cast(User, request.user).is_superuser:
+            raise HttpError(_("Permission denied"), status=status.HTTP_403_FORBIDDEN)
         if user.check_password(request.validated_data["password"]):
             raise HttpError(
                 _("The new password cannot be the same as the old password."),
