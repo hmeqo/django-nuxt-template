@@ -12,6 +12,7 @@ export const useLoginState = () => {
       }
       loginState.value.user = User.init(_state.user)
     },
+    clearLoginState: () => (loginState.value.user = null),
     loggedIn: computed(() => !!loginState.value.user)
   }
 }

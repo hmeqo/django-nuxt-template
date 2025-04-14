@@ -5,7 +5,7 @@ const emit = defineEmits<{
   (e: 'success'): void
 }>()
 
-const { user: loginUser } = useLoginState()
+const { user: loginUser, clearLoginState } = useLoginState()
 
 const user = computed(() => props.user || loginUser.value!)
 
@@ -14,7 +14,8 @@ const { send, loading } = useRequest(() => user.value.resetPassword(model), {
   middleware: middlewares([formValidationMiddleware(() => formRef.value)])
 }).onSuccess(() => {
   if (user.value.id === loginUser.value?.id) {
-    routerRedirect(HomeUrl)
+    clearLoginState()
+    navigateTo(HomeUrl)
   }
   emit('success')
 })
@@ -36,12 +37,12 @@ const formRef = useTemplateRef('form')
   >
     <NFormItem label="密码" path="password" first>
       <div class="flex flex-col w-full">
-        <NInput v-model:value="model.password" type="password" show-password-toggle />
+        <NInput v-model:value="model.password" type="password" show-password-on="click" />
         <PasswordStrengthIndicator :password="model.password" show-message />
       </div>
     </NFormItem>
     <NFormItem label="确认密码" path="confirmPassword" first>
-      <NInput v-model:value="model.confirmPassword" type="password" show-password-toggle />
+      <NInput v-model:value="model.confirmPassword" type="password" show-password-on="click" />
     </NFormItem>
     <NFlex>
       <NButton class="ml-auto" type="primary" :loading="loading" attr-type="submit">重置</NButton>

@@ -5,14 +5,14 @@ import type { DropdownOption } from 'naive-ui'
 const collapsed = defineModel<boolean>('collapsed', { default: false })
 const showDrawer = defineModel<boolean>('showDrawer', { default: false })
 
-const route = useRoute()
-const { user } = useLoginState()
+const { user, clearLoginState } = useLoginState()
 
 const { send: logout } = useRequest(() => Auth.logout(), {
   immediate: false,
   middleware: dialogMiddleware(naiveDialogOptionPresets.logout)
 }).onSuccess(() => {
-  routerRedirect(HomeUrl)
+  clearLoginState()
+  navigateTo(HomeUrl)
 })
 
 const resetPasswordVisible = ref(false)
@@ -56,11 +56,11 @@ function menuButton() {
 </script>
 
 <template>
-  <NLayoutHeader class="flex gap-1 px-4 py-3" bordered>
+  <NLayoutHeader class="flex gap-1 px-4 py-2" bordered>
     <NPopover trigger="hover" :disabled="!responsive.small">
       <template #trigger>
         <NButton :focusable="false" quaternary @click="menuButton">
-          <div class="i-material-symbols:lists w-5 h-5" />
+          <div class="i-material-symbols:lists w-4 h-4" />
         </NButton>
       </template>
       <div>菜单</div>
@@ -68,12 +68,12 @@ function menuButton() {
     <NPopover trigger="hover" :disabled="!responsive.small">
       <template #trigger>
         <NButton :focusable="false" quaternary @click="navigateBack">
-          <div class="i-material-symbols:arrow-back-ios-new-rounded w-5 h-5" />
+          <div class="i-material-symbols:arrow-back-ios-new-rounded w-4 h-4" />
         </NButton>
       </template>
       <div>返回</div>
     </NPopover>
-    <div class="invisible sm:visible mx-auto text-xl">{{ route.meta.title }}</div>
+    <div class="invisible sm:visible mx-auto text-xl" />
     <NPopover trigger="hover" :disabled="!responsive.small">
       <template #trigger>
         <ColorModeSwitch class="px-3.5 self-stretch justify-stretch" quaternary :text="false" iconify />
@@ -86,7 +86,7 @@ function menuButton() {
       </NButton>
     </NDropdown>
     <NaiveModal v-model:show="resetPasswordVisible" class="w-100" title="重置密码">
-      <UserResetPwdForm />
+      <UserResetPwdForm @success="resetPasswordVisible = false" />
     </NaiveModal>
   </NLayoutHeader>
 </template>

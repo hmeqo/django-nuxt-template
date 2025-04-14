@@ -5,7 +5,9 @@ const { send, loading } = useRequest(() => Auth.login(model), {
   immediate: false,
   middleware: formValidationMiddleware(() => formRef.value)
 }).onSuccess(() => {
-  routerRedirect(Urls.admin.index)
+  const { clearPaths } = usePageHistory()
+  clearPaths()
+  navigateTo(HomeUrl)
 })
 
 const formRef = useTemplateRef('form')
@@ -29,7 +31,7 @@ const formRef = useTemplateRef('form')
       </NInput>
     </NFormItem>
     <NFormItem path="password" label="密码" first>
-      <NInput v-model:value="model.password" type="password" show-password-toggle>
+      <NInput v-model:value="model.password" type="password" show-password-on="click">
         <template #prefix>
           <NIcon class="i-material-symbols:lock-outline mr-2" />
         </template>

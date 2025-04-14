@@ -1,30 +1,20 @@
 <script setup lang="ts">
-import { useError } from '#imports'
-
 const error = useError()
 </script>
 
 <template>
-  <NaiveConfigProvider v-if="error">
-    <NLayout class="absolute flex items-center justify-center w-full h-full overflow-hidden">
-      <NaiveErrorInfo
-        v-if="error.statusCode === 403"
-        title="403 禁止访问"
-        description="您没有权限访问该页面"
-        :home-url="HomeUrl"
-      />
-      <NaiveErrorInfo
-        v-else-if="error.statusCode === 404"
-        title="404 资源不存在"
-        description="您访问的资源不存在"
-        :home-url="HomeUrl"
-      />
-      <NaiveErrorInfo
-        v-else
-        :title="`${error.statusCode}`"
-        :description="error.statusMessage || error.message || ''"
-        :home-url="HomeUrl"
-      />
+  <NaiveConfigProvider v-if="error" class="fixed flex flex-col w-full h-full">
+    <NGlobalStyle />
+    <NLayout class="w-full h-full" content-class="flex flex-col items-center justify-center w-full h-full">
+      <div class="flex flex-col items-center justify-center gap-4 p-8 max-w-2xl text-center">
+        <NText tag="h1" class="text-3xl font-bold">{{ error.statusCode }}</NText>
+        <p class="text-xl">出错了</p>
+        <p>{{ error.message }}</p>
+        <NFlex class="mt-6">
+          <NButton size="large" @click="navigateBack">返回</NButton>
+          <NButton size="large" @click="navigateTo(HomeUrl)">返回首页</NButton>
+        </NFlex>
+      </div>
     </NLayout>
   </NaiveConfigProvider>
 </template>

@@ -1,5 +1,6 @@
 <template>
-  <NaiveConfigProvider class="fixed w-full h-full" dark>
+  <NaiveConfigProvider class="fixed flex flex-col w-full h-full" dark>
+    <NGlobalStyle />
     <NaiveRequestFeedback />
     <NLayout class="w-full h-full" content-class="flex flex-col justify-center items-center">
       <slot />

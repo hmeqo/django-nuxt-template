@@ -35,12 +35,12 @@ const formRef = useTemplateRef('form')
         </NFormItem>
         <NFormItem label="密码" path="password" first>
           <div class="flex flex-col w-full">
-            <NInput v-model:value="model.password" type="password" show-password-toggle />
+            <NInput v-model:value="model.password" type="password" show-password-on="click" />
             <PasswordStrengthIndicator :password="model.password" show-message />
           </div>
         </NFormItem>
         <NFormItem label="确认密码" path="confirmPassword" first>
-          <NInput v-model:value="model.confirmPassword" type="password" show-password-toggle />
+          <NInput v-model:value="model.confirmPassword" type="password" show-password-on="click" />
         </NFormItem>
         <NFlex>
           <NCheckbox v-model:checked="model.is_superuser">超级用户</NCheckbox>

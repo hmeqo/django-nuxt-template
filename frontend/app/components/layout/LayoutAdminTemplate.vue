@@ -38,11 +38,12 @@ const menuValue = computed(() => {
 </script>
 
 <template>
-  <NaiveConfigProvider class="fixed w-full h-full">
+  <NaiveConfigProvider class="fixed flex flex-col w-full h-full">
     <NGlobalStyle />
     <NaiveProviderBundle>
       <NaiveRequestFeedback />
-      <NLayout class="w-full h-full" has-sider>
+      <LayoutAdminTemplateHeader v-model:collapsed="collapsed" v-model:show-drawer="showDrawer" class="shrink-0" />
+      <NLayout has-sider>
         <NLayoutSider
           v-model:collapsed="collapsed"
           class="hidden sm:flex"
@@ -56,15 +57,15 @@ const menuValue = computed(() => {
             <NMenu :value="route.path" :options="menuOptions" />
           </NDrawer>
         </NLayoutSider>
-        <div class="grid rows-[auto_1fr] w-full h-full overflow-hidden">
-          <LayoutAdminTemplateHeader v-model:collapsed="collapsed" v-model:show-drawer="showDrawer" />
-          <div class="grid rows-[auto_1fr] w-full h-full overflow-hidden">
-            <NaivePageNavigator />
-            <NLayoutContent :theme-overrides="darkMode ? {} : { color: '#f3f4f6' }">
-              <slot />
-            </NLayoutContent>
-          </div>
-        </div>
+        <NLayout
+          content-class="flex flex-col w-full h-full overflow-hidden"
+          :theme-overrides="darkMode ? {} : { color: '#f3f4f6' }"
+        >
+          <NaivePageNavigator class="shrink-0" />
+          <NLayoutContent class="w-full h-full bg-transparent">
+            <slot />
+          </NLayoutContent>
+        </NLayout>
       </NLayout>
     </NaiveProviderBundle>
   </NaiveConfigProvider>

@@ -35,7 +35,7 @@
     "@vite-pwa/nuxt": "0.10.8",
     "@vueuse/nuxt": "13.0.0",
     "@workspace/backend": "workspace:^",
-    "@workspace/i18n": "link:packages/i18n",
+    "@workspace/i18n": "workspace:^",
     "@workspace/naive-ui": "workspace:^",
     "@workspace/page-history": "workspace:^",
     "@workspace/watermark": "workspace:^",
