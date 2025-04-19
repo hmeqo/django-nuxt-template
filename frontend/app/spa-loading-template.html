@@ -59,7 +59,7 @@
 
 <script>
   (function () {
-    const colorMode = document.cookie.split(';').find(row => row.trim().startsWith('color-mode='))?.split('=')[1];
+    const colorMode = document.cookie.split(';').find(row => row.trim().startsWith('color-mode='))?.split('=')[1] || localStorage.getItem('color-mode')
     if (colorMode === 'light') {
     } else if (colorMode === 'dark') {
       document.documentElement.classList.add('dark')
