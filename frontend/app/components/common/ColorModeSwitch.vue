@@ -4,7 +4,7 @@ const props = defineProps<{
   min?: boolean
 }>()
 
-const darkMode = useNaiveDarkMode()
+const darkMode = useDarkMode()
 const { colorModePreference } = useNaiveColorMode()
 const colorMode = computed({
   get: () => colorModePreference.get(),

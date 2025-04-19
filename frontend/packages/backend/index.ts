@@ -1,24 +1,12 @@
-import { addComponentsDir, addImportsDir, addPlugin, createResolver, defineNuxtModule } from '@nuxt/kit'
-import { defu } from 'defu'
-import type { ModuleOptions } from './types'
+import { addComponentsDir, addImports, addImportsDir, createResolver, defineNuxtModule } from '@nuxt/kit'
 
-export default defineNuxtModule<ModuleOptions>({
+export default defineNuxtModule({
   meta: {
-    name: '@workspace/backend',
-    configKey: 'backend'
-  },
-
-  defaults: {
-    alovaBaseUrl: '/api'
+    name: '@workspace/backend'
   },
 
   setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
-
-    // Pass module options to runtimeConfig object
-    nuxt.options.runtimeConfig.public = defu(nuxt.options.runtimeConfig.public, {
-      backend: options
-    })
 
     // Add components
     addComponentsDir({
@@ -31,12 +19,17 @@ export default defineNuxtModule<ModuleOptions>({
     // Add utils
     addImportsDir(resolver.resolve('./utils'))
 
-    addPlugin(resolver.resolve('./plugins/backend.ts'))
+    addImports({
+      name: 'Branch',
+      from: '@hmeqo/easymodel',
+      type: true
+    })
 
     addImportsDir([
       resolver.resolve('./lib/sdk/models'),
       resolver.resolve('./lib/sdk/schemas'),
-      resolver.resolve('./lib/sdk/services')
+      resolver.resolve('./lib/sdk/services'),
+      resolver.resolve('./lib/auto-imports')
     ])
   }
 })

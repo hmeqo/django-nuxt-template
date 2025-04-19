@@ -1,10 +1,13 @@
 <script setup lang="ts">
 const model = reactive(schemaToDefaults<LoginIn>($LoginIn))
 
+const loggedIn = ref(false)
+
 const { send, loading } = useRequest(() => Auth.login(model), {
   immediate: false,
   middleware: formValidationMiddleware(() => formRef.value)
-}).onSuccess(() => {
+}).onSuccess(({ data }) => {
+  loggedIn.value = data
   const { clearPaths } = usePageHistory()
   clearPaths()
   navigateTo(HomeUrl)
@@ -38,7 +41,7 @@ const formRef = useTemplateRef('form')
       </NInput>
     </NFormItem>
     <NFlex>
-      <NButton class="w-full" type="primary" attr-type="submit" :loading="loading">登录</NButton>
+      <NButton class="w-full" type="primary" attr-type="submit" :loading="loading || loggedIn">登录</NButton>
     </NFlex>
   </NForm>
 </template>

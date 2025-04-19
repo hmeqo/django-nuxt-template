@@ -1,7 +1,26 @@
+from dataclasses import dataclass
+from enum import StrEnum
+
 import dotenv
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 dotenv.load_dotenv()
+
+
+@dataclass
+class AppSettings:
+    name: str = "django-nuxt-template"
+
+
+class UserSettings(BaseSettings):
+    model_config = SettingsConfigDict()
+
+    class DataLocation(StrEnum):
+        LOCAL = "local"
+        GLOBAL = "global"
+        AUTO = "auto"
+
+    data_location: DataLocation = DataLocation.AUTO
 
 
 class DjangoSettings(BaseSettings):
@@ -35,6 +54,8 @@ class DBSettings(BaseSettings):
     use_cache: bool = False
 
 
+app_settings = AppSettings()
+user_settings = UserSettings()
 django_settings = DjangoSettings()
 db_settings = DBSettings()
 granian_settings = GranianSettings()

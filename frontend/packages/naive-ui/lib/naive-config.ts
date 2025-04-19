@@ -1,10 +1,10 @@
 import { darkTheme, dateEnUS, dateZhCN, enUS, lightTheme, zhCN } from 'naive-ui'
-import type { ColorMode, ModuleOptions } from '../types'
+import type { ColorMode } from '../types'
 
 export const useNaiveConfig = (opts?: { colorMode?: ColorMode }) => {
-  const config = useRuntimeConfig().public.naiveUi as ModuleOptions
+  const config = useRuntimeConfig().public.naiveui
   const { locale } = useI18nB()
-  const prefersTheme = computed(() => (useNaiveDarkMode().value ? darkTheme : lightTheme))
+  const prefersTheme = computed(() => (useDarkMode().value ? darkTheme : lightTheme))
   const theme = computed(() =>
     opts?.colorMode === undefined ? prefersTheme.value : opts?.colorMode === 'light' ? lightTheme : darkTheme
   )
@@ -24,7 +24,7 @@ export const useNaiveConfig = (opts?: { colorMode?: ColorMode }) => {
         return zhCN
     }
   })
-  const themeOverrides = computed(() => config.themeConfig?.shared)
+  const themeOverrides = computed(() => config.themeConfig.shared || {})
   return {
     theme: theme,
     themeOverrides: themeOverrides,

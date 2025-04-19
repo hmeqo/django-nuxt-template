@@ -1,4 +1,5 @@
 export const IsLoggedIn = createPermission(() => useLoginState().loggedIn.value)
+export const IsAuthenticated = IsLoggedIn
 export const IsStaff = createPermission(() => !!useLoginState().user.value?.is_staff)
 export const IsSuperuser = createPermission(() => !!useLoginState().user.value?.is_superuser)
 

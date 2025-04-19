@@ -17,10 +17,10 @@ backupdb() {
 
 sync_backend() {
     cd backend || exit
-    uv sync --frozen
+    uv sync --frozen --group=types --group=db --group=prod
     uv run ./manage.py migrate
     uv run ./manage.py compilemessages --ignore=.venv
-    uv run ./manage.py collectresources --clear -v=0
+    uv run ./manage.py collectresources --clear --all
     cd ..
 }
 
@@ -30,7 +30,7 @@ sync_frontend() {
     pnpm build
 
     cd ../backend || exit
-    uv run ./manage.py collectresources -v=0
+    uv run ./manage.py collectresources --all
     cd ..
 }
 
@@ -124,8 +124,17 @@ restart_service() {
 # launch scripts
 
 dev() {
-    tmux new-session -d -s dev -n backend 'cd backend && uv run dev'
-    tmux new-window -t dev:1 -n frontend 'cd frontend && pnpm dev'
+    tmux new-session -d -s dev -n backend
+    tmux new-window -t dev:1 -n frontend
+
+    sleep 0.5
+
+    tmux send-keys -t dev:0 'cd backend' C-m
+    tmux send-keys -t dev:0 'uv run dev' C-m
+
+    tmux send-keys -t dev:1 'cd frontend' C-m
+    tmux send-keys -t dev:1 'pnpm dev' C-m
+
     tmux attach -t dev
 }
 

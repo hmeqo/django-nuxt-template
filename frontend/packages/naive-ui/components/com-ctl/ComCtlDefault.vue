@@ -8,7 +8,7 @@ defineProps<{
 
 <template>
   <div class="flex w-full h-full">
-    <NScrollbar v-if="scrollable">
+    <NScrollbar v-if="scrollable" class="!overflow-clip">
       <div :class="`w-full ${padding} ${contentClass}`">
         <slot />
       </div>

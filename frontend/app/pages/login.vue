@@ -9,9 +9,9 @@ definePageMeta({
 
 <template>
   <NCard class="max-w-100 rounded-1" :segmented="{ content: true }">
-    <template #header>
+    <!-- <template #header>
       <div class="text-center">登录</div>
-    </template>
+    </template> -->
     <UserLoginForm />
   </NCard>
 </template>

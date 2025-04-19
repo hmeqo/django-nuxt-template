@@ -1,8 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-const backendBaseUrl = process.env.BACKEND_BASE_URL || 'http://localhost:8000'
-
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      apiBase: 'http://localhost:8000'
+    }
+  },
   future: {
     compatibilityVersion: 4
   },
@@ -25,7 +28,7 @@ export default defineNuxtConfig({
     'nuxt-csurf',
     '@nuxtjs/i18n',
     '@vueuse/nuxt',
-    // '@nuxtjs/color-mode',
+    '@nuxtjs/color-mode',
     '@vite-pwa/nuxt',
     '@workspace/backend',
     '@workspace/i18n',
@@ -86,8 +89,6 @@ export default defineNuxtConfig({
   // Official naive-ui nuxt not support ssr
   ssr: false,
   routeRules: {
-    '/api/**': { proxy: `${backendBaseUrl}/api/**` },
-    '/media/**': { proxy: `${backendBaseUrl}/media/**` },
     '/a/**': { ssr: false }
   },
 
@@ -99,22 +100,21 @@ export default defineNuxtConfig({
   },
 
   csurf: {
-    https: false, // default true if in production
-    cookieKey: 'csrftoken', // "__Host-csrf" if https is true otherwise just "csrf"
-    headerName: 'X-Csrftoken' // the header where the csrf token is stored
+    https: false,
+    cookieKey: 'csrftoken',
+    headerName: 'X-Csrftoken',
+    methodsToProtect: []
   },
 
   build: { transpile: process.env.NODE_ENV === 'production' ? ['vueuc', 'lodash'] : [] },
 
-  // colorMode: {
-  //   storage: 'cookie',
-  //   storageKey: 'color-mode',
-  //   classSuffix: ''
-  // },
+  colorMode: {
+    // storage: 'cookie',
+    storageKey: 'color-mode',
+    classSuffix: ''
+  },
 
-  naiveUi: {
-    colorModePreference: 'light',
-    colorModePreferenceCookieName: 'color-mode',
+  naiveui: {
     themeConfig: {
       shared: {
         common: {

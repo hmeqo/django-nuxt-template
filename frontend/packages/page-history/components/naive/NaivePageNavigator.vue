@@ -7,8 +7,8 @@ const { enabled, paths, removePath } = usePageHistory()
 </script>
 
 <template>
-  <NLayout>
-    <NScrollbar v-if="enabled" x-scrollable>
+  <div v-if="enabled">
+    <NScrollbar x-scrollable>
       <div class="nav" :size="0">
         <NuxtLink
           v-for="i in paths"
@@ -18,18 +18,20 @@ const { enabled, paths, removePath } = usePageHistory()
           :to="i.path"
           @click.middle="removePath(i)"
         >
-          <div v-if="i.icon" class="nav-item-icon">
-            <div class="nav-item-icon-inner" :class="i.icon" />
-          </div>
-          <div>{{ i.title }}</div>
-          <div v-if="paths.length > 1" class="nav-item-close" @click.stop.prevent="removePath(i)">
-            <div class="nav-item-close-inner i-material-symbols:close" />
-          </div>
+          <NLayoutContent class="px-4 py-2" content-class="flex items-center *:shrink-0">
+            <div v-if="i.icon" class="nav-item-icon">
+              <div class="nav-item-icon-inner" :class="i.icon" />
+            </div>
+            <div>{{ i.title }}</div>
+            <div v-if="paths.length > 1" class="nav-item-close" @click.stop.prevent="removePath(i)">
+              <div class="nav-item-close-inner i-material-symbols:close" />
+            </div>
+          </NLayoutContent>
         </NuxtLink>
-        <div class="nav-fill w-full" />
+        <NLayoutContent class="nav-fill w-full" />
       </div>
     </NScrollbar>
-  </NLayout>
+  </div>
 </template>
 
 <style scoped>
@@ -38,8 +40,12 @@ const { enabled, paths, removePath } = usePageHistory()
   user-select: none;
 }
 
+.nav * {
+  --uno: 'transition-all duration-300';
+}
+
 .nav-item {
-  --uno: 'shrink-0 flex items-center px-4 py-2 border-r-1 border-r-solid border-[#8882] cursor-pointer transition-all *:shrink-0';
+  --uno: 'shrink-0 flex items-center border-r-1 border-r-solid border-[#8882] cursor-pointer *:shrink-0';
 }
 
 .nav-item,
@@ -51,8 +57,8 @@ const { enabled, paths, removePath } = usePageHistory()
   --uno: 'bg-gray-50 dark:bg-truegray-900';
 }
 
-.nav-item:hover,
-.nav-item.active {
+.nav-item:hover *,
+.nav-item.active * {
   --uno: 'text-blue-500';
 }
 
@@ -69,7 +75,7 @@ const { enabled, paths, removePath } = usePageHistory()
 }
 
 .nav-item-close {
-  --uno: 'h-5 aspect-square ml-2 p-0.5 rounded-1 hover:bg-[#7f7f7f3f] transition-all';
+  --uno: 'h-5 aspect-square ml-2 p-0.5 rounded-1 hover:bg-[#7f7f7f3f]';
 }
 
 .nav-item-close-inner {

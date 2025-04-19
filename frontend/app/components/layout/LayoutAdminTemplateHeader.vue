@@ -56,7 +56,10 @@ function menuButton() {
 </script>
 
 <template>
-  <NLayoutHeader class="flex gap-1 px-4 py-2" bordered>
+  <NLayoutHeader class="flex items-center gap-1 px-4 py-1" bordered data-tauri-drag-region>
+    <NuxtLink class="mr-2" :to="HomeUrl">
+      <img src="/favicon.ico" class="w-6 h-6" />
+    </NuxtLink>
     <NPopover trigger="hover" :disabled="!responsive.small">
       <template #trigger>
         <NButton :focusable="false" quaternary @click="menuButton">
@@ -76,7 +79,7 @@ function menuButton() {
     <div class="invisible sm:visible mx-auto text-xl" />
     <NPopover trigger="hover" :disabled="!responsive.small">
       <template #trigger>
-        <ColorModeSwitch class="px-3.5 self-stretch justify-stretch" quaternary :text="false" iconify />
+        <ColorModeSwitch class="px-3.5 self-stretch justify-stretch" quaternary :text="false" iconify min />
       </template>
       <div>主题</div>
     </NPopover>

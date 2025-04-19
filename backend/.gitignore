@@ -331,6 +331,4 @@ $RECYCLE.BIN/
 .python-version
 
 /resources/
-/logs/
-/media/
-/backup/
+/data/

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { MenuOption } from 'naive-ui'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     title?: string
     menus?: MenuOption[]
@@ -13,24 +13,19 @@ const props = withDefaults(
   }
 )
 
-const route = useRoute()
-const darkMode = useNaiveDarkMode()
+const configStore = useConfigStore()
 
-const collapsed = ref(false)
+const route = useRoute()
+const darkMode = useDarkMode()
+
+const collapsed = computed({
+  get: () => configStore.cache.menuCollapsed ?? false,
+  set: (v) => {
+    configStore.cache.menuCollapsed = v
+  }
+})
 const showDrawer = ref(false)
 
-const menuOptions = computed((): MenuOption[] => [
-  {
-    label: renderLink(props.title, Urls.index),
-    key: '',
-    icon: renderIcon({
-      type: 'img',
-      attr: { class: 'w-full h-full object-contain rounded-1 p-[1px]', src: '/favicon.ico' }
-    }),
-    props: { style: { color: '#ff0' } }
-  },
-  ...props.menus
-])
 const menuValue = computed(() => {
   if (!route.meta.tags) return
   return route.meta.tags[0]
@@ -52,15 +47,12 @@ const menuValue = computed(() => {
           :native-scrollbar="false"
           bordered
         >
-          <NMenu :value="menuValue" :options="menuOptions" />
+          <NMenu :value="menuValue" :options="menus" />
           <NDrawer v-if="!responsive.small" v-model:show="showDrawer" placement="left" @click="showDrawer = false">
-            <NMenu :value="route.path" :options="menuOptions" />
+            <NMenu :value="route.path" :options="menus" />
           </NDrawer>
         </NLayoutSider>
-        <NLayout
-          content-class="flex flex-col w-full h-full overflow-hidden"
-          :theme-overrides="darkMode ? {} : { color: '#f3f4f6' }"
-        >
+        <NLayout content-class="flex flex-col w-full h-full" :theme-overrides="darkMode ? {} : { color: '#f3f4f6' }">
           <NaivePageNavigator class="shrink-0" />
           <NLayoutContent class="w-full h-full bg-transparent">
             <slot />
@@ -70,13 +62,3 @@ const menuValue = computed(() => {
     </NaiveProviderBundle>
   </NaiveConfigProvider>
 </template>
-
-<style>
-.n-menu > div:first-child > div:first-child::before {
-  display: none;
-}
-
-.n-menu {
-  user-select: none;
-}
-</style>

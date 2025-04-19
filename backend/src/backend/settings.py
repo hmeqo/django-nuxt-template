@@ -12,12 +12,12 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from django.utils.translation import gettext_lazy as _
 
-from project.env import db_settings, django_settings, granian_settings
-from project.utils import get_base_dir
+from project.dirs import app_base_dir, app_data_dir
+from project.settings import db_settings, django_settings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent.parent
-BASE_DIR = get_base_dir()
+BASE_DIR = app_base_dir
 
 DIST_DIR = BASE_DIR.joinpath("..", "frontend", ".output", "public").resolve()
 
@@ -99,7 +99,7 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / db_settings.sqlite_file,
+        "NAME": app_data_dir / db_settings.sqlite_file,
     }
     if db_settings.engine.endswith("sqlite3")
     else {
@@ -209,7 +209,7 @@ AUTH_USER_MODEL = "main.User"
 
 MEDIA_URL = "media/"
 
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = app_data_dir / "media"
 
 
 # Session
@@ -223,7 +223,6 @@ if db_settings.use_cache:
 # Csrf
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost",
     "http://localhost:3000",
 ]
 
@@ -257,7 +256,7 @@ SPECTACULAR_SETTINGS = {
 # dbbackup
 
 DBBACKUP_STORAGE = "django.core.files.storage.FileSystemStorage"
-DBBACKUP_STORAGE_OPTIONS = {"location": "./backup"}
+DBBACKUP_STORAGE_OPTIONS = {"location": app_data_dir / "backups"}
 DBBACKUP_CLEANUP_KEEP = 10
 DBBACKUP_CLEANUP_KEEP_MEDIA = 10
 
@@ -274,10 +273,3 @@ WHITENOISE_GZIP = True
 # Login
 
 LOGIN_URL = "/login"
-
-
-if granian_settings.capture_log:
-    if not DEBUG:
-        from .common.capturelog import capture_log
-
-        capture_log()

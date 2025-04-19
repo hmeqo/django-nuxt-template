@@ -11,7 +11,19 @@ export default createConfigForNuxt()
       }
     ],
     '@typescript-eslint/no-unused-vars': 'off',
-    'vue/require-default-prop': 'off'
+    'vue/require-default-prop': 'off',
+    'vue/html-self-closing': [
+      'warn',
+      {
+        html: {
+          void: 'always',
+          normal: 'always',
+          component: 'always'
+        },
+        svg: 'always',
+        math: 'always'
+      }
+    ]
   })
   .prepend({
     ignores: ['packages/backend/lib/sdk']

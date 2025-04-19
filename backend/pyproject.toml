@@ -18,6 +18,7 @@ dependencies = [
     "drf-apischema",
     "whitenoise",
     "pillow",
+    "platformdirs",
 ]
 
 [dependency-groups]
@@ -27,9 +28,8 @@ types = [
     "django-types",
     "djangorestframework-stubs[compatible-mypy]",
 ]
-server = ["granian", "mysqlclient", "django-redis"]
-app = ["granian", "pywebview[qt6]"]
-build = ["nuitka", "patchelf; platform_system == 'Linux'"]
+db = ["mysqlclient", "django-redis"]
+prod = ["granian"]
 
 [project.scripts]
 dev = "project.scripts.dev:dev"

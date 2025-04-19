@@ -1,0 +1,4 @@
+{
+  "globalCssFiles": ["./app/assets/css/utilities.css"],
+  "include": ["**/*.{vue,tsx}"]
+}

@@ -1,3 +1,8 @@
+export const userRoleOptions = Object.values(UserRole).map((v) => ({
+  label: userRoleToText(v),
+  value: v
+}))
+
 export enum Activity {
   inactive,
   active
@@ -23,15 +28,3 @@ export const activityFilter = (value: Activity, is_active: () => boolean) => {
 export function checkUserRole(user: User, role: UserRole) {
   return user.roles.includes(role as UserRole)
 }
-
-export function userRoleToText(role: UserRole) {
-  switch (role) {
-    case UserRole.EMPLOYEE:
-      return '员工'
-  }
-}
-
-export const userRoleOptions = Object.entries(UserRole).map(([k, v]) => ({
-  label: userRoleToText(v),
-  value: v
-}))

@@ -60,6 +60,8 @@ function hasSegmented() {
         </template>
         <NScrollbar
           :content-style="{
+            display: 'flex',
+            flexDirection: 'column',
             padding: '0 var(--n-padding-left) var(--n-padding-bottom) var(--n-padding-left)',
             paddingTop: hasSegmented() ? 'var(--n-padding-top)' : '0'
           }"

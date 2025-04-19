@@ -38,7 +38,7 @@ const formRef = useTemplateRef('form')
         <NFlex>
           <NCheckbox v-model:checked="model.is_superuser">超级用户</NCheckbox>
           <NCheckbox v-model:checked="model.is_staff">工作人员</NCheckbox>
-          <NCheckbox v-model:checked="model.is_active">激活</NCheckbox>
+          <NCheckbox v-model:checked="model.is_active">有效</NCheckbox>
         </NFlex>
       </div>
       <div>

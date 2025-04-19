@@ -118,7 +118,7 @@ const resetPasswordVisible = ref(false)
 
 <template>
   <PageBase>
-    <NCard class="h-full" content-class="flex flex-col gap-2">
+    <NCard class="h-full" content-class="flex flex-col gap-4">
       <NFlex>
         <NButton
           type="success"

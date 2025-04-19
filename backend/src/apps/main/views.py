@@ -48,16 +48,21 @@ class AuthViewSet(ViewSet):
         return LoginStateOut({"user": user}).data
 
 
-@apischema_view()
+@apischema_view(
+    list=apischema(permissions=[IsSuperUser]),
+    retrieve=apischema(permissions=[IsSuperUser]),
+    update=apischema(permissions=[IsSuperUser]),
+    destroy=apischema(permissions=[IsSuperUser]),
+)
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserOut
 
-    @apischema(body=UserIn)
+    @apischema(permissions=[IsSuperUser], body=UserIn)
     def create(self, request: ASRequest[UserIn]) -> Any:
         return self.get_serializer(request.serializer.save()).data
 
-    @apischema(body=UserResetPwdIn)
+    @apischema(permissions=[IsAuthenticated], body=UserResetPwdIn)
     @action(methods=["post"], detail=True)
     def reset_password(self, request: ASRequest[UserResetPwdIn], pk: int) -> Any:
         user: User = self.get_object()

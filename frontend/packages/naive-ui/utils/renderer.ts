@@ -1,5 +1,4 @@
-import { NuxtLink } from '#components'
-import { NIcon } from 'naive-ui'
+import { NIcon, NuxtLink } from '#components'
 import type { VNodeProps } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
 
