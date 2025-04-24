@@ -23,7 +23,7 @@ DIST_DIR = BASE_DIR.joinpath("..", "frontend", ".output", "public").resolve()
 
 RESOURCES_DIR = BASE_DIR / "resources"
 
-APP_DIR = RESOURCES_DIR / "app"
+ASSETS_DIR = RESOURCES_DIR / "assets"
 
 
 # Quick-start development settings - unsuitable for production
@@ -77,7 +77,7 @@ ROOT_URLCONF = "backend.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [APP_DIR],
+        "DIRS": [ASSETS_DIR],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -192,7 +192,7 @@ LANGUAGE_COOKIE_NAME = "language"
 
 STATIC_URL = "static/"
 
-STATIC_ROOT = APP_DIR / "static"
+STATIC_ROOT = ASSETS_DIR / "static"
 
 STATICFILES_DIRS = []
 

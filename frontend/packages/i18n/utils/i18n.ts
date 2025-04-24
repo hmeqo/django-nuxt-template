@@ -1,5 +1,5 @@
-export { i18nKeys } from '@@/i18n/words'
+export { i18nKeys } from '../lib/words'
 
-export const $t = (key: string | number) => {
-  return useI18nB().t(key)
+export const $t = (key: string) => {
+  return useI18n().t(key) as string
 }

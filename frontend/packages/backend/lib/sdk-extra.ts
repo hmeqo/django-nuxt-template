@@ -31,6 +31,7 @@ export const schemaToDefaults = <T>(schema: Schema, overrides?: Partial<T>): T =
         else if (type === 'boolean') acc[k] = false as T[keyof T]
         else if (type === 'all-of') acc[k] = null as T[keyof T]
         else if (type === 'array') acc[k] = [] as T[keyof T]
+        else if (type === 'dictionary') acc[k] = {} as T[keyof T]
         else {
           const subSchema = sdk[`$${type}` as keyof typeof sdk] as Schema
           if (subSchema === undefined) throw new Error(`Unknown type: ${type}`)

@@ -18,9 +18,9 @@ from .serializers import *
 
 
 def serve_app_root(request: HttpRequest, path: str):
-    if (settings.APP_DIR / path).is_file():
-        return serve(request, path, document_root=settings.APP_DIR)
-    return serve(request, "index.html", document_root=settings.APP_DIR)
+    if (settings.ASSETS_DIR / path).is_file():
+        return serve(request, path, document_root=settings.ASSETS_DIR)
+    return serve(request, "index.html", document_root=settings.ASSETS_DIR)
 
 
 @apischema(query=MediaQuery, response=OpenApiResponse(str, description=_("Media File")), transaction=False)

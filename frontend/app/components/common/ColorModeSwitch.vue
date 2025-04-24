@@ -4,12 +4,8 @@ const props = defineProps<{
   min?: boolean
 }>()
 
-const darkMode = useDarkMode()
+const darkMode = useNaiveDarkMode()
 const { colorModePreference } = useNaiveColorMode()
-const colorMode = computed({
-  get: () => colorModePreference.get(),
-  set: (v) => colorModePreference.set(v)
-})
 
 function switchColorMode() {
   if (props.min) {
@@ -28,6 +24,11 @@ function switchColorMode() {
     }
   }
 }
+
+const colorMode = computed({
+  get: () => colorModePreference.get(),
+  set: (value) => colorModePreference.set(value)
+})
 </script>
 
 <template>

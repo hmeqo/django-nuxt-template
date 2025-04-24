@@ -3,20 +3,19 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { LoginIn } from '../models/LoginIn';
-import type { LoginStateOut } from '../models/LoginStateOut';
+import type { UserOut } from '../models/UserOut';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class AuthService {
     /**
-     * 登录
      * @param requestBody
-     * @returns void
+     * @returns UserOut
      * @throws ApiError
      */
     public static authLoginCreate(
         requestBody: LoginIn,
-    ): CancelablePromise<void> {
+    ): CancelablePromise<UserOut> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/auth/login/',
@@ -25,18 +24,6 @@ export class AuthService {
         });
     }
     /**
-     * 登录信息
-     * @returns LoginStateOut
-     * @throws ApiError
-     */
-    public static authLoginstateRetrieve(): CancelablePromise<LoginStateOut> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/auth/loginstate/',
-        });
-    }
-    /**
-     * 退出登录
      * @returns void
      * @throws ApiError
      */
@@ -44,6 +31,16 @@ export class AuthService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/auth/logout/',
+        });
+    }
+    /**
+     * @returns UserOut
+     * @throws ApiError
+     */
+    public static authMeRetrieve(): CancelablePromise<UserOut> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/auth/me/',
         });
     }
 }

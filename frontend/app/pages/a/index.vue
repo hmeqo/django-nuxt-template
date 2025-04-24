@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  middleware: () => routeAuth({ auth: [FA] }, { auth: [IsSuperuser], showError: true }),
+  middleware: () => routeAuth([{ auth: [isSuperuser] }], { showError: true }),
   layout: 'admin',
   title: '仪表盘',
   icon: 'i-material-symbols:dashboard-outline',

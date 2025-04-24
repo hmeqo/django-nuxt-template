@@ -16,7 +16,7 @@ withDefaults(
 const configStore = useConfigStore()
 
 const route = useRoute()
-const darkMode = useDarkMode()
+const darkMode = useNaiveDarkMode()
 
 const collapsed = computed({
   get: () => configStore.cache.menuCollapsed ?? false,
@@ -34,10 +34,9 @@ const menuValue = computed(() => {
 
 <template>
   <NaiveConfigProvider class="fixed flex flex-col w-full h-full">
-    <NGlobalStyle />
     <NaiveProviderBundle>
       <NaiveRequestFeedback />
-      <LayoutAdminTemplateHeader v-model:collapsed="collapsed" v-model:show-drawer="showDrawer" class="shrink-0" />
+      <LayoutAdminTemplateHeader v-model:collapsed="collapsed" v-model:show-drawer="showDrawer" />
       <NLayout has-sider>
         <NLayoutSider
           v-model:collapsed="collapsed"
@@ -53,7 +52,7 @@ const menuValue = computed(() => {
           </NDrawer>
         </NLayoutSider>
         <NLayout content-class="flex flex-col w-full h-full" :theme-overrides="darkMode ? {} : { color: '#f3f4f6' }">
-          <NaivePageNavigator class="shrink-0" />
+          <NaivePageNavigator v-if="!isAppMode" class="shrink-0" />
           <NLayoutContent class="w-full h-full bg-transparent">
             <slot />
           </NLayoutContent>

@@ -8,8 +8,6 @@
         "/api/auth/login/": {
             "post": {
                 "operationId": "auth_login_create",
-                "description": "",
-                "summary": "登录",
                 "tags": [
                     "auth"
                 ],
@@ -43,17 +41,44 @@
                     {}
                 ],
                 "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserOut"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/auth/logout/": {
+            "post": {
+                "operationId": "auth_logout_create",
+                "tags": [
+                    "auth"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {
+                        "basicAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
                     "204": {
                         "description": "No response body"
                     }
                 }
             }
         },
-        "/api/auth/loginstate/": {
+        "/api/auth/me/": {
             "get": {
-                "operationId": "auth_loginstate_retrieve",
-                "description": "",
-                "summary": "登录信息",
+                "operationId": "auth_me_retrieve",
                 "tags": [
                     "auth"
                 ],
@@ -71,7 +96,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/LoginStateOut"
+                                    "$ref": "#/components/schemas/UserOut"
                                 }
                             }
                         },
@@ -80,34 +105,9 @@
                 }
             }
         },
-        "/api/auth/logout/": {
-            "post": {
-                "operationId": "auth_logout_create",
-                "description": "",
-                "summary": "退出登录",
-                "tags": [
-                    "auth"
-                ],
-                "security": [
-                    {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
-                    },
-                    {}
-                ],
-                "responses": {
-                    "204": {
-                        "description": "No response body"
-                    }
-                }
-            }
-        },
         "/api/users/": {
             "get": {
                 "operationId": "users_list",
-                "description": "用户管理",
                 "tags": [
                     "users"
                 ],
@@ -138,8 +138,6 @@
             },
             "post": {
                 "operationId": "users_create",
-                "description": "",
-                "summary": "创建用户",
                 "tags": [
                     "users"
                 ],
@@ -189,7 +187,6 @@
         "/api/users/{id}/": {
             "get": {
                 "operationId": "users_retrieve",
-                "description": "用户管理",
                 "parameters": [
                     {
                         "in": "path",
@@ -228,7 +225,6 @@
             },
             "put": {
                 "operationId": "users_update",
-                "description": "用户管理",
                 "parameters": [
                     {
                         "in": "path",
@@ -287,7 +283,6 @@
             },
             "patch": {
                 "operationId": "users_partial_update",
-                "description": "用户管理",
                 "parameters": [
                     {
                         "in": "path",
@@ -345,7 +340,6 @@
             },
             "delete": {
                 "operationId": "users_destroy",
-                "description": "用户管理",
                 "parameters": [
                     {
                         "in": "path",
@@ -379,8 +373,6 @@
         "/api/users/{id}/reset_password/": {
             "post": {
                 "operationId": "users_reset_password_create",
-                "description": "",
-                "summary": "重置用户密码",
                 "parameters": [
                     {
                         "in": "path",
@@ -492,7 +484,7 @@
                     },
                     "password": {
                         "type": "string",
-                        "pattern": "^[\\w\\d`\\-=!@#$%^&*()_+[\\]{}():;\\'\",<.>/?\\\\|]{4,32}$",
+                        "pattern": "^[\\w\\d`\\-=!@#$%^&*()_+[\\]{}():;\\'\",<.>/?\\\\|]{8,32}$",
                         "maxLength": 32,
                         "minLength": 8
                     }
@@ -500,22 +492,6 @@
                 "required": [
                     "password",
                     "username"
-                ]
-            },
-            "LoginStateOut": {
-                "type": "object",
-                "properties": {
-                    "user": {
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/UserOut"
-                            }
-                        ],
-                        "nullable": true
-                    }
-                },
-                "required": [
-                    "user"
                 ]
             },
             "PatchedUserOut": {
@@ -578,7 +554,7 @@
                     "password": {
                         "type": "string",
                         "writeOnly": true,
-                        "pattern": "^[\\w\\d`\\-=!@#$%^&*()_+[\\]{}():;\\'\",<.>/?\\\\|]{4,32}$",
+                        "pattern": "^[\\w\\d`\\-=!@#$%^&*()_+[\\]{}():;\\'\",<.>/?\\\\|]{8,32}$",
                         "maxLength": 32,
                         "minLength": 8
                     },
@@ -673,7 +649,7 @@
                 "properties": {
                     "password": {
                         "type": "string",
-                        "pattern": "^[\\w\\d`\\-=!@#$%^&*()_+[\\]{}():;\\'\",<.>/?\\\\|]{4,32}$",
+                        "pattern": "^[\\w\\d`\\-=!@#$%^&*()_+[\\]{}():;\\'\",<.>/?\\\\|]{8,32}$",
                         "maxLength": 32,
                         "minLength": 8
                     }

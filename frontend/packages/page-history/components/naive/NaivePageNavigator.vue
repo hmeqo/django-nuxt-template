@@ -7,7 +7,7 @@ const { enabled, paths, removePath } = usePageHistory()
 </script>
 
 <template>
-  <div v-if="enabled">
+  <div v-if="enabled" class="h-10.25">
     <NScrollbar x-scrollable>
       <div class="nav" :size="0">
         <NuxtLink

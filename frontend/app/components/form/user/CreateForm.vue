@@ -19,7 +19,15 @@ const formRef = useTemplateRef('form')
   <NForm
     ref="form"
     :model="model"
-    :rules="UserCreate.$getRules(model)"
+    :rules="{
+      ...schemaToNaiveRules($UserOut),
+      confirmPassword: {
+        required: true,
+        validator: (_, value) => value === model.password,
+        message: '两次密码不一致',
+        trigger: ['blur']
+      }
+    }"
     :show-require-mark="false"
     label-placement="top"
     label-width="auto"
@@ -49,7 +57,7 @@ const formRef = useTemplateRef('form')
         </NFlex>
       </div>
       <div>
-        <NFormItem label="身份" required>
+        <NFormItem label="角色" required>
           <NTransfer v-model:value="model.roles" :options="userRoleOptions" />
         </NFormItem>
       </div>

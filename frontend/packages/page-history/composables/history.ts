@@ -12,11 +12,10 @@ export const usePageHistory = () => {
   const enabledStore = usePiniaLocalStorage<StrBoolean>('page-history-enabled', 'true')
   const enabled = computed({ get: () => enabledStore.value === 'true', set: (v) => (enabledStore.value = `${v}`) })
 
-  function clearPaths(opts?: { keepCurrent?: boolean }) {
-    if (opts?.keepCurrent) {
+  function clearPaths(opts?: { exceptCurrent?: boolean }) {
+    if (opts?.exceptCurrent) {
       const route = useRoute()
-      paths.value = paths.value.filter((x) => x.name === route.name)
-      console.log(paths.value)
+      paths.value = paths.value.filter((x) => x.name !== route.name)
     } else {
       paths.value = []
     }

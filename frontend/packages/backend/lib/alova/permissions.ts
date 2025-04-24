@@ -1,21 +1,29 @@
-export const IsLoggedIn = createPermission(() => useLoginState().loggedIn.value)
-export const IsAuthenticated = IsLoggedIn
-export const IsStaff = createPermission(() => !!useLoginState().user.value?.is_staff)
-export const IsSuperuser = createPermission(() => !!useLoginState().user.value?.is_superuser)
+let authCached = false
 
-export const IsEmployee = createPermission(() => !!useLoginState().user.value?.roles.includes(UserRole.EMPLOYEE))
+const fetchMe = createPermission(() => {
+  const loginState = useLoginState()
 
-export class FA extends APermission {
-  override hasPermission() {
-    return new Promise<boolean>((resolve) => {
-      const { loggedIn, setLoginState } = useLoginState()
-      if (loggedIn.value) return resolve(true)
+  if (!authCached)
+    Auth.me()
+      .then((data) => {
+        if (data) {
+          loginState.set(data)
+        } else {
+          loginState.$reset()
+          navigateTo(LoginUrl)
+        }
+      })
+      .catch(() => {})
+      .finally(() => (authCached = true))
 
-      useAsyncData(() =>
-        Auth.loginState()
-          .then((data) => setLoginState(data))
-          .finally(() => resolve(loggedIn.value))
-      )
-    })
-  }
-}
+  return loginState.isLoggedIn()
+})
+
+export const isLoggedIn = createPermission(() => fetchMe.hasPermission() && useLoginState().isLoggedIn())
+export const isAuthenticated = isLoggedIn
+export const isStaff = createPermission(() => fetchMe.hasPermission() && !!useLoginState().user?.is_staff)
+export const isSuperuser = createPermission(() => fetchMe.hasPermission() && !!useLoginState().user?.is_superuser)
+
+export const isEmployee = createPermission(
+  () => fetchMe.hasPermission() && !!useLoginState().user?.roles.includes(UserRole.EMPLOYEE)
+)

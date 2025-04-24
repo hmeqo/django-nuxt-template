@@ -1,4 +1,4 @@
-import type { ModelType } from '@hmeqo/easymodel'
+import type { BaseModel, ModelType } from '@hmeqo/easymodel'
 
 export interface AlovaCustomTypeMeta {
   model?: ModelType

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { i18nKeys } from '@@/i18n/words'
 import type { Event } from '../../lib/alova/core'
 import {
   RequestErrorEvent,

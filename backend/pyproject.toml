@@ -15,10 +15,12 @@ dependencies = [
     "django-cleanup",
     "django-dbbackup",
     "django-unused-media",
+    "django-safedelete",
     "drf-apischema",
     "whitenoise",
     "pillow",
     "platformdirs",
+    "pendulum",
 ]
 
 [dependency-groups]
@@ -30,11 +32,13 @@ types = [
 ]
 db = ["mysqlclient", "django-redis"]
 prod = ["granian"]
+build = ["nuitka", "patchelf; platform_system == 'Linux'"]
 
 [project.scripts]
 dev = "project.scripts.dev:dev"
 serve = "project.scripts.serve:serve"
 app = "project.app:main"
+build = "project.scripts.build:build"
 
 [build-system]
 requires = ["hatchling"]

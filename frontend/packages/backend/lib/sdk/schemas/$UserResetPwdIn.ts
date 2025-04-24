@@ -9,7 +9,7 @@ export const $UserResetPwdIn = {
             isRequired: true,
             maxLength: 32,
             minLength: 8,
-            pattern: '^[\\w\\d`\\-=!@#$%^&*()_+[\\]{}():;\\\'",<.>/?\\\\|]{4,32}$',
+            pattern: '^[\\w\\d`\\-=!@#$%^&*()_+[\\]{}():;\\\'",<.>/?\\\\|]{8,32}$',
         },
     },
 } as const;

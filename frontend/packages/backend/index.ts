@@ -1,4 +1,5 @@
 import { addComponentsDir, addImports, addImportsDir, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { defu } from 'defu'
 
 export default defineNuxtModule({
   meta: {
@@ -8,13 +9,18 @@ export default defineNuxtModule({
   setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
 
+    // Pass module options to runtimeConfig object
+    nuxt.options.runtimeConfig.public = defu(nuxt.options.runtimeConfig.public, {
+      backend: options
+    })
+
     // Add components
     addComponentsDir({
       path: resolver.resolve('./components')
     })
 
-    // Add composables
-    addImportsDir(resolver.resolve('./composables'))
+    // Add stores
+    addImportsDir(resolver.resolve('./stores'))
 
     // Add utils
     addImportsDir(resolver.resolve('./utils'))

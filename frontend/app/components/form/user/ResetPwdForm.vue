@@ -5,17 +5,17 @@ const emit = defineEmits<{
   (e: 'success'): void
 }>()
 
-const { user: loginUser, clearLoginState } = useLoginState()
+const loginState = useLoginState()
 
-const user = computed(() => props.user || loginUser.value!)
+const user = computed(() => props.user || loginState.get())
 
-const { send, loading } = useRequest(() => user.value.resetPassword(model), {
+const { send, loading } = useRequest(() => user.value!.resetPassword(model), {
   immediate: false,
   middleware: middlewares([formValidationMiddleware(() => formRef.value)])
 }).onSuccess(() => {
-  if (user.value.id === loginUser.value?.id) {
-    clearLoginState()
-    navigateTo(HomeUrl)
+  if (user.value?.id === loginState.get().id) {
+    loginState.$reset()
+    navigateTo(LoginUrl)
   }
   emit('success')
 })
@@ -29,7 +29,15 @@ const formRef = useTemplateRef('form')
   <NForm
     ref="form"
     :model="model"
-    :rules="UserResetPwd.$getRules(model)"
+    :rules="{
+      ...schemaToNaiveRules($UserResetPwdIn),
+      confirmPassword: {
+        required: true,
+        validator: (_, value) => value === model.password,
+        message: '两次密码不一致',
+        trigger: ['blur']
+      }
+    }"
     :show-require-mark="false"
     label-width="auto"
     label-placement="left"

@@ -11,7 +11,6 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class UsersService {
     /**
-     * 用户管理
      * @returns UserOut
      * @throws ApiError
      */
@@ -22,7 +21,6 @@ export class UsersService {
         });
     }
     /**
-     * 创建用户
      * @param requestBody
      * @returns UserOut
      * @throws ApiError
@@ -38,7 +36,6 @@ export class UsersService {
         });
     }
     /**
-     * 用户管理
      * @param id A unique integer value identifying this User.
      * @returns UserOut
      * @throws ApiError
@@ -55,7 +52,6 @@ export class UsersService {
         });
     }
     /**
-     * 用户管理
      * @param id A unique integer value identifying this User.
      * @param requestBody
      * @returns UserOut
@@ -76,7 +72,6 @@ export class UsersService {
         });
     }
     /**
-     * 用户管理
      * @param id A unique integer value identifying this User.
      * @param requestBody
      * @returns UserOut
@@ -97,7 +92,6 @@ export class UsersService {
         });
     }
     /**
-     * 用户管理
      * @param id A unique integer value identifying this User.
      * @returns void
      * @throws ApiError
@@ -114,7 +108,6 @@ export class UsersService {
         });
     }
     /**
-     * 重置用户密码
      * @param id A unique integer value identifying this User.
      * @param requestBody
      * @returns void

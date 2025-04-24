@@ -12,7 +12,7 @@ from .choices import UserRole
 # Create your models here.
 
 
-class TimeStampMixin(models.Model):
+class TimeStampModel(models.Model):
     created_at = models.DateTimeField(_("Create Time"), auto_now_add=True)
     updated_at = models.DateTimeField(_("Update Time"), auto_now=True)
 

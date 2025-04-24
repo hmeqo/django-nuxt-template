@@ -33,8 +33,8 @@ class Command(BaseCommand):
                 shutil.rmtree(settings.RESOURCES_DIR)
 
             if settings.DIST_DIR.exists():
-                self.stdout.write(f"Copying resources from {settings.DIST_DIR} to {settings.APP_DIR}")
-                shutil.copytree(settings.DIST_DIR, settings.APP_DIR, dirs_exist_ok=True)
+                self.stdout.write(f"Copying resources from {settings.DIST_DIR} to {settings.ASSETS_DIR}")
+                shutil.copytree(settings.DIST_DIR, settings.ASSETS_DIR, dirs_exist_ok=True)
             else:
                 self.stdout.write(f"Skipping: {settings.DIST_DIR} does not exist")
 

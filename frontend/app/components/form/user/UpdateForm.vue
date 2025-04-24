@@ -21,7 +21,7 @@ const formRef = useTemplateRef('form')
   <NForm
     ref="form"
     :model="model"
-    :rules="User.$rules"
+    :rules="schemaToNaiveRules($UserOut)"
     :show-require-mark="false"
     label-placement="top"
     label-width="auto"

@@ -1,0 +1,12 @@
+{
+  "en-US": "English",
+  "zh-Hans": "中文 (简体)",
+
+  "welcome": "Welcome",
+
+  "error_occurred": "Error Occurred",
+  "operation_succeeds": "Operation Succeeds",
+  "status_code": "Status Code",
+  "detail_message": "Detail Message",
+  "network_error": "Network Error"
+}

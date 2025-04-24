@@ -8,10 +8,10 @@
             "name": "Backend: Django",
             "type": "debugpy",
             "request": "launch",
-            "args": ["runserver"],
+            "module": "uv",
+            "args": ["run", "dev"],
             "django": true,
             "autoStartBrowser": false,
-            "program": "${workspaceFolder}/manage.py",
             "internalConsoleOptions": "neverOpen"
         }
     ]

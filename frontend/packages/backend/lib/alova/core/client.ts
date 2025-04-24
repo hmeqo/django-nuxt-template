@@ -12,7 +12,6 @@ import {
 } from './event'
 
 export const alovaInst = createAlova({
-  baseURL: '/api',
   statesHook: VueHook,
   requestAdapter: fetchAdapter(),
   beforeRequest(method) {
@@ -50,7 +49,7 @@ export const alovaInst = createAlova({
         }
         if (method.meta?.model) {
           data = method.meta.model.init(data)
-          if (method.meta.instance) Object.assign(method.meta.instance!, data)
+          if (method.meta.instance) Object.assign(method.meta.instance, data)
         }
         new RequestSuccessEvent(response, method, data).emit()
         return data

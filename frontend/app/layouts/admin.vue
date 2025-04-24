@@ -9,7 +9,7 @@
       {
         label: renderLink('用户', Urls.admin.user.index),
         key: Urls.admin.user.index,
-        icon: renderIcon({ attr: { class: 'i-material-symbols:person' } })
+        icon: renderIcon({ attr: { class: 'i-material-symbols:person-outline' } })
       }
     ]"
   >

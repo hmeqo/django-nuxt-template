@@ -3,7 +3,7 @@ import { ActiveState, NaiveMultiButton } from '#components'
 import type { DataTableColumns } from 'naive-ui'
 
 definePageMeta({
-  middleware: () => routeAuth({ auth: [FA] }, { auth: [IsSuperuser], showError: true }),
+  middleware: () => routeAuth([{ auth: [isSuperuser] }], { showError: true }),
   layout: 'admin',
   title: '用户',
   icon: 'i-material-symbols:person-outline',
@@ -54,7 +54,7 @@ const columns = computed(
       render: (row) => h(ActiveState, { active: row.is_staff })
     },
     {
-      title: '身份',
+      title: '角色',
       key: 'roles',
       resizable: true,
       filterOptions: userRoleOptions,
@@ -143,21 +143,23 @@ const resetPasswordVisible = ref(false)
         flex-height
       />
     </NCard>
-    <NaiveModal v-model:show="createVisible" class="w-200" title="创建">
-      <UserCreateForm
-        @created="
-          (data) => {
-            users.unshift(data)
-            createVisible = false
-          }
-        "
-      />
-    </NaiveModal>
-    <NaiveModal v-model:show="updateVisible" class="w-200" title="更新">
-      <UserUpdateForm v-if="chosen" v-model:model="chosen" @updated="updateVisible = false" />
-    </NaiveModal>
-    <NaiveModal v-model:show="resetPasswordVisible" class="w-100" title="重置密码">
-      <UserResetPwdForm v-if="chosen" :user="chosen" @success="resetPasswordVisible = false" />
-    </NaiveModal>
+    <Teleport to="body">
+      <NaiveModal v-model:show="createVisible" class="w-200" title="创建">
+        <UserCreateForm
+          @created="
+            (data) => {
+              users.unshift(data)
+              createVisible = false
+            }
+          "
+        />
+      </NaiveModal>
+      <NaiveModal v-model:show="updateVisible" class="w-200" title="更新">
+        <UserUpdateForm v-if="chosen" v-model:model="chosen" @updated="updateVisible = false" />
+      </NaiveModal>
+      <NaiveModal v-model:show="resetPasswordVisible" class="w-100" title="重置密码">
+        <UserResetPwdForm v-if="chosen" :user="chosen" @success="resetPasswordVisible = false" />
+      </NaiveModal>
+    </Teleport>
   </PageBase>
 </template>
