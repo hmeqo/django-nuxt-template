@@ -49,13 +49,13 @@ start_backend() {
 
 start_frontend() {
     cd frontend || exit
-    node .output/backend/index.mjs
+    node .output/server/index.mjs
     cd ..
 }
 
 stop_frontend() {
-    if pgrep -f 'node .output/backend/index.mjs'; then
-        pkill -f 'node .output/backend/index.mjs'
+    if pgrep -f 'node .output/server/index.mjs'; then
+        pkill -f 'node .output/server/index.mjs'
     fi
     wait
 }

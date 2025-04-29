@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@hmeqo/nuxt-web-kit':
-        specifier: 0.1.0-beta.10
-        version: 0.1.0-beta.10(magicast@0.3.5)
+        specifier: 0.1.0-beta.12
+        version: 0.1.0-beta.12(magicast@0.3.5)
       '@iconify-json/carbon':
         specifier: ^1.2.8
         version: 1.2.8
@@ -1151,8 +1151,8 @@ packages:
   '@hmeqo/easymodel@0.1.0-beta.17':
     resolution: {integrity: sha512-OKWyuuzJU/BHbdin19iWeqLUP1A2Ghx+SRL/mEx5wRPHcFvxciYpkAO7XZCykjrXhsoEvjXIDimf9nZ4lJrFwQ==}
 
-  '@hmeqo/nuxt-web-kit@0.1.0-beta.10':
-    resolution: {integrity: sha512-PVDyYu5MfGcSAbpaZVxrLOeIASzLn3PeOVnH7TfGrvWP/eS2Sgp7dqncbc7/vneMDHWWIGa+QG6csV3tLL6HQw==}
+  '@hmeqo/nuxt-web-kit@0.1.0-beta.12':
+    resolution: {integrity: sha512-P8xcXFIpZs+MijRxK/0nRkZKNIjkgHHZndmmg8A0FJ5wB8k89riuvj2M76v0QQCnF70OUTKDYktV/ipQ+87F0Q==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -7248,7 +7248,7 @@ snapshots:
       lodash: 4.17.21
       reflect-metadata: 0.2.2
 
-  '@hmeqo/nuxt-web-kit@0.1.0-beta.10(magicast@0.3.5)':
+  '@hmeqo/nuxt-web-kit@0.1.0-beta.12(magicast@0.3.5)':
     dependencies:
       '@nuxt/kit': 3.16.2(magicast@0.3.5)
       lodash: 4.17.21

@@ -19,11 +19,11 @@ const fetchMe = createPermission(() => {
   return loginState.isLoggedIn()
 })
 
-export const isLoggedIn = createPermission(() => fetchMe.hasPermission() && useLoginState().isLoggedIn())
+export const isLoggedIn = createPermission(() => fetchMe.verify() && useLoginState().isLoggedIn())
 export const isAuthenticated = isLoggedIn
-export const isStaff = createPermission(() => fetchMe.hasPermission() && !!useLoginState().user?.is_staff)
-export const isSuperuser = createPermission(() => fetchMe.hasPermission() && !!useLoginState().user?.is_superuser)
+export const isStaff = createPermission(() => fetchMe.verify() && !!useLoginState().user?.is_staff)
+export const isSuperuser = createPermission(() => fetchMe.verify() && !!useLoginState().user?.is_superuser)
 
 export const isEmployee = createPermission(
-  () => fetchMe.hasPermission() && !!useLoginState().user?.roles.includes(UserRole.EMPLOYEE)
+  () => fetchMe.verify() && !!useLoginState().user?.roles.includes(UserRole.EMPLOYEE)
 )

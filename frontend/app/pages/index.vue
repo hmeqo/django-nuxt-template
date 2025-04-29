@@ -1,6 +1,8 @@
 <script setup lang="ts">
 definePageMeta({
-  middleware: clientOnly(() => routeAuth([{ auth: [isSuperuser], redirect: Urls.admin.index }], { fallback: LoginUrl }))
+  middleware: clientOnly(() =>
+    routeAuth([{ auth: [isSuperuser], to: { path: Urls.admin.index, redirect: true } }], { fallback: LoginUrl })
+  )
 })
 </script>
 

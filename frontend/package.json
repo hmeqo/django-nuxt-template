@@ -17,7 +17,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@hmeqo/nuxt-web-kit": "0.1.0-beta.10",
+    "@hmeqo/nuxt-web-kit": "0.1.0-beta.12",
     "@iconify-json/carbon": "^1.2.8",
     "@iconify-json/clarity": "^1.2.2",
     "@iconify-json/material-symbols": "^1.2.20",

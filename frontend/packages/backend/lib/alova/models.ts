@@ -3,7 +3,7 @@ import format from 'string-format'
 import { alovaInst } from './core'
 
 const urls = urlsEnsureEndSlash(
-  createUrls('', {
+  createUrls('api', {
     auth: createUrls('auth', {
       login: 'login',
       logout: 'logout',

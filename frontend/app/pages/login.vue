@@ -1,7 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'login',
-  middleware: clientOnly(() => routeAuth([{ auth: [isSuperuser], redirect: Urls.admin.index }])),
+  middleware: clientOnly(() => routeAuth([{ auth: [isSuperuser], to: Urls.admin.index }])),
   title: '登录',
   tags: [Urls.login]
 })

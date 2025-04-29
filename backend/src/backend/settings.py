@@ -55,9 +55,10 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "dbbackup",
     "django_unused_media",
+    "django_cleanup.apps.CleanupConfig",
+    "safedelete",
     "apps.chore",
     "apps.main",
-    "django_cleanup.apps.CleanupConfig",
 ]
 
 MIDDLEWARE = [
@@ -263,7 +264,8 @@ DBBACKUP_CLEANUP_KEEP_MEDIA = 10
 
 # Whitenoise
 
-WHITENOISE_GZIP = True
+WHITENOISE_ROOT = ASSETS_DIR
+WHITENOISE_INDEX_FILE = True
 
 # WHITENOISE_MIMETYPES = {
 #     ".js": "application/text; charset=utf-8",

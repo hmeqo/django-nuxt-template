@@ -17,7 +17,7 @@ dependencies = [
     "django-unused-media",
     "django-safedelete",
     "drf-apischema",
-    "whitenoise",
+    "whitenoise[brotli]",
     "pillow",
     "platformdirs",
     "pendulum",

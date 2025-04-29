@@ -17,12 +17,6 @@ from .serializers import *
 # Create your views here.
 
 
-def serve_app_root(request: HttpRequest, path: str):
-    if (settings.ASSETS_DIR / path).is_file():
-        return serve(request, path, document_root=settings.ASSETS_DIR)
-    return serve(request, "index.html", document_root=settings.ASSETS_DIR)
-
-
 @apischema(query=MediaQuery, response=OpenApiResponse(str, description=_("Media File")), transaction=False)
 @api_view(["get"])
 def media_view(request, path: str):

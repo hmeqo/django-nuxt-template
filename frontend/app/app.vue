@@ -10,11 +10,9 @@ useHead({
 </script>
 
 <template>
-  <div>
-    <PwaProvider />
-    <NuxtRouteAnnouncer />
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-  </div>
+  <PwaProvider />
+  <NuxtRouteAnnouncer />
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>

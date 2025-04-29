@@ -17,7 +17,7 @@ export const alovaInst = createAlova({
   beforeRequest(method) {
     Object.assign(method.config.headers, {
       [useCsrf().headerName]: useCookie('csrftoken').value,
-      'Content-Type': 'application/json'
+      'Content-Type': method.config.headers['Content-Type'] ?? (method.meta?.multipart ? undefined : 'application/json')
     })
 
     let data = method.data
@@ -26,7 +26,6 @@ export const alovaInst = createAlova({
       method.data = data
     }
     if (method.meta?.multipart || data instanceof FormData) {
-      delete method.config.headers['Content-Type']
       if (!(data instanceof FormData)) {
         const formData = new FormData()
         for (const [key, value] of Object.entries(data as Record<string, unknown>)) {
