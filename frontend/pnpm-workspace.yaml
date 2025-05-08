@@ -1,5 +1,6 @@
 packages:
-  - 'packages/*'
-
+  - packages/*
 catalog:
-  '@nuxt/kit': '^3.16.2'
+  '@nuxt/kit': ^3.16.2
+patchedDependencies:
+  '@nuxtjs/color-mode': patches/@nuxtjs__color-mode.patch

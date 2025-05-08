@@ -14,7 +14,7 @@ definePageMeta({
       <NFlex>
         <NButton>{{ $t(i18nKeys.welcome) }}</NButton>
         <NDatePicker />
-        <LangSwitch />
+        <NaiveLangSwitch />
       </NFlex>
     </NCard>
   </PageBase>

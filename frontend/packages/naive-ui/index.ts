@@ -7,7 +7,7 @@ export default defineNuxtModule({
     name: '@workspace/naive-ui'
   },
 
-  setup(options, nuxt) {
+  async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
 
     // @ts-expect-error unknown type
@@ -32,7 +32,7 @@ export default defineNuxtModule({
       }
     })
 
-    installModule('@bg-dev/nuxt-naiveui')
+    await installModule('@bg-dev/nuxt-naiveui')
 
     // Add components
     addComponentsDir({

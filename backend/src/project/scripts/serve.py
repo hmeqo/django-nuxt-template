@@ -1,9 +1,10 @@
 import os
+import sys
 
-from granian.constants import Interfaces, RuntimeModes
-from granian.server import Server as Granian
+from granian import cli
 
-from project.logging_config import capture_stdout, get_logconfig
+from project.dirs import app_base_dir
+from project.logging_config import capture_stdout
 from project.settings import django_settings, granian_settings
 
 
@@ -11,29 +12,29 @@ def _serve():
     django_settings.__init__()
     granian_settings.__init__()
 
+    log_dir = app_base_dir / "data" / "logs"
+    log_dir.mkdir(parents=True, exist_ok=True)
+
     if granian_settings.capture_log:
         capture_stdout()
 
-    server = Granian(
+    sys.argv = [
+        "granian",
         "backend.wsgi:application",
-        address=granian_settings.host,
-        port=granian_settings.port,
-        interface=Interfaces.WSGI,
-        websockets=False,
-        backpressure=1,
-        workers=granian_settings.workers,
-        workers_kill_timeout=3,
-        blocking_threads=1,
-        blocking_threads_idle_timeout=30,
-        runtime_mode=RuntimeModes.st,
-        runtime_threads=1,
-        runtime_blocking_threads=1,
-        log_dictconfig=get_logconfig(),
-        log_enabled=True,
-        log_access=True,
-    )
-
-    server.serve()
+        "--interface",
+        "wsgi",
+        "--workers",
+        str(granian_settings.workers),
+        "--host",
+        granian_settings.host,
+        "--port",
+        str(granian_settings.port),
+        "--log-config",
+        "conf/logconfig.json",
+        "--access-log",
+        *sys.argv[1:],
+    ]
+    sys.exit(cli.entrypoint())
 
 
 def serve():

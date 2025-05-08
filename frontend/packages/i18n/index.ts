@@ -1,30 +1,42 @@
-import { addImportsDir, createResolver, defineNuxtModule, installModule } from '@nuxt/kit'
+import { addComponentsDir, addImportsDir, createResolver, defineNuxtModule, installModule } from '@nuxt/kit'
 import { defu } from 'defu'
-import type { ModuleOptions } from 'nuxt-i18n-micro'
+import type { ModuleOptions } from '@nuxtjs/i18n'
 
 export default defineNuxtModule({
   meta: {
     name: '@workspace/i18n'
   },
 
-  setup(options, nuxt) {
+  async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
 
     nuxt.options.i18n = defu(nuxt.options.i18n, <ModuleOptions>{
+      locales: ['en', 'zh-CN'],
+      defaultLocale: 'zh-CN',
       strategy: 'no_prefix',
-      locales: [
-        { code: 'en', iso: 'en-US', dir: 'ltr' },
-        { code: 'zh', iso: 'zh-Hans', dir: 'ltr' }
-      ],
-      autoDetectLanguage: true,
-      localeCookie: 'language',
-      translationDir: 'packages/i18n/locales',
-      meta: true
+      detectBrowserLanguage: {
+        useCookie: false
+      },
+      bundle: {
+        optimizeTranslationDirective: false
+      },
+      lazy: true,
+
+      langDir: resolver.resolve('./locales'),
+      vueI18n: resolver.resolve('./i18n.config.ts')
     })
 
-    installModule('nuxt-i18n-micro')
+    await installModule('@nuxtjs/i18n')
 
-    // Add utils
+    // Add components
+    addComponentsDir({
+      path: resolver.resolve('./components')
+    })
+
+    // Add composables
+    addImportsDir(resolver.resolve('./composables'))
+
+    // Add composables
     addImportsDir(resolver.resolve('./utils'))
   }
 })

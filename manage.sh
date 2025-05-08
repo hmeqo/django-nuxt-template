@@ -17,7 +17,7 @@ backupdb() {
 
 sync_backend() {
     cd backend || exit
-    uv sync --frozen --group=types --group=db --group=prod
+    uv sync --frozen --group=types --group=cache --group=postgresql --group=prod
     uv run ./manage.py migrate
     uv run ./manage.py compilemessages --ignore=.venv
     uv run ./manage.py collectresources --clear --all
@@ -49,7 +49,7 @@ start_backend() {
 
 start_frontend() {
     cd frontend || exit
-    node .output/server/index.mjs
+    env $(cat .env) node .output/server/index.mjs
     cd ..
 }
 

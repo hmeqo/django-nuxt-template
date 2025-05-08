@@ -166,8 +166,8 @@ PASSWORD_HASHERS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
-# LANGUAGE_CODE = "zh-hans"
+LANGUAGE_CODE = "en"
+# LANGUAGE_CODE = "zh-CN"
 
 TIME_ZONE = "UTC"
 # TIME_ZONE = "Asia/Shanghai"
@@ -181,8 +181,8 @@ LOCALE_PATHS = [
 ]
 
 LANGUAGES = (
-    ("en-US", _("English")),
-    ("zh-Hans", _("Chinese (simplified)")),
+    ("en", _("English")),
+    ("zh-CN", _("Chinese (simplified)")),
 )
 
 LANGUAGE_COOKIE_NAME = "language"

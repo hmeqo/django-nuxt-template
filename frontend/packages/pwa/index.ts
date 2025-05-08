@@ -7,7 +7,7 @@ export default defineNuxtModule({
     name: '@workspace/pwa'
   },
 
-  setup(options, nuxt) {
+  async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
 
     nuxt.options.pwa = defu(nuxt.options.pwa, <PwaModuleOptions>{
@@ -33,7 +33,7 @@ export default defineNuxtModule({
       }
     })
 
-    installModule('@vite-pwa/nuxt')
+    await installModule('@vite-pwa/nuxt')
 
     // Add components
     addComponentsDir({

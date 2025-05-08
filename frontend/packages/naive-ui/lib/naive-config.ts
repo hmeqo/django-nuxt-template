@@ -3,24 +3,31 @@ import type { ColorMode } from '../types'
 
 export const useNaiveConfig = (opts?: { colorMode?: ColorMode }) => {
   const config = useRuntimeConfig().public.naiveui
-  const { getLocale } = useI18n()
-  const prefersTheme = computed(() => (useNaiveDarkMode().value ? darkTheme : lightTheme))
+  const locale = useLocale()
+  const darkMode = useDarkMode()
+
+  const prefersTheme = computed(() => (darkMode.value ? darkTheme : lightTheme))
   const theme = computed(() =>
     opts?.colorMode === undefined ? prefersTheme.value : opts?.colorMode === 'light' ? lightTheme : darkTheme
   )
+
+  watch(darkMode, (v) => {
+    useNaiveColorMode().colorMode.value = darkMode.value ? 'dark' : 'light'
+  })
+
   const naiveDateLocale = computed(() => {
-    switch (getLocale()) {
+    switch (locale.value) {
       case 'en':
         return dateEnUS
-      case 'zh':
+      case 'zh-CN':
         return dateZhCN
     }
   })
   const naiveLocale = computed(() => {
-    switch (getLocale()) {
+    switch (locale.value) {
       case 'en':
         return enUS
-      case 'zh':
+      case 'zh-CN':
         return zhCN
     }
   })

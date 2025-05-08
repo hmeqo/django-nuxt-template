@@ -10,6 +10,7 @@ useHead({
 </script>
 
 <template>
+  <I18nProvider />
   <PwaProvider />
   <NuxtRouteAnnouncer />
   <NuxtLayout>

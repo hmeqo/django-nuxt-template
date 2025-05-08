@@ -14,25 +14,14 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   modules: [
+    '@workspace/i18n',
+    '@workspace/common',
     '@workspace/app',
     '@workspace/backend',
-    '@workspace/i18n',
     '@workspace/naive-ui',
-    '@workspace/page-history',
     '@workspace/pwa',
     '@workspace/watermark',
-    '@nuxt/fonts',
-    '@nuxt/eslint',
-    '@nuxt/image',
-    '@nuxt/icon',
-    '@nuxt/test-utils',
-    '@pinia/nuxt',
-    'pinia-plugin-persistedstate/nuxt',
-    '@unocss/nuxt',
-    '@hmeqo/nuxt-web-kit',
-    '@nuxtjs/seo',
-    'nuxt-csurf',
-    '@vueuse/nuxt'
+    '@unocss/nuxt'
   ],
   components: [
     { path: '@/components' },
@@ -52,16 +41,8 @@ export default defineNuxtConfig({
     buildAssetsDir: 'static'
   },
 
-  routeRules: {
-    '/a/**': { prerender: false }
-  },
-
-  csurf: {
-    https: false,
-    cookieKey: 'csrftoken',
-    headerName: 'X-Csrftoken',
-    methodsToProtect: []
-  },
+  // ssr: false,
+  routeRules: {},
 
   site: {
     url: 'https://example.cn'
@@ -80,10 +61,6 @@ export default defineNuxtConfig({
     prerender: {
       routes: ['/', '/login', '/sitemap.xml']
     }
-  },
-
-  vite: {
-    cacheDir: '.vite'
   },
 
   build: {

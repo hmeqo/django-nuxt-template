@@ -1,4 +1,4 @@
-import { addComponentsDir, addImports, addImportsDir, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { addComponentsDir, addImports, addImportsDir, createResolver, defineNuxtModule, installModule } from '@nuxt/kit'
 import { defu } from 'defu'
 
 export default defineNuxtModule({
@@ -6,13 +6,21 @@ export default defineNuxtModule({
     name: '@workspace/backend'
   },
 
-  setup(options, nuxt) {
+  async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
 
     // Pass module options to runtimeConfig object
     nuxt.options.runtimeConfig.public = defu(nuxt.options.runtimeConfig.public, {
       backend: options
     })
+    nuxt.options.csurf = defu(nuxt.options.csurf, {
+      https: false,
+      cookieKey: 'csrftoken',
+      headerName: 'X-Csrftoken',
+      methodsToProtect: []
+    })
+
+    await installModule('nuxt-csurf')
 
     // Add components
     addComponentsDir({

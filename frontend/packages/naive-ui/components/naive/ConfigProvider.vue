@@ -6,13 +6,13 @@ const props = defineProps<{
   dark?: boolean
 }>()
 
-const { theme, themeOverrides, locale, dateLocale } = useNaiveConfig({
+const { locale, dateLocale } = useNaiveConfig({
   colorMode: props.light ? 'light' : props.dark ? 'dark' : undefined
 })
 </script>
 
 <template>
-  <NaiveConfig :theme="theme" :theme-overrides="themeOverrides" :locale="locale" :date-locale="dateLocale">
+  <NaiveConfig :locale="locale" :date-locale="dateLocale">
     <slot />
   </NaiveConfig>
 </template>

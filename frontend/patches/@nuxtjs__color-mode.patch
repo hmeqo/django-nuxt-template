@@ -1,0 +1,13 @@
+diff --git a/dist/runtime/plugin.client.js b/dist/runtime/plugin.client.js
+index 9106f1b35e7813574276b11eaf40a7c85c6704bd..9f790578e024f355fd8e2bbf83fab87da64e7adb 100644
+--- a/dist/runtime/plugin.client.js
++++ b/dist/runtime/plugin.client.js
+@@ -54,7 +54,7 @@ export default defineNuxtPlugin((nuxtApp) => {
+   function setPreferenceToStorage(storageType, preference) {
+     switch (storageType) {
+       case "cookie":
+-        window.document.cookie = storageKey + "=" + preference;
++        window.document.cookie = storageKey + "=" + preference + "; path=/";
+         break;
+       case "sessionStorage":
+         window.sessionStorage?.setItem(storageKey, preference);

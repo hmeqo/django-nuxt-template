@@ -1,4 +1,6 @@
 export const i18nKeys = {
+  en: 'English',
+  'zh-CN': '中文 (简体)',
   english: '',
   simplified_chinese: '',
   welcome: '',

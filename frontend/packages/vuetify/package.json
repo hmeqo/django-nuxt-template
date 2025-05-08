@@ -1,7 +1,0 @@
-{
-  "name": "@workspace/vuetify",
-  "version": "0.1.0",
-  "devDependencies": {
-    "vuetify-nuxt-module": "^0.18.6"
-  }
-}

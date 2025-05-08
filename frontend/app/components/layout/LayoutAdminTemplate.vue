@@ -16,7 +16,7 @@ withDefaults(
 const configStore = useConfigStore()
 
 const route = useRoute()
-const darkMode = useNaiveDarkMode()
+const darkMode = useDarkMode()
 
 const collapsed = computed({
   get: () => configStore.cache.menuCollapsed ?? false,

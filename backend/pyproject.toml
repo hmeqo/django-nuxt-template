@@ -30,7 +30,9 @@ types = [
     "django-types",
     "djangorestframework-stubs[compatible-mypy]",
 ]
-db = ["mysqlclient", "django-redis"]
+cache = ["django-redis"]
+postgresql = ["psycopg"]
+mysql = ["mysqlclient"]
 prod = ["granian"]
 build = ["nuitka", "patchelf; platform_system == 'Linux'"]
 
