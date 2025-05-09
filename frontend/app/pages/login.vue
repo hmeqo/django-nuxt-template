@@ -5,6 +5,8 @@ definePageMeta({
   title: '登录',
   tags: [Urls.login]
 })
+
+const { isMobile } = useNaiveDevice()
 </script>
 
 <template>
@@ -12,6 +14,8 @@ definePageMeta({
     <template #header>
       <div class="text-center">登录</div>
     </template>
-    <UserLoginForm />
+    <div :class="isMobile ? 'flex flex-col justify-end h-full max-h-110 pb-30' : 'py-2'">
+      <UserLoginForm />
+    </div>
   </NCard>
 </template>

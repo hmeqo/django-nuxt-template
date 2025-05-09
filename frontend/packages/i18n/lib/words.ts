@@ -9,7 +9,8 @@ export const i18nKeys = {
   operation_succeeds: '',
   status_code: '',
   detail_message: '',
-  network_error: ''
+  network_error: '',
+  canceled: ''
 }
 
 export type I18nKeys = typeof i18nKeys

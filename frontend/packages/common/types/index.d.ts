@@ -7,3 +7,11 @@ declare global {
 
   type ClassProp = HTMLAttributes['class']
 }
+
+declare module 'nuxt/app' {
+  interface PageMeta {
+    title?: string
+    tags?: string[]
+    icon?: string
+  }
+}

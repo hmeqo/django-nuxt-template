@@ -13,6 +13,8 @@ from rest_framework.mixins import (
     UpdateModelMixin,
 )
 from rest_framework.parsers import MultiPartParser
+from rest_framework.request import Request
+from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet, ViewSet
 
 from .models import *
@@ -38,27 +40,33 @@ class AuthViewSet(ViewSet):
     def logout(self, request) -> Any:
         logout(request)
 
-    @apischema(response=UserOut)
+    @apischema(response=LoginStateOut)
     @action(methods=["get"], detail=False)
-    def me(self, request) -> Any:
+    def login_state(self, request: Request) -> Any:
         if not request.user.is_authenticated:
             return None
-        return UserOut(request.user).data
+        return LoginStateOut({"user": request.user, "expires": request.session.get_expiry_date() or None}).data
 
 
 @apischema_view()
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserOut
+    permission_classes = [IsAuthenticated]
 
     def filter_queryset(self, queryset):
-        if not self.request.user.is_superuser:
+        if not cast(User, self.request.user).is_superuser:
             queryset = queryset.filter(pk=self.request.user.pk)
         return super().filter_queryset(queryset)
 
     @apischema(body=UserIn)
     def create(self, request: ASRequest[UserIn]) -> Any:
         return self.get_serializer(request.serializer.save()).data
+
+    @apischema(permissions=[IsAuthenticated], response=UserOut)
+    @action(methods=["get"], detail=False)
+    def me(self, request: Request) -> Any:
+        return UserOut(request.user).data
 
     @apischema(body=UserResetPwdIn)
     @action(methods=["post"], detail=True)

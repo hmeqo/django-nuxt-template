@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { LoginIn } from '../models/LoginIn';
+import type { LoginStateOut } from '../models/LoginStateOut';
 import type { UserOut } from '../models/UserOut';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -24,6 +25,16 @@ export class AuthService {
         });
     }
     /**
+     * @returns LoginStateOut
+     * @throws ApiError
+     */
+    public static authLoginStateRetrieve(): CancelablePromise<LoginStateOut> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/auth/login_state/',
+        });
+    }
+    /**
      * @returns void
      * @throws ApiError
      */
@@ -31,16 +42,6 @@ export class AuthService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/auth/logout/',
-        });
-    }
-    /**
-     * @returns UserOut
-     * @throws ApiError
-     */
-    public static authMeRetrieve(): CancelablePromise<UserOut> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/auth/me/',
         });
     }
 }

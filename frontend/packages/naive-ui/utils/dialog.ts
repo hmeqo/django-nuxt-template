@@ -37,7 +37,7 @@ export function createNaiveDialog(options: DialogOptions) {
     ...options,
     onNegativeClick: (e) => {
       options?.onNegativeClick?.(e)
-      message.info('已取消')
+      message.info($t(i18nKeys.canceled))
     },
     onPositiveClick: (e) => {
       if (!options.onPositiveClick) return
@@ -47,11 +47,11 @@ export function createNaiveDialog(options: DialogOptions) {
     },
     onEsc: () => {
       options?.onClose?.()
-      message.info('已取消')
+      message.info($t(i18nKeys.canceled))
     },
     onClose: () => {
       options?.onClose?.()
-      message.info('已取消')
+      message.info($t(i18nKeys.canceled))
     }
   })
   return result

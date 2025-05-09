@@ -25,9 +25,9 @@ export default defineNuxtModule({
       '@nuxt/icon',
       '@nuxt/test-utils',
       '@nuxtjs/seo',
+      '@vueuse/nuxt',
       '@pinia/nuxt',
       'pinia-plugin-persistedstate/nuxt',
-      '@vueuse/nuxt',
       '@hmeqo/nuxt-web-kit',
       '@nuxtjs/color-mode'
     ]
@@ -35,6 +35,7 @@ export default defineNuxtModule({
     nuxt.options.colorMode = defu(nuxt.options.colorMode, <ColorModeModuleOptions>{
       classSuffix: '',
       storage: 'cookie',
+      preference: 'dark',
       storageKey: 'color-mode'
     })
 

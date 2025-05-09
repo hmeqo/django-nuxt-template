@@ -15,7 +15,7 @@ const { send, loading } = useRequest(() => user.value!.resetPassword(model), {
 }).onSuccess(() => {
   if (user.value?.id === loginState.get().id) {
     loginState.$reset()
-    navigateTo(LoginUrl)
+    navigateTo(getLoginUrl())
   }
   emit('success')
 })

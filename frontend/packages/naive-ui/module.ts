@@ -1,6 +1,7 @@
 import type { ModuleOptions as NaiveUiModuleOptions } from '@bg-dev/nuxt-naiveui'
-import { addComponentsDir, addImportsDir, createResolver, defineNuxtModule, installModule } from '@nuxt/kit'
+import { addComponentsDir, addImportsDir, addPlugin, createResolver, defineNuxtModule, installModule } from '@nuxt/kit'
 import { defu } from 'defu'
+import modern from './themes/modern'
 
 export default defineNuxtModule({
   meta: {
@@ -14,21 +15,8 @@ export default defineNuxtModule({
     nuxt.options.runtimeConfig.public = defu(nuxt.options.runtimeConfig.public, {
       naiveui: <NaiveUiModuleOptions>{
         colorModePreferenceCookieName: 'color-mode',
-        themeConfig: {
-          shared: {
-            common: {
-              primaryColor: '#2080f0',
-              primaryColorHover: '#4098fc',
-              primaryColorPressed: '#1060c9',
-              primaryColorSuppl: '#4098fc'
-            },
-            Checkbox: {
-              textColorDisabled: 'black',
-              checkMarkColorDisabled: 'black',
-              checkMarkColorDisabledChecked: 'black'
-            }
-          }
-        }
+        colorModePreference: nuxt.options.colorMode.preference,
+        themeConfig: modern
       }
     })
 
@@ -38,6 +26,8 @@ export default defineNuxtModule({
     addComponentsDir({
       path: resolver.resolve('./components')
     })
+
+    addPlugin(resolver.resolve('./plugins/color-mode.ts'))
 
     // Add composables
     addImportsDir(resolver.resolve('./composables'))

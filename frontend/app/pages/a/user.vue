@@ -143,7 +143,7 @@ const resetPasswordVisible = ref(false)
         flex-height
       />
     </NCard>
-    <Teleport to="body">
+    <Teleport to="#teleports">
       <NaiveModal v-model:show="createVisible" class="w-200" title="创建">
         <UserCreateForm
           @created="

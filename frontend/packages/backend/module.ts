@@ -1,4 +1,4 @@
-import { addComponentsDir, addImports, addImportsDir, createResolver, defineNuxtModule, installModule } from '@nuxt/kit'
+import { addImports, addImportsDir, createResolver, defineNuxtModule, installModule } from '@nuxt/kit'
 import { defu } from 'defu'
 
 export default defineNuxtModule({
@@ -10,9 +10,6 @@ export default defineNuxtModule({
     const resolver = createResolver(import.meta.url)
 
     // Pass module options to runtimeConfig object
-    nuxt.options.runtimeConfig.public = defu(nuxt.options.runtimeConfig.public, {
-      backend: options
-    })
     nuxt.options.csurf = defu(nuxt.options.csurf, {
       https: false,
       cookieKey: 'csrftoken',
@@ -22,16 +19,14 @@ export default defineNuxtModule({
 
     await installModule('nuxt-csurf')
 
-    // Add components
-    addComponentsDir({
-      path: resolver.resolve('./components')
-    })
+    // Add composables
+    addImportsDir(resolver.resolve('./composables'))
 
     // Add stores
     addImportsDir(resolver.resolve('./stores'))
 
     // Add utils
-    addImportsDir(resolver.resolve('./utils'))
+    // addImportsDir(resolver.resolve('./utils'))
 
     addImports({
       name: 'Branch',

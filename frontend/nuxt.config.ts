@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     '@workspace/backend',
     '@workspace/naive-ui',
     '@workspace/pwa',
-    '@workspace/watermark',
+    '@workspace/unocss',
     '@unocss/nuxt'
   ],
   components: [

@@ -15,7 +15,7 @@ export default defineNuxtModule({
       manifest: {
         name: 'Django Nuxt Template',
         short_name: 'Django Nuxt Template',
-        theme_color: '#18181c',
+        theme_color: '#141414',
         description: 'Django Nuxt Template',
         icons: [
           {

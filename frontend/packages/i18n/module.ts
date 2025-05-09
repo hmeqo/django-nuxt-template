@@ -12,7 +12,6 @@ export default defineNuxtModule({
 
     nuxt.options.i18n = defu(nuxt.options.i18n, <ModuleOptions>{
       locales: ['en', 'zh-CN'],
-      defaultLocale: 'zh-CN',
       strategy: 'no_prefix',
       detectBrowserLanguage: {
         useCookie: false

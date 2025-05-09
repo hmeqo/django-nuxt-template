@@ -17,23 +17,16 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@iconify-json/carbon": "^1.2.8",
     "@iconify-json/clarity": "^1.2.2",
     "@iconify-json/material-symbols": "^1.2.20",
-    "@iconify-json/mdi": "^1.2.3",
-    "@unocss/nuxt": "66.1.0-beta.12",
-    "@unocss/preset-icons": "66.1.0-beta.12",
-    "@unocss/preset-wind3": "66.1.0-beta.12",
-    "@unocss/reset": "66.1.0-beta.12",
     "@workspace/app": "workspace:^",
     "@workspace/backend": "workspace:^",
+    "@workspace/common": "workspace:^",
     "@workspace/i18n": "workspace:^",
     "@workspace/naive-ui": "workspace:^",
-    "@workspace/page-history": "workspace:^",
     "@workspace/pwa": "workspace:^",
-    "@workspace/watermark": "workspace:^",
+    "@workspace/unocss": "workspace:^",
     "nuxt": "^3.17.1",
-    "unocss": "66.1.0-beta.12",
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {

@@ -25,7 +25,6 @@ function onClose() {
     return false
   }
   emit('close')
-  show.value = false
   return true
 }
 
@@ -39,44 +38,26 @@ function hasSegmented() {
 <template>
   <NModal
     v-model:show="show"
+    class="max-w-[95vw] max-h-[90vh] mx-auto"
+    content-class="flex flex-col h-full shrink-1 overflow-hidden !p-0"
+    preset="card"
+    :title="title"
+    :segmented="hasSegmented()"
     :mask-closable="maskClosable"
     :close-on-esc="escClosable"
     draggable
     @mask-click="maskClosable && onClose()"
     @esc="emit('close')"
+    @close="onClose"
   >
-    <template #default="{ draggableClass }">
-      <NCard
-        class="max-w-[95vw] max-h-[90vh] mx-auto overflow-hidden"
-        content-class="grid h-full overflow-hidden"
-        :content-style="{ padding: 0, margin: 0 }"
-        :class="containerClass"
-        :closable="closable"
-        :segmented="segmented"
-        @close="onClose"
-      >
-        <template #header>
-          <div :class="draggableClass">
-            {{ title }}
-          </div>
-        </template>
-        <template #header-extra>
-          <slot name="header-extra" />
-        </template>
-        <NScrollbar
-          :content-style="{
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '0 var(--n-padding-left) var(--n-padding-bottom) var(--n-padding-left)',
-            paddingTop: hasSegmented() ? 'var(--n-padding-top)' : '0'
-          }"
-        >
-          <slot />
-        </NScrollbar>
-        <template #footer>
-          <slot name="footer" />
-        </template>
-      </NCard>
-    </template>
+    <NScrollbar
+      class="flex flex-col w-full h-full overflow-hidden"
+      :content-style="{
+        padding: '0 var(--n-padding-left) var(--n-padding-bottom) var(--n-padding-left)',
+        paddingTop: hasSegmented() ? 'var(--n-padding-top)' : '0'
+      }"
+    >
+      <slot />
+    </NScrollbar>
   </NModal>
 </template>

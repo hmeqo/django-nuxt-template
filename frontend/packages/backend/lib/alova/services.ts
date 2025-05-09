@@ -7,9 +7,10 @@ const urls = urlsEnsureEndSlash(
     auth: createUrls('auth', {
       login: 'login',
       logout: 'logout',
-      me: 'me'
+      loginState: 'login_state'
     }),
     users: createUrls('users', {
+      me: 'me',
       detail: createUrls('{id}', {
         resetPassword: 'reset_password'
       })
@@ -18,16 +19,16 @@ const urls = urlsEnsureEndSlash(
 )
 
 export const Auth = {
-  login(data: LoginIn) {
-    return alovaInst.Post<UserOut>(urls.auth.login, data)
+  login(data: LoginIn, opts?: Record<string, unknown>) {
+    return alovaInst.Post<UserOut>(urls.auth.login, data, opts)
   },
 
   logout() {
     return alovaInst.Post(urls.auth.logout)
   },
 
-  me() {
-    return alovaInst.Get<UserOut>(urls.auth.me, { meta: { noMessage: true } })
+  loginState() {
+    return alovaInst.Get<LoginStateOut>(urls.auth.loginState)
   }
 }
 
@@ -62,6 +63,10 @@ export class User extends Model {
 
   destroy() {
     return alovaInst.Delete(format(urls.users.detail.index, { id: this.id }))
+  }
+
+  me() {
+    return alovaInst.Get<UserOut>(urls.users.me)
   }
 
   resetPassword(data: UserResetPwdIn) {

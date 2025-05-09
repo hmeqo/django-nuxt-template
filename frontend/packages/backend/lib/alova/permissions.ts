@@ -4,13 +4,13 @@ const fetchMe = createPermission(() => {
   const loginState = useLoginState()
 
   if (!authCached)
-    Auth.me()
+    Auth.loginState()
       .then((data) => {
         if (data) {
-          loginState.set(data)
+          loginState.set(data.user)
         } else {
           loginState.$reset()
-          navigateTo(LoginUrl)
+          navigateTo(getLoginUrl())
         }
       })
       .catch(() => {})

@@ -5,7 +5,7 @@ const config = useRuntimeConfig().public.watermark as ModuleOptions
 </script>
 
 <template>
-  <Teleport to="body">
+  <Teleport to="#teleports">
     <div
       :style="{ gridTemplateColumns: `repeat(${config.columns}, minmax(0, 1fr))` }"
       class="z-50 fixed left-0 top-0 hidden print:grid content-center justify-center gap-36 w-full h-full"

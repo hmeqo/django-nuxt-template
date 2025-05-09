@@ -8,9 +8,7 @@ const { send, loading } = useRequest(() => Auth.login(model), {
   middleware: formValidationMiddleware(() => formRef.value)
 }).onSuccess(({ data }) => {
   loginState.set(data)
-  const { clearPaths } = usePageHistory()
-  clearPaths()
-  navigateTo(HomeUrl)
+  navigateTo(getHomeUrl())
 })
 
 const formRef = useTemplateRef('form')
@@ -41,9 +39,7 @@ const formRef = useTemplateRef('form')
       </NInput>
     </NFormItem>
     <NFlex>
-      <NButton class="w-full" type="primary" attr-type="submit" :loading="loading || loginState.isLoggedIn()"
-        >登录</NButton
-      >
+      <NButton class="w-full" attr-type="submit" :loading="loading || loginState.isLoggedIn()">登录</NButton>
     </NFlex>
   </NForm>
 </template>

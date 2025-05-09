@@ -11,6 +11,9 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class UsersService {
     /**
+     * **Permissions:** `IsAuthenticated`
+     *
+     *
      * @returns UserOut
      * @throws ApiError
      */
@@ -21,6 +24,9 @@ export class UsersService {
         });
     }
     /**
+     * **Permissions:** `IsAuthenticated`
+     *
+     *
      * @param requestBody
      * @returns UserOut
      * @throws ApiError
@@ -36,6 +42,9 @@ export class UsersService {
         });
     }
     /**
+     * **Permissions:** `IsAuthenticated`
+     *
+     *
      * @param id A unique integer value identifying this User.
      * @returns UserOut
      * @throws ApiError
@@ -52,6 +61,9 @@ export class UsersService {
         });
     }
     /**
+     * **Permissions:** `IsAuthenticated`
+     *
+     *
      * @param id A unique integer value identifying this User.
      * @param requestBody
      * @returns UserOut
@@ -72,6 +84,9 @@ export class UsersService {
         });
     }
     /**
+     * **Permissions:** `IsAuthenticated`
+     *
+     *
      * @param id A unique integer value identifying this User.
      * @param requestBody
      * @returns UserOut
@@ -92,6 +107,9 @@ export class UsersService {
         });
     }
     /**
+     * **Permissions:** `IsAuthenticated`
+     *
+     *
      * @param id A unique integer value identifying this User.
      * @returns void
      * @throws ApiError
@@ -108,6 +126,9 @@ export class UsersService {
         });
     }
     /**
+     * **Permissions:** `IsAuthenticated`
+     *
+     *
      * @param id A unique integer value identifying this User.
      * @param requestBody
      * @returns void
@@ -125,6 +146,19 @@ export class UsersService {
             },
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+    /**
+     * **Permissions:** `IsAuthenticated` `IsAuthenticated`
+     *
+     *
+     * @returns UserOut
+     * @throws ApiError
+     */
+    public static usersMeRetrieve(): CancelablePromise<UserOut> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/users/me/',
         });
     }
 }

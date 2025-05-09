@@ -13,7 +13,9 @@ useHead({
   <I18nProvider />
   <PwaProvider />
   <NuxtRouteAnnouncer />
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <NaiveWrapper>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </NaiveWrapper>
 </template>

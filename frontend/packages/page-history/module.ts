@@ -5,14 +5,6 @@ export default defineNuxtModule({
     name: '@workspace/path-history'
   },
 
-  hooks: {
-    'prepare:types': ({ references }) => {
-      references.push({
-        types: '@workspace/page-history/types'
-      })
-    }
-  },
-
   setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
 

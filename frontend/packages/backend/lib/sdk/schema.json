@@ -54,6 +54,35 @@
                 }
             }
         },
+        "/api/auth/login_state/": {
+            "get": {
+                "operationId": "auth_login_state_retrieve",
+                "tags": [
+                    "auth"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {
+                        "basicAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginStateOut"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/auth/logout/": {
             "post": {
                 "operationId": "auth_logout_create",
@@ -76,38 +105,10 @@
                 }
             }
         },
-        "/api/auth/me/": {
-            "get": {
-                "operationId": "auth_me_retrieve",
-                "tags": [
-                    "auth"
-                ],
-                "security": [
-                    {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
-                    },
-                    {}
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserOut"
-                                }
-                            }
-                        },
-                        "description": ""
-                    }
-                }
-            }
-        },
         "/api/users/": {
             "get": {
                 "operationId": "users_list",
+                "description": "**Permissions:** `IsAuthenticated`\n\n",
                 "tags": [
                     "users"
                 ],
@@ -117,8 +118,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -138,6 +138,7 @@
             },
             "post": {
                 "operationId": "users_create",
+                "description": "**Permissions:** `IsAuthenticated`\n\n",
                 "tags": [
                     "users"
                 ],
@@ -167,8 +168,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -187,6 +187,7 @@
         "/api/users/{id}/": {
             "get": {
                 "operationId": "users_retrieve",
+                "description": "**Permissions:** `IsAuthenticated`\n\n",
                 "parameters": [
                     {
                         "in": "path",
@@ -207,8 +208,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -225,6 +225,7 @@
             },
             "put": {
                 "operationId": "users_update",
+                "description": "**Permissions:** `IsAuthenticated`\n\n",
                 "parameters": [
                     {
                         "in": "path",
@@ -265,8 +266,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -283,6 +283,7 @@
             },
             "patch": {
                 "operationId": "users_partial_update",
+                "description": "**Permissions:** `IsAuthenticated`\n\n",
                 "parameters": [
                     {
                         "in": "path",
@@ -322,8 +323,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -340,6 +340,7 @@
             },
             "delete": {
                 "operationId": "users_destroy",
+                "description": "**Permissions:** `IsAuthenticated`\n\n",
                 "parameters": [
                     {
                         "in": "path",
@@ -360,8 +361,7 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "204": {
@@ -373,6 +373,7 @@
         "/api/users/{id}/reset_password/": {
             "post": {
                 "operationId": "users_reset_password_create",
+                "description": "**Permissions:** `IsAuthenticated`\n\n",
                 "parameters": [
                     {
                         "in": "path",
@@ -413,12 +414,40 @@
                     },
                     {
                         "basicAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "204": {
                         "description": "No response body"
+                    }
+                }
+            }
+        },
+        "/api/users/me/": {
+            "get": {
+                "operationId": "users_me_retrieve",
+                "description": "**Permissions:** `IsAuthenticated` `IsAuthenticated`\n\n",
+                "tags": [
+                    "users"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {
+                        "basicAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserOut"
+                                }
+                            }
+                        },
+                        "description": ""
                     }
                 }
             }
@@ -492,6 +521,28 @@
                 "required": [
                     "password",
                     "username"
+                ]
+            },
+            "LoginStateOut": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/UserOut"
+                            }
+                        ],
+                        "readOnly": true
+                    },
+                    "expires": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    }
+                },
+                "required": [
+                    "expires",
+                    "user"
                 ]
             },
             "PatchedUserOut": {

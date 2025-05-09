@@ -14,13 +14,15 @@ withDefaults(
     <NaiveLoadingBar :navigation="loadingBarProps.navigation" />
     <NNotificationProvider>
       <NaiveNotification />
-      <NMessageProvider>
-        <NDialogProvider>
+      <NDialogProvider>
+        <NMessageProvider>
           <NModalProvider>
-            <slot />
+            <NaiveApiProvider>
+              <slot />
+            </NaiveApiProvider>
           </NModalProvider>
-        </NDialogProvider>
-      </NMessageProvider>
+        </NMessageProvider>
+      </NDialogProvider>
     </NNotificationProvider>
   </NLoadingBarProvider>
 </template>

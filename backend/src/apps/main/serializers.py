@@ -50,7 +50,8 @@ class UserOut(serializers.ModelSerializer):
 
 
 class LoginStateOut(serializers.Serializer):
-    user = UserOut(allow_null=True)
+    user = UserOut(read_only=True)
+    expires = serializers.DateTimeField(read_only=True)
 
 
 class UserIn(serializers.ModelSerializer):

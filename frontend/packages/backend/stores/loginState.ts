@@ -14,10 +14,14 @@ export const useLoginState = defineStore('login-state', {
       this.user = user
     },
     isLoggedIn() {
-      return !!this.user?.id
+      return !!this.user
     }
   },
   persist: {
-    storage: piniaPluginPersistedstate.cookies()
+    storage: piniaPluginPersistedstate.cookies({
+      path: '/',
+      sameSite: 'lax',
+      maxAge: 86400 * 30
+    })
   }
 })

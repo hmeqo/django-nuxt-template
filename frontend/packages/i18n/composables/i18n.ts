@@ -1,5 +1,3 @@
-import type { CookieOptions } from '#app'
-
 import type { Composer } from 'vue-i18n'
 
 export { i18nKeys } from '../lib/words'
@@ -22,10 +20,6 @@ export const useLocale = () => {
   return locale
 }
 
-export const useLangCookie = (
-  opts?: CookieOptions<string> & {
-    readonly?: false
-  }
-) => {
-  return useCookie('language', opts)
+export const useLangCookie = (opts?: { default?: () => string }) => {
+  return usePiniaCookies('language', opts)
 }

@@ -1,39 +1,42 @@
-const stateMap = new Map()
+import { toString } from 'lodash'
 
-export const usePiniaSessionStorage = <T>(_key: string, defaultValue: () => T) => {
-  const key = `session-storage-${_key}`
-  if (stateMap.has(key)) return stateMap.get(key) as Ref<T>
-  const storage = piniaPluginPersistedstate.sessionStorage()
-  const state = useState(key, () => {
-    const value = storage.getItem(key)
-    return value !== null ? <T>JSON.parse(value) : defaultValue()
+// const stateMap = new Map()
+
+function usePiniaStorage<T>(storage: Storage, key: string, opts?: { default?: () => T }) {
+  if (!storage.getItem(key)) storage.setItem(key, toString(opts?.default?.() as T))
+  return computed({
+    get: () => storage.getItem(key) as T,
+    set: (v) => storage.setItem(key, toString(v))
   })
-  watch(
-    state,
-    (v) => {
-      storage.setItem(key, JSON.stringify(v))
-    },
-    { deep: true }
-  )
-  stateMap.set(key, state)
-  return state
+  // if (stateMap.has(key)) return stateMap.get(key) as Ref<T>
+  // const state = useState(key, () => (storage.getItem(key) || opts?.default?.() as T))
+  // watch(
+  //   state,
+  //   (v) => {
+  //     storage.setItem(key, v)
+  //   },
+  //   { deep: true, immediate: true }
+  // )
+  // stateMap.set(key, state)
+  // return state
 }
 
-export const usePiniaLocalStorage = <T extends string>(_key: string, defaultValue: T) => {
-  const key = `local-storage-${_key}`
-  if (stateMap.has(key)) return stateMap.get(key) as Ref<T>
-  const storage = piniaPluginPersistedstate.localStorage()
-  const state = useState(key, () => {
-    const value = storage.getItem(key)
-    return value !== null ? <T>JSON.parse(value) : defaultValue
-  })
-  watch(
-    state,
-    (v) => {
-      storage.setItem(key, JSON.stringify(v))
-    },
-    { deep: true }
+export function usePiniaSessionStorage<T>(key: string, opts?: { default?: () => T }) {
+  return usePiniaStorage(piniaPluginPersistedstate.sessionStorage(), key, opts)
+}
+
+export function usePiniaLocalStorage<T>(key: string, opts?: { default?: () => T }) {
+  return usePiniaStorage(piniaPluginPersistedstate.localStorage(), key, opts)
+}
+
+export function usePiniaCookies<T>(key: string, opts?: { default?: () => T; maxAge?: number }) {
+  return usePiniaStorage(
+    piniaPluginPersistedstate.cookies({
+      path: '/',
+      sameSite: 'lax',
+      maxAge: opts?.maxAge
+    }),
+    key,
+    opts
   )
-  stateMap.set(key, state)
-  return state
 }

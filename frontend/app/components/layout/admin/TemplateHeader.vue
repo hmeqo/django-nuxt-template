@@ -12,7 +12,7 @@ const { send: logout } = useRequest(() => Auth.logout(), {
   middleware: dialogMiddleware(naiveDialogOptionPresets.logout)
 }).onSuccess(() => {
   loginState.$reset()
-  navigateTo(LoginUrl)
+  navigateTo(getLoginUrl())
 })
 
 const resetPasswordVisible = ref(false)
@@ -56,10 +56,10 @@ function menuButton() {
 </script>
 
 <template>
-  <NLayoutHeader class="flex items-center px-4 py-1" bordered>
-    <div class="flex flex-1 items-center gap-1">
+  <NLayoutHeader class="flex items-center px-4 py-1">
+    <div class="flex flex-1 items-center gap-1 overflow-hidden">
       <img v-if="isAppMode" src="/favicon.ico" class="no-drag w-6 h-6" />
-      <NuxtLink v-else class="mr-2" :to="HomeUrl">
+      <NuxtLink v-else class="shrink-0 mr-2" :to="getHomeUrl()">
         <img src="/favicon.ico" class="no-drag w-6 h-6" />
       </NuxtLink>
       <NPopover trigger="hover" :disabled="!responsive.small">
@@ -96,7 +96,7 @@ function menuButton() {
       </NDropdown>
       <AppTitlebar embedded />
     </div>
-    <Teleport to="body">
+    <Teleport to="#teleports">
       <NaiveModal v-model:show="resetPasswordVisible" class="w-100" title="重置密码">
         <UserResetPwdForm @success="resetPasswordVisible = false" />
       </NaiveModal>

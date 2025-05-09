@@ -36,7 +36,7 @@ watch(
       }"
     >
       <div>{{ ['弱', '中', '强', '很强', '超强'][passwordStrength] }}</div>
-      <div class="i-mdi:shield-lock-outline" />
+      <div class="i-material-symbols:shield-lock-outline" />
     </div>
   </div>
 </template>

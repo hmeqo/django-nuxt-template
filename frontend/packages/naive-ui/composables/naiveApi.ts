@@ -1,18 +1,18 @@
-import { defu } from 'defu'
-import { createDiscreteApi, type ConfigProviderProps } from 'naive-ui'
-import { useNaiveConfig } from '../lib/naive-config'
+import type { DialogApi, LoadingBarApi, MessageApi, NotificationApi } from 'naive-ui'
 
-export const useNaiveApi = (configProviderProps?: ConfigProviderProps) => {
-  const { theme, dateLocale, locale, themeOverrides } = useNaiveConfig()
-  return createDiscreteApi(['message', 'dialog', 'notification', 'loadingBar'], {
-    configProviderProps: defu(
-      {
-        theme: theme.value,
-        themeOverrides: themeOverrides.value,
-        locale: locale.value,
-        dateLocale: dateLocale.value
-      },
-      configProviderProps
-    )
+let cachedNaiveApi: {
+  message: MessageApi
+  dialog: DialogApi
+  notification: NotificationApi
+  loadingBar: LoadingBarApi
+}
+
+export const useNaiveApi = (opts?: { refresh: boolean }) => {
+  if (opts?.refresh) cachedNaiveApi = undefined as unknown as typeof cachedNaiveApi
+  return (cachedNaiveApi ??= {
+    message: useMessage(),
+    dialog: useDialog(),
+    notification: useNotification(),
+    loadingBar: useLoadingBar()
   })
 }

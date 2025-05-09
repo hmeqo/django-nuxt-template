@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { Event } from '../../lib/alova/core'
 import {
+  type Event,
   RequestErrorEvent,
   RequestInternetErrorEvent,
   RequestStartEvent,
   RequestSuccessEvent,
   subscribe,
   unsubscribe
-} from '../../lib/alova/core'
+} from '@workspace/backend/lib/alova/core'
 
 const { loadingBar, message, notification } = useNaiveApi()
 

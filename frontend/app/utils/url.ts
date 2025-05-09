@@ -7,17 +7,10 @@ export const Urls = createUrls('', {
   })
 })
 
-export const HomeUrl = Urls.index
-
-export const LoginUrl = Urls.login
-
-export function withOriginUrl(url: string) {
-  return `${location.origin}${url}`
+export function getHomeUrl() {
+  return Urls.index
 }
 
-export function toThumbnailUrl(url: string, opts?: { size?: number }) {
-  const params = new URLSearchParams({
-    size: `${opts?.size || 256}`
-  })
-  return `${url}?${params}`
+export function getLoginUrl() {
+  return Urls.login
 }

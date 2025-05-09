@@ -16,7 +16,7 @@ export const alovaInst = createAlova({
   requestAdapter: fetchAdapter(),
   beforeRequest(method) {
     Object.assign(method.config.headers, {
-      [useCsrf().headerName]: useCookie('csrftoken').value,
+      [useCsrf().headerName]: piniaPluginPersistedstate.cookies().getItem('csrftoken'),
       'Content-Type': method.config.headers['Content-Type'] ?? (method.meta?.multipart ? undefined : 'application/json')
     })
 
