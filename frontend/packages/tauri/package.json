@@ -1,5 +1,5 @@
 {
-  "name": "@workspace/app",
+  "name": "@workspace/tauri",
   "version": "0.1.0",
   "devDependencies": {}
 }

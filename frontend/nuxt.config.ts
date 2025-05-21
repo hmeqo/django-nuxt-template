@@ -16,12 +16,11 @@ export default defineNuxtConfig({
   modules: [
     '@workspace/i18n',
     '@workspace/common',
-    '@workspace/app',
+    '@workspace/tauri',
     '@workspace/backend',
     '@workspace/naive-ui',
     '@workspace/pwa',
-    '@workspace/unocss',
-    '@unocss/nuxt'
+    '@workspace/unocss'
   ],
   components: [
     { path: '@/components' },
@@ -38,18 +37,22 @@ export default defineNuxtConfig({
   app: {
     // layoutTransition: { name: 'fade', mode: 'out-in' },
     // pageTransition: { name: 'fade', mode: 'out-in' },
-    buildAssetsDir: 'static'
+    buildAssetsDir: 'static',
+    rootAttrs: {
+      id: 'root'
+    }
   },
 
   // ssr: false,
   routeRules: {},
 
   site: {
-    url: 'https://example.cn'
+    url: 'https://example.cn',
+    indexable: false
   },
   seo: {
     meta: {
-      description: 'lorem'
+      description: 'Django Nuxt Template'
     }
   },
   sitemap: {
@@ -64,7 +67,7 @@ export default defineNuxtConfig({
   },
 
   build: {
-    transpile: [...(process.env.NODE_ENV === 'production' ? ['vueuc', 'lodash'] : [])]
+    transpile: [...(process.env.NODE_ENV === 'production' ? ['lodash'] : [])]
   },
 
   typescript: {

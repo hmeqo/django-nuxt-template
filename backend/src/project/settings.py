@@ -1,10 +1,7 @@
 from dataclasses import dataclass
 from enum import StrEnum
 
-import dotenv
 from pydantic_settings import BaseSettings, SettingsConfigDict
-
-dotenv.load_dotenv()
 
 
 @dataclass
@@ -13,8 +10,6 @@ class AppSettings:
 
 
 class UserSettings(BaseSettings):
-    model_config = SettingsConfigDict()
-
     class DataLocation(StrEnum):
         LOCAL = "local"
         GLOBAL = "global"
@@ -22,29 +17,29 @@ class UserSettings(BaseSettings):
 
     data_location: DataLocation = DataLocation.AUTO
 
+    model_config = SettingsConfigDict(env_file=".env", env_prefix="app_", extra="ignore")
+
 
 class DjangoSettings(BaseSettings):
-    model_config = SettingsConfigDict(env_prefix="DJANGO_")
-
     debug: bool = True
 
     host: str = "127.0.0.1"
     port: int = 8000
 
+    model_config = SettingsConfigDict(env_file=".env", env_prefix="django_", extra="ignore")
 
-class GranianSettings(BaseSettings):
-    model_config = SettingsConfigDict(env_prefix="GRANIAN_")
 
+class ProdSettings(BaseSettings):
     workers: int = 2
     host: str = "::"
     port: int = 8000
 
     capture_log: bool = True
 
+    model_config = SettingsConfigDict(env_file=".env", env_prefix="prod_", extra="ignore")
+
 
 class DBSettings(BaseSettings):
-    model_config = SettingsConfigDict(env_prefix="DB_")
-
     sqlite_file: str = "db.sqlite3"
 
     engine: str = "sqlite3"
@@ -52,13 +47,15 @@ class DBSettings(BaseSettings):
     user: str = "django-nuxt-template"
     password: str = ""
     host: str = "127.0.0.1"
-    port: int = 3306
+    port: int | None = None
 
     use_cache: bool = False
+
+    model_config = SettingsConfigDict(env_file=".env", env_prefix="db_", extra="ignore")
 
 
 app_settings = AppSettings()
 user_settings = UserSettings()
 django_settings = DjangoSettings()
 db_settings = DBSettings()
-granian_settings = GranianSettings()
+prod_settings = ProdSettings()

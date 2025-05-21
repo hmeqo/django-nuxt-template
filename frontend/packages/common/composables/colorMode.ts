@@ -21,7 +21,7 @@ export const useColorModeApi = () => {
   const colorMode = computed({
     get: () => {
       if (import.meta.server) {
-        const colorMode = usePiniaCookies<ColorMode>('color-mode').value
+        const colorMode = useCookie<ColorMode>('color-mode').value
         if (colorModes.includes(colorMode)) return colorMode
       }
       return nuxtColorMode.preference as ColorMode

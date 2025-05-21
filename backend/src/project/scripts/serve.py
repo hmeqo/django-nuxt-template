@@ -5,17 +5,17 @@ from granian import cli
 
 from project.dirs import app_base_dir
 from project.logging_config import capture_stdout
-from project.settings import django_settings, granian_settings
+from project.settings import django_settings, prod_settings
 
 
 def _serve():
     django_settings.__init__()
-    granian_settings.__init__()
+    prod_settings.__init__()
 
     log_dir = app_base_dir / "data" / "logs"
     log_dir.mkdir(parents=True, exist_ok=True)
 
-    if granian_settings.capture_log:
+    if prod_settings.capture_log:
         capture_stdout()
 
     sys.argv = [
@@ -24,11 +24,11 @@ def _serve():
         "--interface",
         "wsgi",
         "--workers",
-        str(granian_settings.workers),
+        str(prod_settings.workers),
         "--host",
-        granian_settings.host,
+        prod_settings.host,
         "--port",
-        str(granian_settings.port),
+        str(prod_settings.port),
         "--log-config",
         "conf/logconfig.json",
         "--access-log",

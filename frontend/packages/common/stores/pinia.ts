@@ -1,42 +1,57 @@
-import { toString } from 'lodash'
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type State = Record<string, any>
 
-// const stateMap = new Map()
+export const usePiniaCacheStore = defineStore('cache', {
+  state: () => <State>{},
+  actions: {
+    register<T>(key: string, opts?: { default: () => T }) {
+      return computed<T>({
+        get: () => this.$state[key] ?? opts?.default?.(),
+        set: (v) => {
+          this.$state[key] = v
+        }
+      })
+    }
+  },
+  persist: {
+    storage: piniaPluginPersistedstate.localStorage()
+  }
+})
 
-function usePiniaStorage<T>(storage: Storage, key: string, opts?: { default?: () => T }) {
-  if (!storage.getItem(key)) storage.setItem(key, toString(opts?.default?.() as T))
-  return computed({
-    get: () => storage.getItem(key) as T,
-    set: (v) => storage.setItem(key, toString(v))
-  })
-  // if (stateMap.has(key)) return stateMap.get(key) as Ref<T>
-  // const state = useState(key, () => (storage.getItem(key) || opts?.default?.() as T))
-  // watch(
-  //   state,
-  //   (v) => {
-  //     storage.setItem(key, v)
-  //   },
-  //   { deep: true, immediate: true }
-  // )
-  // stateMap.set(key, state)
-  // return state
-}
-
-export function usePiniaSessionStorage<T>(key: string, opts?: { default?: () => T }) {
-  return usePiniaStorage(piniaPluginPersistedstate.sessionStorage(), key, opts)
-}
-
-export function usePiniaLocalStorage<T>(key: string, opts?: { default?: () => T }) {
-  return usePiniaStorage(piniaPluginPersistedstate.localStorage(), key, opts)
-}
-
-export function usePiniaCookies<T>(key: string, opts?: { default?: () => T; maxAge?: number }) {
-  return usePiniaStorage(
-    piniaPluginPersistedstate.cookies({
+export const usePiniaCookieStore = defineStore('c', {
+  state: () => <State>{},
+  actions: {
+    register<T>(key: string, opts?: { default: () => T }) {
+      return computed<T>({
+        get: () => this.$state[key] ?? opts?.default?.(),
+        set: (v) => {
+          this.$state[key] = v
+        }
+      })
+    }
+  },
+  persist: {
+    storage: piniaPluginPersistedstate.cookies({
       path: '/',
-      sameSite: 'lax',
-      maxAge: opts?.maxAge
-    }),
-    key,
-    opts
-  )
-}
+      sameSite: 'lax'
+    })
+  }
+})
+
+export const usePiniaStateStore = defineStore('state', {
+  state: () => <State>{},
+  actions: {
+    register<T>(key: string, opts?: { default: () => T }) {
+      let defaultValue
+      return computed<T>({
+        get: () => this.$state[key] ?? (defaultValue = opts?.default?.()),
+        set: (v) => {
+          this.$state[key] = v
+        }
+      })
+    }
+  },
+  persist: {
+    storage: piniaPluginPersistedstate.sessionStorage()
+  }
+})

@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "dependencies": {
     "@bg-dev/nuxt-naiveui": "2.0.0-rc.5",
-    "naive-ui": "^2.41.0",
-    "nuxtjs-naive-ui": "1.0.2",
-    "unplugin-auto-import": "^19.1.2",
-    "unplugin-vue-components": "^28.5.0"
+    "naive-ui": "^2.41.0"
   }
 }

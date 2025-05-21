@@ -5,8 +5,7 @@ export { i18nKeys } from '../lib/words'
 let cachedI18n: Composer
 
 export const useCachedI18n = () => {
-  if (!cachedI18n) cachedI18n = useI18n()
-  return cachedI18n
+  return (cachedI18n ??= useI18n())
 }
 
 export const useLocale = () => {
@@ -21,5 +20,5 @@ export const useLocale = () => {
 }
 
 export const useLangCookie = (opts?: { default?: () => string }) => {
-  return usePiniaCookies('language', opts)
+  return useCookie('language', opts)
 }

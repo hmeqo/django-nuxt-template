@@ -2,7 +2,7 @@ import { addComponentsDir, addImportsDir, createResolver, defineNuxtModule } fro
 
 export default defineNuxtModule({
   meta: {
-    name: '@workspace/app'
+    name: '@workspace/tauri'
   },
 
   setup(options, nuxt) {

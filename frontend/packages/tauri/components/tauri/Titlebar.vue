@@ -17,7 +17,7 @@ function close() {}
 </script>
 
 <template>
-  <div v-if="isAppMode" class="flex select-none" :class="{ 'p-1': !embedded }">
+  <div v-if="isTauri" class="flex select-none" :class="{ 'p-1': !embedded }">
     <div class="flex h-full ml-auto">
       <div class="titlebar-button" @click="minimize">
         <div :class="{ 'rounded-full': rounded }">

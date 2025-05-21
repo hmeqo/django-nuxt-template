@@ -8,16 +8,9 @@ from drf_spectacular.utils import extend_schema_field, extend_schema_serializer
 from rest_framework import serializers
 
 from .choices import UserRole
+from .modelutils import *
 
 # Create your models here.
-
-
-class TimeStampModel(models.Model):
-    created_at = models.DateTimeField(_("Create Time"), auto_now_add=True)
-    updated_at = models.DateTimeField(_("Update Time"), auto_now=True)
-
-    class Meta:
-        abstract = True
 
 
 class User(AbstractUser):
