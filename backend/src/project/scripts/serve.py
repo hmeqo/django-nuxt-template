@@ -16,7 +16,7 @@ def _serve():
     log_dir.mkdir(parents=True, exist_ok=True)
 
     if prod_settings.capture_log:
-        capture_stdout()
+        capture_stdout("_granian")
 
     sys.argv = [
         "granian",
@@ -32,7 +32,6 @@ def _serve():
         "--log-config",
         "conf/logconfig.json",
         "--access-log",
-        *sys.argv[1:],
     ]
     sys.exit(cli.entrypoint())
 

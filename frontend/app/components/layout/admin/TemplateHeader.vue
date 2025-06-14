@@ -7,13 +7,19 @@ const showDrawer = defineModel<boolean>('showDrawer', { default: false })
 
 const loginState = useLoginState()
 
-const { send: logout } = useRequest(() => Auth.logout(), {
-  immediate: false,
-  middleware: dialogMiddleware(naiveDialogOptionPresets.logout)
-}).onSuccess(() => {
-  loginState.$reset()
-  navigateTo(getLoginUrl())
-})
+const { refresh: logout } = useAsyncData(
+  () =>
+    withLifecycle(() => AuthService.authLogoutCreate(), {
+      before: () => showNaiveDialog(naiveDialogOptionPresets.logout),
+      onSuccess: () => {
+        loginState.$reset()
+        navigateTo(getLoginUrl())
+      }
+    }),
+  {
+    immediate: false
+  }
+)
 
 const resetPasswordVisible = ref(false)
 
@@ -45,7 +51,7 @@ const userMenuOptions = computed((): DropdownOption[] => [
     label: '退出登录',
     key: 'logout',
     icon: renderIcon({ attr: { class: 'i-material-symbols:logout w-5 h-5' } }),
-    props: { onClick: logout }
+    props: { onClick: () => logout() }
   }
 ])
 
@@ -57,8 +63,8 @@ function menuButton() {
 
 <template>
   <NLayoutHeader class="flex items-center px-4 py-1">
-    <div class="flex flex-1 items-center gap-1 overflow-hidden">
-      <img v-if="isAppMode" src="/favicon.ico" class="no-drag w-6 h-6" />
+    <div class="flex flex-1 grow items-center gap-1 overflow-hidden" data-tauri-drag-region>
+      <img v-if="isTauri" src="/favicon.ico" class="no-drag w-6 h-6" data-tauri-drag-region />
       <NuxtLink v-else class="shrink-0 mr-2" :to="getHomeUrl()">
         <img src="/favicon.ico" class="no-drag w-6 h-6" />
       </NuxtLink>
@@ -79,10 +85,10 @@ function menuButton() {
         <div>返回</div>
       </NPopover>
     </div>
-    <div class="invisible sm:visible text-[16px]">
+    <div class="invisible sm:visible text-[16px] cursor-default" data-tauri-drag-region>
       {{ $route.meta.title }}
     </div>
-    <div class="flex flex-1 items-center justify-end gap-1">
+    <div class="flex flex-1 grow items-center justify-end gap-1" data-tauri-drag-region>
       <NPopover trigger="hover" :disabled="!responsive.small">
         <template #trigger>
           <ColorModeSwitch quaternary iconify min />
@@ -94,10 +100,10 @@ function menuButton() {
           <div class="i-material-symbols:account-circle-outline w-5 h-5" />
         </NButton>
       </NDropdown>
-      <AppTitlebar embedded />
+      <TauriTitlebar embedded />
     </div>
     <Teleport to="#teleports">
-      <NaiveModal v-model:show="resetPasswordVisible" class="w-100" title="重置密码">
+      <NaiveModal v-model:show="resetPasswordVisible" width="100" title="重置密码">
         <UserResetPwdForm @success="resetPasswordVisible = false" />
       </NaiveModal>
     </Teleport>

@@ -1,3 +1,5 @@
+import type { AsyncDataRequestStatus } from '#app'
+
 export const useLockedSend = <T>(
   send: () => T | Promise<T>,
   opts?: {
@@ -11,6 +13,7 @@ export const useLockedSend = <T>(
      * @default false
      */
     once?: boolean
+    status?: Ref<AsyncDataRequestStatus>
   }
 ) => {
   const maxConcurrency = opts?.concurrency ?? 1
@@ -26,8 +29,10 @@ export const useLockedSend = <T>(
 
       try {
         const result = await send()
-        hasExecuted = true
-        return result
+        if ((opts?.status?.value ?? 'success') === 'success') {
+          hasExecuted = true
+          return result
+        }
       } finally {
         pendingCount--
       }

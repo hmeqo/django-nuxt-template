@@ -9,6 +9,7 @@ const { send, loading } = useRequest(() => User.create(model), {
 }).onSuccess(({ data }) => {
   emit('created', data)
 })
+const { lockedSend } = useLockedSend(send, { once: true })
 
 const model = reactive(UserCreate.init())
 
@@ -20,7 +21,7 @@ const formRef = useTemplateRef('form')
     ref="form"
     :model="model"
     :rules="{
-      ...schemaToNaiveRules($UserOut),
+      ...schemaToNaiveRules($UserSer),
       confirmPassword: {
         required: true,
         validator: (_, value) => value === model.password,
@@ -31,7 +32,7 @@ const formRef = useTemplateRef('form')
     :show-require-mark="false"
     label-placement="top"
     label-width="auto"
-    @submit.prevent="send"
+    @submit.prevent="lockedSend"
   >
     <NFlex class="flex !sm:flex-nowrap !gap-4 w-full h-full *:w-full">
       <div>
@@ -50,7 +51,7 @@ const formRef = useTemplateRef('form')
         <NFormItem label="确认密码" path="confirmPassword" first>
           <NInput v-model:value="model.confirmPassword" type="password" show-password-on="click" />
         </NFormItem>
-        <NFlex>
+        <NFlex class="*:!items-center">
           <NCheckbox v-model:checked="model.is_superuser">超级用户</NCheckbox>
           <NCheckbox v-model:checked="model.is_staff">工作人员</NCheckbox>
           <NCheckbox v-model:checked="model.is_active">有效</NCheckbox>
@@ -63,7 +64,7 @@ const formRef = useTemplateRef('form')
       </div>
     </NFlex>
     <NFlex>
-      <NButton class="ml-auto" type="success" :loading="loading" attr-type="submit">创建</NButton>
+      <NButton class="ml-auto" :loading="loading" attr-type="submit">创建</NButton>
     </NFlex>
   </NForm>
 </template>

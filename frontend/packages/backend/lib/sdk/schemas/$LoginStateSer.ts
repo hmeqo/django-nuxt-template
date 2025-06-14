@@ -2,12 +2,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export const $LoginStateOut = {
+export const $LoginStateSer = {
     properties: {
         user: {
             type: 'all-of',
             contains: [{
-                type: 'UserOut',
+                type: 'UserSer',
             }],
             isReadOnly: true,
             isRequired: true,

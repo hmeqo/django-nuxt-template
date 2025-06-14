@@ -13,16 +13,9 @@ withDefaults(
   }
 )
 
-const configStore = useConfigStore()
-
 const route = useRoute()
 
-const collapsed = computed({
-  get: () => configStore.cache.menuCollapsed ?? false,
-  set: (v) => {
-    configStore.cache.menuCollapsed = v
-  }
-})
+const collapsed = usePiniaCookie('menu-collapsed', { default: () => false })
 const showDrawer = ref(false)
 
 const menuValue = computed(() => {

@@ -13,6 +13,7 @@ const { send, loading } = useRequest(() => model.update(), {
   model.$apply()
   emit('updated')
 })
+const { lockedSend } = useLockedSend(send, { once: true })
 
 const formRef = useTemplateRef('form')
 </script>
@@ -21,11 +22,11 @@ const formRef = useTemplateRef('form')
   <NForm
     ref="form"
     :model="model"
-    :rules="schemaToNaiveRules($UserOut)"
+    :rules="schemaToNaiveRules($UserSer)"
     :show-require-mark="false"
     label-placement="top"
     label-width="auto"
-    @submit.prevent="send"
+    @submit.prevent="lockedSend"
   >
     <NFlex class="flex !sm:flex-nowrap !gap-4 w-full h-full *:w-full">
       <div>
@@ -35,20 +36,20 @@ const formRef = useTemplateRef('form')
         <NFormItem label="名称" path="name" first>
           <NInput v-model:value="model.display_name" placeholder="" />
         </NFormItem>
-        <NFlex>
+        <NFlex class="*:!items-center">
           <NCheckbox v-model:checked="model.is_superuser">超级用户</NCheckbox>
           <NCheckbox v-model:checked="model.is_staff">工作人员</NCheckbox>
           <NCheckbox v-model:checked="model.is_active">有效</NCheckbox>
         </NFlex>
       </div>
       <div>
-        <NFormItem label="身份" required>
+        <NFormItem label="角色" required>
           <NTransfer v-model:value="model.roles" :options="userRoleOptions" />
         </NFormItem>
       </div>
     </NFlex>
     <NFlex>
-      <NButton class="ml-auto" type="success" :loading="loading" attr-type="submit">保存</NButton>
+      <NButton class="ml-auto" :loading="loading" attr-type="submit">保存</NButton>
     </NFlex>
   </NForm>
 </template>

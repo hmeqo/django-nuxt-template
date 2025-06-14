@@ -1,5 +1,7 @@
+import type { StorageLike } from 'pinia-plugin-persistedstate'
+
 type LoginState = {
-  user: UserOut | null
+  user: UserSer | null
 }
 
 export const useLoginState = defineStore('login-state', {
@@ -10,7 +12,7 @@ export const useLoginState = defineStore('login-state', {
     get() {
       return User.init(this.user || {})
     },
-    set(user: UserOut) {
+    set(user: UserSer) {
       this.user = user
     },
     isLoggedIn() {
@@ -18,10 +20,13 @@ export const useLoginState = defineStore('login-state', {
     }
   },
   persist: {
-    storage: piniaPluginPersistedstate.cookies({
-      path: '/',
-      sameSite: 'lax',
-      maxAge: 86400 * 30
-    })
+    storage: <StorageLike>{
+      getItem(key) {
+        return useCookie(key).value
+      },
+      setItem(key, value) {
+        useCookie(key).value = value
+      }
+    }
   }
 })

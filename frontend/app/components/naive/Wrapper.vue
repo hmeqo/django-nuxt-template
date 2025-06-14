@@ -3,6 +3,7 @@
     <NGlobalStyle />
     <NaiveProviderBundle>
       <NaiveRequestFeedback />
+      <NaiveRequestFeedbackAlova />
       <slot />
     </NaiveProviderBundle>
   </NaiveConfigProvider>

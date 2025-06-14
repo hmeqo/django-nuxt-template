@@ -16,22 +16,21 @@ const { user } = useLoginState()
       <NCard title="个人信息" class="max-w-lg mx-auto rounded-md shadow">
         <div v-if="user" class="space-y-4">
           <div class="flex items-center space-x-4">
-            <!-- Basic Avatar Placeholder -->
             <div
-              class="flex shrink-0 items-center justify-center w-16 h-16 bg-gray-200 rounded-full text-gray-500 text-2xl dark:(text-gray-300 bg-gray-700)"
+              class="flex shrink-0 items-center justify-center w-16 h-16 rounded-full text-2xl text-gray-500 bg-gray-200 dark:(text-gray-300 bg-gray-700) transition-all duration-300"
             >
               {{ (user.display_name || user.username)?.charAt(0).toUpperCase() }}
             </div>
             <div>
               <NText class="text-xl font-semibold">{{ user.display_name || user.username }}</NText>
-              <NText class="block text-sm text-gray-500 dark:text-gray-400">@{{ user.username }}</NText>
+              <NText class="block text-sm text-truegray-500">@{{ user.username }}</NText>
             </div>
           </div>
 
           <NDivider />
 
           <div
-            class="grid cols-[auto_1fr] gap-x-4 gap-y-2 items-center [&>:nth-child(odd)]:(text-right text-sm text-gray-500 dark:text-gray-400)"
+            class="grid cols-[auto_1fr] gap-x-4 gap-y-2 items-center [&>:nth-child(odd)]:(text-right text-sm text-truegray-500)"
           >
             <div>用户ID:</div>
             <div>

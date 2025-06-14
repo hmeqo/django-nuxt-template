@@ -15,8 +15,10 @@ export const alovaInst = createAlova({
   statesHook: VueHook,
   requestAdapter: fetchAdapter(),
   beforeRequest(method) {
+    method.config.credentials = 'include'
+
     Object.assign(method.config.headers, {
-      [useCsrf().headerName]: piniaPluginPersistedstate.cookies().getItem('csrftoken'),
+      [useCsrf().headerName]: useCookie('csrftoken').value,
       'Content-Type': method.config.headers['Content-Type'] ?? (method.meta?.multipart ? undefined : 'application/json')
     })
 

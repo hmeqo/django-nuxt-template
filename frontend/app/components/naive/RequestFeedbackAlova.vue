@@ -7,26 +7,34 @@ import {
   RequestSuccessEvent,
   subscribe,
   unsubscribe
-} from '@workspace/backend/lib/core'
+} from '@workspace/backend/lib/alova/core'
 
 const { loadingBar, message, notification } = useNaiveApi()
 
 function onRequestStart(e: RequestStartEvent) {
+  if (e.method.type === 'GET') return
   loadingBar.start()
 }
 
 function onRequestSuccess(e: RequestSuccessEvent) {
-  message.success(`${$t(i18nKeys.operation_succeeds)}`)
+  if (e.method.type === 'GET') return
+  const noMessage = e.method?.meta?.noMessage
+  if (!noMessage || !(Array.isArray(noMessage) && noMessage.includes(e.response.status))) {
+    message.success(`${$t(i18nKeys.operation_succeeds)}`)
+  }
   loadingBar.finish()
 }
 
 function onRequestError(e: RequestErrorEvent) {
-  notification.error({
-    title: isTauri ? `${$t(i18nKeys.error_occurred)}` : `${$t(i18nKeys.status_code)}: ${e.status}`,
-    content: `${$t(i18nKeys.detail_message)}: ${JSON.stringify(e.detail)}`,
-    duration: 5000,
-    keepAliveOnHover: true
-  })
+  const noMessage = e.method?.meta?.noMessage
+  if (!noMessage || !(Array.isArray(noMessage) && noMessage.includes(e.response.status))) {
+    notification.error({
+      title: `${$t(i18nKeys.status_code)}: ${e.response.status}`,
+      content: `${$t(i18nKeys.detail_message)}: ${JSON.stringify(e.error.detail)}`,
+      duration: 5000,
+      keepAliveOnHover: true
+    })
+  }
   loadingBar.error()
 }
 

@@ -56,3 +56,27 @@ export function createNaiveDialog(options: DialogOptions) {
   })
   return result
 }
+
+export function showNaiveDialog(options: DialogOptions) {
+  return new Promise((resolve, reject) =>
+    createNaiveDialog({
+      ...options,
+      onPositiveClick(event) {
+        options?.onPositiveClick?.(event)
+        resolve(undefined)
+      },
+      onNegativeClick(event) {
+        options?.onNegativeClick?.(event)
+        reject(new Error())
+      },
+      onClose() {
+        options?.onClose?.()
+        reject(new Error())
+      },
+      onEsc() {
+        options?.onEsc?.()
+        reject(new Error())
+      }
+    })
+  )
+}

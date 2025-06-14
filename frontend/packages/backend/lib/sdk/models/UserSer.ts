@@ -2,19 +2,20 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type UserIn = {
-    /**
-     * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-     */
-    username: string;
-    password: string;
-    display_name?: string;
-    first_name?: string;
-    last_name?: string;
+import type { UserRole } from './UserRole';
+export type UserSer = {
+    readonly id: number;
+    roles: Array<UserRole>;
     /**
      * Designates that this user has all permissions without explicitly assigning them.
      */
     is_superuser?: boolean;
+    /**
+     * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+     */
+    username: string;
+    first_name?: string;
+    last_name?: string;
     /**
      * Designates whether the user can log into this admin site.
      */
@@ -23,5 +24,6 @@ export type UserIn = {
      * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
      */
     is_active?: boolean;
+    display_name?: string;
 };
 

@@ -18,6 +18,6 @@ export default defineNuxtModule({
     addPlugin(resolver.resolve('./plugins/color-mode.ts'))
 
     // Add utils
-    addImportsDir(resolver.resolve('./utils'))
+    // addImportsDir(resolver.resolve('./utils'))
   }
 })

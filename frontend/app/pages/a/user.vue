@@ -10,15 +10,10 @@ definePageMeta({
   tags: [Urls.admin.user.index]
 })
 
-const configStore = useConfigStore()
-
 const { data: users, loading } = useRequest(() => User.list(), { initialData: UserSet.init() })
 
-const page = usePiniaSessionStorage('users-page', () => 1)
-const pageSize = computed({
-  get: () => configStore.cache.users__pageSize,
-  set: (v) => (configStore.cache.users__pageSize = v)
-})
+const page = usePiniaState('users-page', { default: () => 1 })
+const pageSize = usePiniaCache<number | undefined>('users-page-size')
 
 const chosen = ref<User>()
 
@@ -118,19 +113,23 @@ const resetPasswordVisible = ref(false)
 
 <template>
   <PageBase>
-    <NCard class="h-full" content-class="flex flex-col gap-4">
-      <NFlex>
-        <NButton
-          type="success"
-          @click="
-            () => {
-              chosen = undefined
-              createVisible = true
-            }
-          "
-          >创建</NButton
-        >
-      </NFlex>
+    <NCard class="h-full">
+      <template #header>
+        <div class="truncate">用户</div>
+      </template>
+      <template #header-extra>
+        <NFlex>
+          <NButton
+            @click="
+              () => {
+                chosen = undefined
+                createVisible = true
+              }
+            "
+            >创建</NButton
+          >
+        </NFlex>
+      </template>
       <NDataTable
         v-model:page="page"
         v-model:page-size="pageSize"
@@ -144,7 +143,7 @@ const resetPasswordVisible = ref(false)
       />
     </NCard>
     <Teleport to="#teleports">
-      <NaiveModal v-model:show="createVisible" class="w-200" title="创建">
+      <NaiveModal v-model:show="createVisible" width="200" title="创建">
         <UserCreateForm
           @created="
             (data) => {
@@ -154,10 +153,10 @@ const resetPasswordVisible = ref(false)
           "
         />
       </NaiveModal>
-      <NaiveModal v-model:show="updateVisible" class="w-200" title="更新">
+      <NaiveModal v-model:show="updateVisible" width="200" title="更新">
         <UserUpdateForm v-if="chosen" v-model:model="chosen" @updated="updateVisible = false" />
       </NaiveModal>
-      <NaiveModal v-model:show="resetPasswordVisible" class="w-100" title="重置密码">
+      <NaiveModal v-model:show="resetPasswordVisible" width="100" title="重置密码">
         <UserResetPwdForm v-if="chosen" :user="chosen" @success="resetPasswordVisible = false" />
       </NaiveModal>
     </Teleport>

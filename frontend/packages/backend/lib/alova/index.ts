@@ -1,3 +1,3 @@
-export * from './choices'
-export * from './permissions'
+export * from '../core/choices'
+export * from '../core/permissions'
 export * from './services'

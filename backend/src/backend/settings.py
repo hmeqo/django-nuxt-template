@@ -15,6 +15,8 @@ from django.utils.translation import gettext_lazy as _
 from project.dirs import app_base_dir, app_data_dir
 from project.settings import db_settings, django_settings
 
+from .recieper import disable_csrf
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent.parent
 BASE_DIR = app_base_dir
@@ -51,12 +53,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
+    "corsheaders",
     "rest_framework",
     "drf_spectacular",
     "dbbackup",
     "django_unused_media",
     "django_cleanup.apps.CleanupConfig",
-    "safedelete",
     "apps.chore",
     "apps.main",
 ]
@@ -221,11 +223,20 @@ if db_settings.use_cache:
     SESSION_CACHE_ALIAS = "default"
 
 
+# CORS
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "tauri://localhost",
+    "https://tauri.localhost",
+]
+CORS_ALLOW_CREDENTIALS = True
+
+
 # Csrf
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000",
-]
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
 
 
 # Django rest framework
@@ -251,6 +262,16 @@ SPECTACULAR_SETTINGS = {
     "ENUM_NAME_OVERRIDES": {
         "UserRole": "apps.main.choices.UserRole",
     },
+    "COMPONENT_SPLIT_REQUEST": True,
+    "COMPONENT_NO_READ_ONLY_REQUIRED": False,
+    "COMPONENT_SPLIT_PATCH": True,
+}
+
+
+# drf-apischema
+
+DRF_APISCHEMA_SETTINGS = {
+    "SQL_LOGGING": True,
 }
 
 
@@ -275,3 +296,6 @@ WHITENOISE_INDEX_FILE = True
 # Login
 
 LOGIN_URL = "/login"
+
+
+disable_csrf(MIDDLEWARE)

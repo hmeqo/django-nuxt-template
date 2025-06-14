@@ -11,6 +11,7 @@ const props = withDefaults(
     onMaskClick?: ModalProps['onMaskClick']
     closable?: CardProps['closable']
     beforeClose?: () => boolean
+    width?: number | string
   }>(),
   { closable: true, maskClosable: true, escClosable: true }
 )
@@ -40,6 +41,7 @@ function hasSegmented() {
     v-model:show="show"
     class="max-w-[95vw] max-h-[90vh] mx-auto"
     content-class="flex flex-col h-full shrink-1 overflow-hidden !p-0"
+    :style="{ width: width ? (width.toString().match(/[\D]$/) ? width : `${Number(width) / 4}rem`) : 'auto' }"
     preset="card"
     :title="title"
     :segmented="hasSegmented()"

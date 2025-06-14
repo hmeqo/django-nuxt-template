@@ -2,9 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { UserOut } from './UserOut';
-export type LoginStateOut = {
-    readonly user: UserOut;
+import type { UserSer } from './UserSer';
+export type LoginStateSer = {
+    readonly user: UserSer;
     readonly expires: string;
 };
 

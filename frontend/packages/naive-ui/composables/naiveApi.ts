@@ -13,6 +13,12 @@ export const useNaiveApi = (opts?: { refresh: boolean }) => {
     message: useMessage(),
     dialog: useDialog(),
     notification: useNotification(),
-    loadingBar: useLoadingBar()
+    loadingBar: isTauri
+      ? {
+          start: () => {},
+          finish: () => {},
+          error: () => {}
+        }
+      : useLoadingBar()
   })
 }

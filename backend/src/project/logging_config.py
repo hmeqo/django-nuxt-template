@@ -31,7 +31,7 @@ class StderrLogger(io.TextIOWrapper):
         return False
 
 
-def capture_stdout(to="_granian"):
+def capture_stdout(to: str):
     logger = logging.getLogger(to)
     logging.captureWarnings(True)
     sys.stdout = StdoutLogger(logger)

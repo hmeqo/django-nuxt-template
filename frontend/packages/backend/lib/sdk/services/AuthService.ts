@@ -2,21 +2,20 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { LoginIn } from '../models/LoginIn';
-import type { LoginStateOut } from '../models/LoginStateOut';
-import type { UserOut } from '../models/UserOut';
+import type { LoginSerRequest } from '../models/LoginSerRequest';
+import type { LoginStateSer } from '../models/LoginStateSer';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class AuthService {
     /**
      * @param requestBody
-     * @returns UserOut
+     * @returns LoginStateSer
      * @throws ApiError
      */
     public static authLoginCreate(
-        requestBody: LoginIn,
-    ): CancelablePromise<UserOut> {
+        requestBody: LoginSerRequest,
+    ): CancelablePromise<LoginStateSer> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/auth/login/',
@@ -25,10 +24,10 @@ export class AuthService {
         });
     }
     /**
-     * @returns LoginStateOut
+     * @returns LoginStateSer
      * @throws ApiError
      */
-    public static authLoginStateRetrieve(): CancelablePromise<LoginStateOut> {
+    public static authLoginStateRetrieve(): CancelablePromise<LoginStateSer> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/auth/login_state/',

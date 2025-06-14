@@ -19,6 +19,7 @@ const { send, loading } = useRequest(() => user.value!.resetPassword(model), {
   }
   emit('success')
 })
+const { lockedSend } = useLockedSend(send, { once: true })
 
 const model = reactive<UserResetPwd>(UserResetPwd.init())
 
@@ -30,7 +31,7 @@ const formRef = useTemplateRef('form')
     ref="form"
     :model="model"
     :rules="{
-      ...schemaToNaiveRules($UserResetPwdIn),
+      ...schemaToNaiveRules($UserResetPwdSerRequest),
       confirmPassword: {
         required: true,
         validator: (_, value) => value === model.password,
@@ -41,7 +42,7 @@ const formRef = useTemplateRef('form')
     :show-require-mark="false"
     label-width="auto"
     label-placement="left"
-    @submit.prevent="send"
+    @submit.prevent="lockedSend"
   >
     <NFormItem label="密码" path="password" first>
       <div class="flex flex-col w-full">
@@ -53,7 +54,7 @@ const formRef = useTemplateRef('form')
       <NInput v-model:value="model.confirmPassword" type="password" show-password-on="click" />
     </NFormItem>
     <NFlex>
-      <NButton class="ml-auto" type="primary" :loading="loading" attr-type="submit">重置</NButton>
+      <NButton class="ml-auto" :loading="loading" attr-type="submit">重置</NButton>
     </NFlex>
   </NForm>
 </template>

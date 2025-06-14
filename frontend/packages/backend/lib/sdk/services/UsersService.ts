@@ -2,10 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { PatchedUserOut } from '../models/PatchedUserOut';
-import type { UserIn } from '../models/UserIn';
-import type { UserOut } from '../models/UserOut';
-import type { UserResetPwdIn } from '../models/UserResetPwdIn';
+import type { PatchedUserSerRequest } from '../models/PatchedUserSerRequest';
+import type { UserResetPwdSerRequest } from '../models/UserResetPwdSerRequest';
+import type { UserSer } from '../models/UserSer';
+import type { UserSerRequest } from '../models/UserSerRequest';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -14,10 +14,10 @@ export class UsersService {
      * **Permissions:** `IsAuthenticated`
      *
      *
-     * @returns UserOut
+     * @returns UserSer
      * @throws ApiError
      */
-    public static usersList(): CancelablePromise<Array<UserOut>> {
+    public static usersList(): CancelablePromise<Array<UserSer>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/users/',
@@ -28,12 +28,12 @@ export class UsersService {
      *
      *
      * @param requestBody
-     * @returns UserOut
+     * @returns UserSer
      * @throws ApiError
      */
     public static usersCreate(
-        requestBody: UserIn,
-    ): CancelablePromise<UserOut> {
+        requestBody: UserSerRequest,
+    ): CancelablePromise<UserSer> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/users/',
@@ -46,12 +46,12 @@ export class UsersService {
      *
      *
      * @param id A unique integer value identifying this User.
-     * @returns UserOut
+     * @returns UserSer
      * @throws ApiError
      */
     public static usersRetrieve(
         id: number,
-    ): CancelablePromise<UserOut> {
+    ): CancelablePromise<UserSer> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/users/{id}/',
@@ -66,13 +66,13 @@ export class UsersService {
      *
      * @param id A unique integer value identifying this User.
      * @param requestBody
-     * @returns UserOut
+     * @returns UserSer
      * @throws ApiError
      */
     public static usersUpdate(
         id: number,
-        requestBody: UserOut,
-    ): CancelablePromise<UserOut> {
+        requestBody: UserSerRequest,
+    ): CancelablePromise<UserSer> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/api/users/{id}/',
@@ -89,13 +89,13 @@ export class UsersService {
      *
      * @param id A unique integer value identifying this User.
      * @param requestBody
-     * @returns UserOut
+     * @returns UserSer
      * @throws ApiError
      */
     public static usersPartialUpdate(
         id: number,
-        requestBody?: PatchedUserOut,
-    ): CancelablePromise<UserOut> {
+        requestBody?: PatchedUserSerRequest,
+    ): CancelablePromise<UserSer> {
         return __request(OpenAPI, {
             method: 'PATCH',
             url: '/api/users/{id}/',
@@ -136,7 +136,7 @@ export class UsersService {
      */
     public static usersResetPasswordCreate(
         id: number,
-        requestBody: UserResetPwdIn,
+        requestBody: UserResetPwdSerRequest,
     ): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -152,10 +152,10 @@ export class UsersService {
      * **Permissions:** `IsAuthenticated` `IsAuthenticated`
      *
      *
-     * @returns UserOut
+     * @returns UserSer
      * @throws ApiError
      */
-    public static usersMeRetrieve(): CancelablePromise<UserOut> {
+    public static usersMeRetrieve(): CancelablePromise<UserSer> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/users/me/',

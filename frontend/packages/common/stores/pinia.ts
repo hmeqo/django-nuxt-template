@@ -1,3 +1,5 @@
+import type { StorageLike } from 'pinia-plugin-persistedstate'
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type State = Record<string, any>
 
@@ -31,10 +33,14 @@ export const usePiniaCookieStore = defineStore('c', {
     }
   },
   persist: {
-    storage: piniaPluginPersistedstate.cookies({
-      path: '/',
-      sameSite: 'lax'
-    })
+    storage: <StorageLike>{
+      getItem(key) {
+        return useCookie(key).value
+      },
+      setItem(key, value) {
+        useCookie(key).value = value
+      }
+    }
   }
 })
 

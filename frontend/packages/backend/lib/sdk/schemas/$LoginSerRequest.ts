@@ -2,13 +2,14 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export const $LoginIn = {
+export const $LoginSerRequest = {
     properties: {
         username: {
             type: 'string',
             description: `Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.`,
             isRequired: true,
             maxLength: 150,
+            minLength: 1,
             pattern: '^[\\w.@+-]+$',
         },
         password: {

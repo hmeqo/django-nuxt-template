@@ -26,32 +26,32 @@ from .serializers import *
 
 @apischema_view()
 class AuthViewSet(ViewSet):
-    @apischema(body=LoginIn, transaction=False, response=UserOut)
+    @apischema(body=LoginSer, transaction=False, response=LoginStateSer)
     @action(methods=["post"], detail=False)
-    def login(self, request: ASRequest[LoginIn]) -> Any:
+    def login(self, request: ASRequest[LoginSer]) -> Any:
         user = cast(Optional[User], authenticate(request, **request.validated_data))
         if not user:
             raise HttpError(_("Invalid username or password"), status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         login(request, user)
-        return UserOut(user).data
+        return LoginStateSer({"user": request.user, "expires": request.session.get_expiry_date() or None}).data
 
     @apischema()
     @action(methods=["post"], detail=False)
     def logout(self, request) -> Any:
         logout(request)
 
-    @apischema(response=LoginStateOut)
+    @apischema(response=LoginStateSer)
     @action(methods=["get"], detail=False)
     def login_state(self, request: Request) -> Any:
         if not request.user.is_authenticated:
             return None
-        return LoginStateOut({"user": request.user, "expires": request.session.get_expiry_date() or None}).data
+        return LoginStateSer({"user": request.user, "expires": request.session.get_expiry_date() or None}).data
 
 
 @apischema_view()
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
-    serializer_class = UserOut
+    serializer_class = UserSer
     permission_classes = [IsAuthenticated]
 
     def filter_queryset(self, queryset):
@@ -59,18 +59,14 @@ class UserViewSet(ModelViewSet):
             queryset = queryset.filter(pk=self.request.user.pk)
         return super().filter_queryset(queryset)
 
-    @apischema(body=UserIn)
-    def create(self, request: ASRequest[UserIn]) -> Any:
-        return self.get_serializer(request.serializer.save()).data
-
-    @apischema(permissions=[IsAuthenticated], response=UserOut)
+    @apischema(permissions=[IsAuthenticated], response=UserSer)
     @action(methods=["get"], detail=False)
     def me(self, request: Request) -> Any:
-        return UserOut(request.user).data
+        return UserSer(request.user).data
 
-    @apischema(body=UserResetPwdIn)
+    @apischema(body=UserResetPwdSer)
     @action(methods=["post"], detail=True)
-    def reset_password(self, request: ASRequest[UserResetPwdIn], pk: int) -> Any:
+    def reset_password(self, request: ASRequest[UserResetPwdSer], pk: int) -> Any:
         user: User = self.get_object()
         if request.user.pk != user.pk and not cast(User, request.user).is_superuser:
             raise HttpError(_("Permission denied"), status=status.HTTP_403_FORBIDDEN)

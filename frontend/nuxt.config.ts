@@ -30,9 +30,6 @@ export default defineNuxtConfig({
     { path: '@/components/form' }
   ],
   css: ['assets/css/main.css'],
-  fonts: {
-    families: [{ name: 'Outfit', provider: 'google', global: true }]
-  },
 
   app: {
     // layoutTransition: { name: 'fade', mode: 'out-in' },

@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Max
 from django.utils.translation import gettext_lazy as _
 
 
@@ -25,10 +26,12 @@ class PathModel(models.Model):
     def update_path(self, force_update: bool = False):
         """
         Usage:
-            def save(self, *args, **kwargs):
-                super().save(*args, **kwargs)
-                self.update_path()
-                super().save()
+        ```
+        def save(self, *args, **kwargs):
+            super().save(*args, **kwargs)
+            self.update_path()
+            super().save()
+        ```
         """
         if force_update or not self.path:
             parent = self.parent
@@ -62,4 +65,32 @@ class PathModel(models.Model):
         ids = self.path.split(".")
         lst = [self]
         lst.extend(objects.filter(pk__in=ids).order_by("level"))
-        return lst
+
+
+class OrderedModel(models.Model):
+    """自定义排序模型基类"""
+
+    order = models.PositiveIntegerField(
+        _("Order"), default=0, db_index=True, help_text=_("Items will be ordered by this value")
+    )
+
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        if not self.pk and (self.order is None or self.order == 0):
+            max_order = self.__class__.objects.aggregate(Max("order"))["order__max"] or 0
+            self.order = max_order + 1
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def reorder_items(cls, ordered_ids):
+        """批量更新排序顺序
+
+        :param ordered_ids: 按新顺序排列的ID列表
+        """
+        items = cls.objects.in_bulk(ordered_ids)
+        for index, item_id in enumerate(ordered_ids, start=1):
+            if item_id in items:
+                items[item_id].order = index
+        cls.objects.bulk_update(items.values(), ["order"])

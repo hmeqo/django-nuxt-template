@@ -4,7 +4,7 @@ const fetchMe = createPermission(() => {
   const loginState = useLoginState()
 
   if (!authCached)
-    Auth.loginState()
+    AuthService.authLoginStateRetrieve()
       .then((data) => {
         if (data) {
           loginState.set(data.user)

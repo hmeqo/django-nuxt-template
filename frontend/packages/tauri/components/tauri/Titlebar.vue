@@ -9,15 +9,33 @@ withDefaults(
 
 const isMaximized = ref(false)
 
-function minimize() {}
+function minimize() {
+  import('@tauri-apps/api/window').then(({ getCurrentWindow }) => getCurrentWindow().minimize())
+}
 
-function toggleMaximize() {}
+function toggleMaximize() {
+  import('@tauri-apps/api/window').then(({ getCurrentWindow }) => getCurrentWindow().toggleMaximize())
+}
 
-function close() {}
+function close() {
+  import('@tauri-apps/api/window').then(({ getCurrentWindow }) => getCurrentWindow().close())
+}
+
+if (isTauri) {
+  import('@tauri-apps/api/event').then(({ listen }) => {
+    listen('tauri://resize', () => {
+      import('@tauri-apps/api/window').then(({ getCurrentWindow }) =>
+        getCurrentWindow()
+          .isMaximized()
+          .then((v) => (isMaximized.value = v))
+      )
+    })
+  })
+}
 </script>
 
 <template>
-  <div v-if="isTauri" class="flex select-none" :class="{ 'p-1': !embedded }">
+  <div v-if="isTauri" class="flex select-none" :class="{ 'p-1': !embedded }" data-tauri-drag-region>
     <div class="flex h-full ml-auto">
       <div class="titlebar-button" @click="minimize">
         <div :class="{ 'rounded-full': rounded }">
@@ -47,7 +65,7 @@ function close() {}
 }
 
 .titlebar-button > * {
-  --uno: 'flex items-center justify-center m-0.5 w-7 h-7 transition-all';
+  --uno: 'flex items-center justify-center m-0.5 w-7 h-7';
 }
 
 .titlebar-button:hover > * {

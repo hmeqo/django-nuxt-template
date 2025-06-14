@@ -124,18 +124,41 @@ restart_service() {
 # launch scripts
 
 dev() {
-    tmux new-session -d -s dev -n backend
-    tmux new-window -t dev:1 -n frontend
+    local session_name="dev"
+    local backend_port=8000
+    local frontend_port=3000
+
+    while getopts ":n:b:f:" opt; do
+        case $opt in
+        n)
+            session_name="$OPTARG"
+            ;;
+        b)
+            backend_port="$OPTARG"
+            ;;
+        f)
+            frontend_port="$OPTARG"
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument." >&2
+            exit 1
+            ;;
+        esac
+    done
+
+    tmux new-session -d -s $session_name -n backend -c backend -e DJANGO_PORT=$backend_port
+    tmux new-window -t $session_name:1 -n frontend -c frontend -e PORT=$frontend_port -e NUXT_PUBLIC_API_BASE=http://127.0.0.1:$backend_port
 
     sleep 0.5
 
-    tmux send-keys -t dev:0 'cd backend' C-m
-    tmux send-keys -t dev:0 'uv run dev' C-m
+    tmux send-keys -t $session_name:0 'uv run dev' C-m
+    tmux send-keys -t $session_name:1 'pnpm dev' C-m
 
-    tmux send-keys -t dev:1 'cd frontend' C-m
-    tmux send-keys -t dev:1 'pnpm dev' C-m
-
-    tmux attach -t dev
+    tmux attach -t $session_name
 }
 
 deploy() {

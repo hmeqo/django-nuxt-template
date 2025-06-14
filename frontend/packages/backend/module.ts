@@ -1,4 +1,4 @@
-import { addImports, addImportsDir, createResolver, defineNuxtModule, installModule } from '@nuxt/kit'
+import { addImports, addImportsDir, addPlugin, createResolver, defineNuxtModule, installModule } from '@nuxt/kit'
 import { defu } from 'defu'
 
 export default defineNuxtModule({
@@ -26,7 +26,10 @@ export default defineNuxtModule({
     addImportsDir(resolver.resolve('./stores'))
 
     // Add utils
-    // addImportsDir(resolver.resolve('./utils'))
+    addImportsDir(resolver.resolve('./utils'))
+
+    addPlugin(resolver.resolve('./plugins/alova.ts'))
+    addPlugin(resolver.resolve('./plugins/sdk.ts'))
 
     addImports({
       name: 'Branch',

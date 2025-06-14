@@ -15,17 +15,17 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/LoginIn"
+                                "$ref": "#/components/schemas/LoginSerRequest"
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/LoginIn"
+                                "$ref": "#/components/schemas/LoginSerRequest"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/LoginIn"
+                                "$ref": "#/components/schemas/LoginSerRequest"
                             }
                         }
                     },
@@ -45,7 +45,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserOut"
+                                    "$ref": "#/components/schemas/LoginStateSer"
                                 }
                             }
                         },
@@ -74,7 +74,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/LoginStateOut"
+                                    "$ref": "#/components/schemas/LoginStateSer"
                                 }
                             }
                         },
@@ -127,7 +127,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/UserOut"
+                                        "$ref": "#/components/schemas/UserSer"
                                     }
                                 }
                             }
@@ -146,17 +146,17 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserIn"
+                                "$ref": "#/components/schemas/UserSerRequest"
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserIn"
+                                "$ref": "#/components/schemas/UserSerRequest"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserIn"
+                                "$ref": "#/components/schemas/UserSerRequest"
                             }
                         }
                     },
@@ -175,7 +175,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserOut"
+                                    "$ref": "#/components/schemas/UserSer"
                                 }
                             }
                         },
@@ -215,7 +215,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserOut"
+                                    "$ref": "#/components/schemas/UserSer"
                                 }
                             }
                         },
@@ -244,17 +244,17 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserOut"
+                                "$ref": "#/components/schemas/UserSerRequest"
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserOut"
+                                "$ref": "#/components/schemas/UserSerRequest"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserOut"
+                                "$ref": "#/components/schemas/UserSerRequest"
                             }
                         }
                     },
@@ -273,7 +273,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserOut"
+                                    "$ref": "#/components/schemas/UserSer"
                                 }
                             }
                         },
@@ -302,17 +302,17 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedUserOut"
+                                "$ref": "#/components/schemas/PatchedUserSerRequest"
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedUserOut"
+                                "$ref": "#/components/schemas/PatchedUserSerRequest"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedUserOut"
+                                "$ref": "#/components/schemas/PatchedUserSerRequest"
                             }
                         }
                     }
@@ -330,7 +330,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserOut"
+                                    "$ref": "#/components/schemas/UserSer"
                                 }
                             }
                         },
@@ -392,17 +392,17 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserResetPwdIn"
+                                "$ref": "#/components/schemas/UserResetPwdSerRequest"
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserResetPwdIn"
+                                "$ref": "#/components/schemas/UserResetPwdSerRequest"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserResetPwdIn"
+                                "$ref": "#/components/schemas/UserResetPwdSerRequest"
                             }
                         }
                     },
@@ -443,7 +443,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserOut"
+                                    "$ref": "#/components/schemas/UserSer"
                                 }
                             }
                         },
@@ -502,20 +502,21 @@
     },
     "components": {
         "schemas": {
-            "LoginIn": {
+            "LoginSerRequest": {
                 "type": "object",
                 "properties": {
                     "username": {
                         "type": "string",
+                        "minLength": 1,
                         "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
                         "pattern": "^[\\w.@+-]+$",
                         "maxLength": 150
                     },
                     "password": {
                         "type": "string",
+                        "minLength": 8,
                         "pattern": "^[\\w\\d`\\-=!@#$%^&*()_+[\\]{}():;\\'\",<.>/?\\\\|]{8,32}$",
-                        "maxLength": 32,
-                        "minLength": 8
+                        "maxLength": 32
                     }
                 },
                 "required": [
@@ -523,13 +524,13 @@
                     "username"
                 ]
             },
-            "LoginStateOut": {
+            "LoginStateSer": {
                 "type": "object",
                 "properties": {
                     "user": {
                         "allOf": [
                             {
-                                "$ref": "#/components/schemas/UserOut"
+                                "$ref": "#/components/schemas/UserSer"
                             }
                         ],
                         "readOnly": true
@@ -545,120 +546,34 @@
                     "user"
                 ]
             },
-            "PatchedUserOut": {
+            "PatchedUserSerRequest": {
                 "type": "object",
                 "properties": {
-                    "id": {
-                        "type": "integer",
-                        "readOnly": true
-                    },
-                    "username": {
-                        "type": "string",
-                        "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
-                        "pattern": "^[\\w.@+-]+$",
-                        "maxLength": 150
-                    },
-                    "display_name": {
-                        "type": "string",
-                        "maxLength": 150
-                    },
-                    "first_name": {
-                        "type": "string",
-                        "maxLength": 150
-                    },
-                    "last_name": {
-                        "type": "string",
-                        "maxLength": 150
-                    },
-                    "is_active": {
-                        "type": "boolean",
-                        "title": "Active",
-                        "description": "Designates whether this user should be treated as active. Unselect this instead of deleting accounts."
-                    },
-                    "is_superuser": {
-                        "type": "boolean",
-                        "title": "Superuser status",
-                        "description": "Designates that this user has all permissions without explicitly assigning them."
-                    },
-                    "is_staff": {
-                        "type": "boolean",
-                        "title": "Staff status",
-                        "description": "Designates whether the user can log into this admin site."
-                    },
                     "roles": {
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/UserRole"
                         }
-                    }
-                }
-            },
-            "UserIn": {
-                "type": "object",
-                "properties": {
-                    "username": {
-                        "type": "string",
-                        "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
-                        "pattern": "^[\\w.@+-]+$",
-                        "maxLength": 150
                     },
                     "password": {
                         "type": "string",
                         "writeOnly": true,
+                        "minLength": 8,
                         "pattern": "^[\\w\\d`\\-=!@#$%^&*()_+[\\]{}():;\\'\",<.>/?\\\\|]{8,32}$",
-                        "maxLength": 32,
-                        "minLength": 8
-                    },
-                    "display_name": {
-                        "type": "string",
-                        "maxLength": 150
-                    },
-                    "first_name": {
-                        "type": "string",
-                        "maxLength": 150
-                    },
-                    "last_name": {
-                        "type": "string",
-                        "maxLength": 150
+                        "maxLength": 32
                     },
                     "is_superuser": {
                         "type": "boolean",
                         "title": "Superuser status",
                         "description": "Designates that this user has all permissions without explicitly assigning them."
                     },
-                    "is_staff": {
-                        "type": "boolean",
-                        "title": "Staff status",
-                        "description": "Designates whether the user can log into this admin site."
-                    },
-                    "is_active": {
-                        "type": "boolean",
-                        "title": "Active",
-                        "description": "Designates whether this user should be treated as active. Unselect this instead of deleting accounts."
-                    }
-                },
-                "required": [
-                    "password",
-                    "username"
-                ]
-            },
-            "UserOut": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "readOnly": true
-                    },
                     "username": {
                         "type": "string",
+                        "minLength": 1,
                         "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
                         "pattern": "^[\\w.@+-]+$",
                         "maxLength": 150
                     },
-                    "display_name": {
-                        "type": "string",
-                        "maxLength": 150
-                    },
                     "first_name": {
                         "type": "string",
                         "maxLength": 150
@@ -667,42 +582,30 @@
                         "type": "string",
                         "maxLength": 150
                     },
-                    "is_active": {
-                        "type": "boolean",
-                        "title": "Active",
-                        "description": "Designates whether this user should be treated as active. Unselect this instead of deleting accounts."
-                    },
-                    "is_superuser": {
-                        "type": "boolean",
-                        "title": "Superuser status",
-                        "description": "Designates that this user has all permissions without explicitly assigning them."
-                    },
                     "is_staff": {
                         "type": "boolean",
                         "title": "Staff status",
                         "description": "Designates whether the user can log into this admin site."
                     },
-                    "roles": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/UserRole"
-                        }
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Active",
+                        "description": "Designates whether this user should be treated as active. Unselect this instead of deleting accounts."
+                    },
+                    "display_name": {
+                        "type": "string",
+                        "maxLength": 150
                     }
-                },
-                "required": [
-                    "id",
-                    "roles",
-                    "username"
-                ]
+                }
             },
-            "UserResetPwdIn": {
+            "UserResetPwdSerRequest": {
                 "type": "object",
                 "properties": {
                     "password": {
                         "type": "string",
+                        "minLength": 8,
                         "pattern": "^[\\w\\d`\\-=!@#$%^&*()_+[\\]{}():;\\'\",<.>/?\\\\|]{8,32}$",
-                        "maxLength": 32,
-                        "minLength": 8
+                        "maxLength": 32
                     }
                 },
                 "required": [
@@ -715,6 +618,115 @@
                 ],
                 "type": "string",
                 "description": "* `Employee` - Employee"
+            },
+            "UserSer": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserRole"
+                        }
+                    },
+                    "is_superuser": {
+                        "type": "boolean",
+                        "title": "Superuser status",
+                        "description": "Designates that this user has all permissions without explicitly assigning them."
+                    },
+                    "username": {
+                        "type": "string",
+                        "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+                        "pattern": "^[\\w.@+-]+$",
+                        "maxLength": 150
+                    },
+                    "first_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "is_staff": {
+                        "type": "boolean",
+                        "title": "Staff status",
+                        "description": "Designates whether the user can log into this admin site."
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Active",
+                        "description": "Designates whether this user should be treated as active. Unselect this instead of deleting accounts."
+                    },
+                    "display_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    }
+                },
+                "required": [
+                    "id",
+                    "roles",
+                    "username"
+                ]
+            },
+            "UserSerRequest": {
+                "type": "object",
+                "properties": {
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserRole"
+                        }
+                    },
+                    "password": {
+                        "type": "string",
+                        "writeOnly": true,
+                        "minLength": 8,
+                        "pattern": "^[\\w\\d`\\-=!@#$%^&*()_+[\\]{}():;\\'\",<.>/?\\\\|]{8,32}$",
+                        "maxLength": 32
+                    },
+                    "is_superuser": {
+                        "type": "boolean",
+                        "title": "Superuser status",
+                        "description": "Designates that this user has all permissions without explicitly assigning them."
+                    },
+                    "username": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+                        "pattern": "^[\\w.@+-]+$",
+                        "maxLength": 150
+                    },
+                    "first_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "is_staff": {
+                        "type": "boolean",
+                        "title": "Staff status",
+                        "description": "Designates whether the user can log into this admin site."
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "title": "Active",
+                        "description": "Designates whether this user should be treated as active. Unselect this instead of deleting accounts."
+                    },
+                    "display_name": {
+                        "type": "string",
+                        "maxLength": 150
+                    }
+                },
+                "required": [
+                    "roles",
+                    "username"
+                ]
             }
         },
         "securitySchemes": {

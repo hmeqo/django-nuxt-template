@@ -2,7 +2,7 @@
   "name": "@workspace/varlet",
   "version": "0.1.0",
   "dependencies": {
-    "@varlet/nuxt": "0.1.5",
-    "@varlet/ui": "^3.10.6"
+    "@varlet/nuxt": "^0.1.5",
+    "@varlet/ui": "^3.10.7"
   }
 }

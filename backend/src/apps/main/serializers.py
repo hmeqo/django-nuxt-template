@@ -6,7 +6,7 @@ from .models import *
 from .validators import PasswordValidator
 
 
-class LoginIn(serializers.ModelSerializer):
+class LoginSer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["username", "password"]
@@ -22,7 +22,7 @@ class LoginIn(serializers.ModelSerializer):
         }
 
 
-class UserOut(serializers.ModelSerializer):
+class UserSer(serializers.ModelSerializer):
     roles = serializers.ListField(
         child=serializers.ChoiceField(choices=UserRole.choices),
         label=_("Roles"),
@@ -31,48 +31,14 @@ class UserOut(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = [
-            "id",
-            "username",
-            "display_name",
-            "first_name",
-            "last_name",
-            "is_active",
-            "is_superuser",
-            "is_staff",
-            "roles",
-        ]
-
-    def validate(self, attrs):
-        if attrs.get("is_superuser") and not attrs.get("is_staff"):
-            attrs["is_staff"] = True
-        return super().validate(attrs)
-
-
-class LoginStateOut(serializers.Serializer):
-    user = UserOut(read_only=True)
-    expires = serializers.DateTimeField(read_only=True)
-
-
-class UserIn(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = [
-            "username",
-            "password",
-            "display_name",
-            "first_name",
-            "last_name",
-            "is_superuser",
-            "is_staff",
-            "is_active",
-        ]
+        exclude = ["email", "last_login", "date_joined", "groups", "user_permissions"]
         extra_kwargs = {
             "password": {
                 "write_only": True,
                 "min_length": 8,
                 "max_length": 32,
                 "validators": [PasswordValidator()],
+                "required": False,
             },
         }
 
@@ -93,7 +59,12 @@ class UserIn(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 
-class UserResetPwdIn(serializers.ModelSerializer):
+class LoginStateSer(serializers.Serializer):
+    user = UserSer(read_only=True)
+    expires = serializers.DateTimeField(read_only=True)
+
+
+class UserResetPwdSer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["password"]

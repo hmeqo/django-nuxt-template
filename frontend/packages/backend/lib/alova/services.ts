@@ -18,20 +18,6 @@ const urls = urlsEnsureEndSlash(
   })
 )
 
-export const Auth = {
-  login(data: LoginIn, opts?: Record<string, unknown>) {
-    return alovaInst.Post<UserOut>(urls.auth.login, data, opts)
-  },
-
-  logout() {
-    return alovaInst.Post(urls.auth.logout)
-  },
-
-  loginState() {
-    return alovaInst.Get<LoginStateOut>(urls.auth.loginState)
-  }
-}
-
 export class User extends Model {
   @intField({ readonly: true }) id!: number
   @strField username!: string
@@ -66,10 +52,10 @@ export class User extends Model {
   }
 
   me() {
-    return alovaInst.Get<UserOut>(urls.users.me)
+    return alovaInst.Get<UserSer>(urls.users.me)
   }
 
-  resetPassword(data: UserResetPwdIn) {
+  resetPassword(data: UserResetPwdSerRequest) {
     return alovaInst.Post(format(urls.users.detail.resetPassword, { id: this.id }), data)
   }
 }

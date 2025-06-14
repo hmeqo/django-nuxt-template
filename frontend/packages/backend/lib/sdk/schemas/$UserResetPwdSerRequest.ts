@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export const $UserResetPwdIn = {
+export const $UserResetPwdSerRequest = {
     properties: {
         password: {
             type: 'string',
