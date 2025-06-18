@@ -83,6 +83,7 @@ class Command(BaseCommand):
                 cwd=str(frontend_path),
                 check=True,
             )
-            self.stdout.write(self.style.SUCCESS("Successfully generated SDK"))
+            self.stdout.write(self.style.SUCCESS("SDK exported successfully"))
         except subprocess.CalledProcessError as e:
-            self.stdout.write(self.style.ERROR(f"Failed to generate SDK: {e}"))
+            self.stdout.write(self.style.ERROR(f"Failed to export SDK: {e}"))
+        subprocess.run(["pnpm", "postinstall"], cwd=str(frontend_path))

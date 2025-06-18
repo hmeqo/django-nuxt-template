@@ -5,7 +5,7 @@ export { i18nKeys } from '../lib/words'
 let cachedI18n: Composer
 
 export const useCachedI18n = () => {
-  cachedI18n = useI18n()
+  cachedI18n ??= useI18n()
   const { locale, availableLocales } = cachedI18n
 
   const langCookie = useLangCookie({ default: clientOnly(() => locale.value) })
