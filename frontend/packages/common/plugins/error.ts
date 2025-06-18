@@ -1,6 +1,6 @@
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook('vue:error', (error) => {
-    if (error instanceof MiddlewareReject) {
+    if (error instanceof AbortError) {
       if (error.message) console.log(error.message)
       return
     }

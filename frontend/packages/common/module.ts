@@ -46,6 +46,7 @@ export default defineNuxtModule({
       path: resolver.resolve('./components')
     })
 
+    addPlugin(resolver.resolve('./plugins/error.ts'))
     addPlugin(resolver.resolve('./plugins/dayjs.ts'))
 
     // Add composables
