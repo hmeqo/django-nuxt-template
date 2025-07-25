@@ -1,0 +1,30 @@
+{
+  "name": "django-nuxt-template",
+  "private": true,
+  "type": "module",
+  "main": "dist/server/index.js",
+  "version": "0.1.0",
+  "dependencies": {
+    "@iconify-json/clarity": "^1.2.2",
+    "@iconify-json/material-symbols": "^1.2.29",
+    "@workspace-hmeqo/backend": "workspace:^",
+    "@workspace-hmeqo/common": "workspace:^",
+    "@workspace-hmeqo/i18n": "workspace:^",
+    "@workspace-hmeqo/naive-ui": "workspace:^",
+    "@workspace-hmeqo/pwa": "workspace:^",
+    "@workspace-hmeqo/unocss": "workspace:^",
+    "@workspace/backend": "workspace:^",
+    "@workspace/tauri": "workspace:^",
+    "zxcvbn": "^4.4.2"
+  },
+  "devDependencies": {
+    "@types/zxcvbn": "^4.4.5"
+  },
+  "browserslist": {
+    "production": [
+      ">0.1%",
+      "not dead",
+      "not IE 11"
+    ]
+  }
+}

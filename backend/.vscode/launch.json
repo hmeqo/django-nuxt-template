@@ -8,9 +8,8 @@
             "name": "Backend: Django",
             "type": "debugpy",
             "request": "launch",
-            "module": "uv",
-            "args": ["run", "dev"],
-            "django": true,
+            "program": "src/project/scripts/dev.py",
+            "args": [],
             "autoStartBrowser": false,
             "internalConsoleOptions": "neverOpen"
         }

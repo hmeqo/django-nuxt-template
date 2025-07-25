@@ -1,13 +1,5 @@
-import type { BaseModel, ModelType } from '@hmeqo/easymodel'
-
-export interface AlovaCustomTypeMeta {
-  model?: ModelType
-  instance?: BaseModel
-  multipart?: boolean
-}
-
-declare module 'alova' {
-  export interface AlovaCustomTypes {
-    meta: AlovaCustomTypeMeta
+declare module '@workspace-hmeqo/backend/types' {
+  export interface AlovaCustomTypeMeta {
+    noMessage?: boolean
   }
 }

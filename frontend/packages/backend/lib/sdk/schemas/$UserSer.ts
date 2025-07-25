@@ -9,23 +9,16 @@ export const $UserSer = {
             isReadOnly: true,
             isRequired: true,
         },
-        roles: {
-            type: 'array',
-            contains: {
-                type: 'UserRole',
-            },
-            isRequired: true,
-        },
-        is_superuser: {
-            type: 'boolean',
-            description: `Designates that this user has all permissions without explicitly assigning them.`,
-        },
         username: {
             type: 'string',
             description: `Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.`,
             isRequired: true,
             maxLength: 150,
             pattern: '^[\\w.@+-]+$',
+        },
+        display_name: {
+            type: 'string',
+            maxLength: 150,
         },
         first_name: {
             type: 'string',
@@ -35,6 +28,10 @@ export const $UserSer = {
             type: 'string',
             maxLength: 150,
         },
+        is_superuser: {
+            type: 'boolean',
+            description: `Designates that this user has all permissions without explicitly assigning them.`,
+        },
         is_staff: {
             type: 'boolean',
             description: `Designates whether the user can log into this admin site.`,
@@ -42,10 +39,6 @@ export const $UserSer = {
         is_active: {
             type: 'boolean',
             description: `Designates whether this user should be treated as active. Unselect this instead of deleting accounts.`,
-        },
-        display_name: {
-            type: 'string',
-            maxLength: 150,
         },
     },
 } as const;

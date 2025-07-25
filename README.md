@@ -3,7 +3,7 @@
 > [!WARNING]
 > 此模板处在实验性阶段
 
-全局搜索 `Django Nuxt Template` 与 `django-nuxt-template` 替换为你的项目名称
+全局搜索 `Django Nuxt Template`, `DjangoNuxtTemplate` 与 `django-nuxt-template` 替换为你的项目名称
 
 确认配置无误 `conf/crontab.conf` `conf/website.service`
 

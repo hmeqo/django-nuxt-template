@@ -20,7 +20,7 @@ sync_backend() {
     uv sync --frozen --group=types --group=cache --group=postgresql --group=prod
     uv run ./manage.py migrate
     uv run ./manage.py compilemessages --ignore=.venv
-    uv run ./manage.py collectresources --clear --all
+    uv run ./manage.py collectresources --all
     cd ..
 }
 
@@ -28,15 +28,11 @@ sync_frontend() {
     cd frontend || exit
     pnpm install --frozen-lockfile
     pnpm build
-
-    cd ../backend || exit
-    uv run ./manage.py collectresources --all
-    cd ..
 }
 
 sync() {
-    sync_backend
     sync_frontend
+    sync_backend
 }
 
 # batch
@@ -48,47 +44,15 @@ start_backend() {
 }
 
 start_frontend() {
-    cd frontend || exit
+    cd frontend/src-pc || exit
     env $(cat .env) node .output/server/index.mjs
-    cd ..
-}
-
-stop_frontend() {
-    if pgrep -f 'node .output/server/index.mjs'; then
-        pkill -f 'node .output/server/index.mjs'
-    fi
-    wait
-}
-
-stop_backend() {
-    if pgrep -f granian; then
-        pkill -f granian
-    fi
-    wait
-}
-
-stop() {
-    stop_frontend &
-    stop_backend &
-    wait
+    cd ../..
 }
 
 start() {
     start_backend &
     start_frontend &
     wait
-}
-
-start_bg() {
-    start_backend &
-    disown %1
-    start_frontend &
-    disown %1
-}
-
-restart() {
-    stop
-    start
 }
 
 # service
@@ -156,7 +120,7 @@ dev() {
     sleep 0.5
 
     tmux send-keys -t $session_name:0 'uv run dev' C-m
-    tmux send-keys -t $session_name:1 'pnpm dev' C-m
+    tmux send-keys -t $session_name:1 'pnpm dev:pc' C-m
 
     tmux attach -t $session_name
 }

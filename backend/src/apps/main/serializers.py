@@ -1,6 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from drf_apischema import HttpError
 from rest_framework import serializers
+from rest_framework.request import Request
 
 from .models import *
 from .validators import PasswordValidator
@@ -23,15 +24,19 @@ class LoginSer(serializers.ModelSerializer):
 
 
 class UserSer(serializers.ModelSerializer):
-    roles = serializers.ListField(
-        child=serializers.ChoiceField(choices=UserRole.choices),
-        label=_("Roles"),
-        read_only=False,
-    )
-
     class Meta:
         model = User
-        exclude = ["email", "last_login", "date_joined", "groups", "user_permissions"]
+        fields = [
+            "id",
+            "username",
+            "password",
+            "display_name",
+            "first_name",
+            "last_name",
+            "is_superuser",
+            "is_staff",
+            "is_active",
+        ]
         extra_kwargs = {
             "password": {
                 "write_only": True,
@@ -62,6 +67,15 @@ class UserSer(serializers.ModelSerializer):
 class LoginStateSer(serializers.Serializer):
     user = UserSer(read_only=True)
     expires = serializers.DateTimeField(read_only=True)
+
+    @classmethod
+    def make(cls, request: Request):
+        return cls(
+            {
+                "user": request.user,
+                "expires": request.session.get_expiry_date(),
+            }
+        ).data
 
 
 class UserResetPwdSer(serializers.ModelSerializer):

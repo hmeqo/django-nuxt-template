@@ -4,23 +4,6 @@
 /* eslint-disable */
 export const $UserSerRequest = {
     properties: {
-        roles: {
-            type: 'array',
-            contains: {
-                type: 'UserRole',
-            },
-            isRequired: true,
-        },
-        password: {
-            type: 'string',
-            maxLength: 32,
-            minLength: 8,
-            pattern: '^[\\w\\d`\\-=!@#$%^&*()_+[\\]{}():;\\\'",<.>/?\\\\|]{8,32}$',
-        },
-        is_superuser: {
-            type: 'boolean',
-            description: `Designates that this user has all permissions without explicitly assigning them.`,
-        },
         username: {
             type: 'string',
             description: `Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.`,
@@ -28,6 +11,16 @@ export const $UserSerRequest = {
             maxLength: 150,
             minLength: 1,
             pattern: '^[\\w.@+-]+$',
+        },
+        password: {
+            type: 'string',
+            maxLength: 32,
+            minLength: 8,
+            pattern: '^[\\w\\d`\\-=!@#$%^&*()_+[\\]{}():;\\\'",<.>/?\\\\|]{8,32}$',
+        },
+        display_name: {
+            type: 'string',
+            maxLength: 150,
         },
         first_name: {
             type: 'string',
@@ -37,6 +30,10 @@ export const $UserSerRequest = {
             type: 'string',
             maxLength: 150,
         },
+        is_superuser: {
+            type: 'boolean',
+            description: `Designates that this user has all permissions without explicitly assigning them.`,
+        },
         is_staff: {
             type: 'boolean',
             description: `Designates whether the user can log into this admin site.`,
@@ -44,10 +41,6 @@ export const $UserSerRequest = {
         is_active: {
             type: 'boolean',
             description: `Designates whether this user should be treated as active. Unselect this instead of deleting accounts.`,
-        },
-        display_name: {
-            type: 'string',
-            maxLength: 150,
         },
     },
 } as const;

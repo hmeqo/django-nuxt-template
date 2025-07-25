@@ -1,0 +1,3 @@
+[submodule "frontend/packages/hmeqo"]
+	path = frontend/packages/hmeqo
+	url = https://github.com/hmeqo/nuxt-modules.git

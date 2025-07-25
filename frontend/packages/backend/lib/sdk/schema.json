@@ -340,7 +340,7 @@
             },
             "delete": {
                 "operationId": "users_destroy",
-                "description": "**Permissions:** `IsAuthenticated`\n\n",
+                "description": "**Permissions:** `IsAuthenticated` `IsSuperUser`\n\n",
                 "parameters": [
                     {
                         "in": "path",
@@ -549,11 +549,12 @@
             "PatchedUserSerRequest": {
                 "type": "object",
                 "properties": {
-                    "roles": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/UserRole"
-                        }
+                    "username": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+                        "pattern": "^[\\w.@+-]+$",
+                        "maxLength": 150
                     },
                     "password": {
                         "type": "string",
@@ -562,16 +563,8 @@
                         "pattern": "^[\\w\\d`\\-=!@#$%^&*()_+[\\]{}():;\\'\",<.>/?\\\\|]{8,32}$",
                         "maxLength": 32
                     },
-                    "is_superuser": {
-                        "type": "boolean",
-                        "title": "Superuser status",
-                        "description": "Designates that this user has all permissions without explicitly assigning them."
-                    },
-                    "username": {
+                    "display_name": {
                         "type": "string",
-                        "minLength": 1,
-                        "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
-                        "pattern": "^[\\w.@+-]+$",
                         "maxLength": 150
                     },
                     "first_name": {
@@ -582,6 +575,11 @@
                         "type": "string",
                         "maxLength": 150
                     },
+                    "is_superuser": {
+                        "type": "boolean",
+                        "title": "Superuser status",
+                        "description": "Designates that this user has all permissions without explicitly assigning them."
+                    },
                     "is_staff": {
                         "type": "boolean",
                         "title": "Staff status",
@@ -591,10 +589,6 @@
                         "type": "boolean",
                         "title": "Active",
                         "description": "Designates whether this user should be treated as active. Unselect this instead of deleting accounts."
-                    },
-                    "display_name": {
-                        "type": "string",
-                        "maxLength": 150
                     }
                 }
             },
@@ -612,13 +606,6 @@
                     "password"
                 ]
             },
-            "UserRole": {
-                "enum": [
-                    "Employee"
-                ],
-                "type": "string",
-                "description": "* `Employee` - Employee"
-            },
             "UserSer": {
                 "type": "object",
                 "properties": {
@@ -626,21 +613,14 @@
                         "type": "integer",
                         "readOnly": true
                     },
-                    "roles": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/UserRole"
-                        }
-                    },
-                    "is_superuser": {
-                        "type": "boolean",
-                        "title": "Superuser status",
-                        "description": "Designates that this user has all permissions without explicitly assigning them."
-                    },
                     "username": {
                         "type": "string",
                         "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
                         "pattern": "^[\\w.@+-]+$",
+                        "maxLength": 150
+                    },
+                    "display_name": {
+                        "type": "string",
                         "maxLength": 150
                     },
                     "first_name": {
@@ -651,6 +631,11 @@
                         "type": "string",
                         "maxLength": 150
                     },
+                    "is_superuser": {
+                        "type": "boolean",
+                        "title": "Superuser status",
+                        "description": "Designates that this user has all permissions without explicitly assigning them."
+                    },
                     "is_staff": {
                         "type": "boolean",
                         "title": "Staff status",
@@ -660,26 +645,22 @@
                         "type": "boolean",
                         "title": "Active",
                         "description": "Designates whether this user should be treated as active. Unselect this instead of deleting accounts."
-                    },
-                    "display_name": {
-                        "type": "string",
-                        "maxLength": 150
                     }
                 },
                 "required": [
                     "id",
-                    "roles",
                     "username"
                 ]
             },
             "UserSerRequest": {
                 "type": "object",
                 "properties": {
-                    "roles": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/UserRole"
-                        }
+                    "username": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+                        "pattern": "^[\\w.@+-]+$",
+                        "maxLength": 150
                     },
                     "password": {
                         "type": "string",
@@ -688,16 +669,8 @@
                         "pattern": "^[\\w\\d`\\-=!@#$%^&*()_+[\\]{}():;\\'\",<.>/?\\\\|]{8,32}$",
                         "maxLength": 32
                     },
-                    "is_superuser": {
-                        "type": "boolean",
-                        "title": "Superuser status",
-                        "description": "Designates that this user has all permissions without explicitly assigning them."
-                    },
-                    "username": {
+                    "display_name": {
                         "type": "string",
-                        "minLength": 1,
-                        "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
-                        "pattern": "^[\\w.@+-]+$",
                         "maxLength": 150
                     },
                     "first_name": {
@@ -708,6 +681,11 @@
                         "type": "string",
                         "maxLength": 150
                     },
+                    "is_superuser": {
+                        "type": "boolean",
+                        "title": "Superuser status",
+                        "description": "Designates that this user has all permissions without explicitly assigning them."
+                    },
                     "is_staff": {
                         "type": "boolean",
                         "title": "Staff status",
@@ -717,14 +695,9 @@
                         "type": "boolean",
                         "title": "Active",
                         "description": "Designates whether this user should be treated as active. Unselect this instead of deleting accounts."
-                    },
-                    "display_name": {
-                        "type": "string",
-                        "maxLength": 150
                     }
                 },
                 "required": [
-                    "roles",
                     "username"
                 ]
             }

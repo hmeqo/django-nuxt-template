@@ -1,6 +1,7 @@
 from typing import Any, Optional, cast
 
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 from drf_apischema import ASRequest, HttpError, apischema, apischema_view
 from rest_framework import status
@@ -29,11 +30,11 @@ class AuthViewSet(ViewSet):
     @apischema(body=LoginSer, transaction=False, response=LoginStateSer)
     @action(methods=["post"], detail=False)
     def login(self, request: ASRequest[LoginSer]) -> Any:
-        user = cast(Optional[User], authenticate(request, **request.validated_data))
+        user = cast(Optional[User], authenticate(cast(HttpRequest, request), **request.validated_data))
         if not user:
             raise HttpError(_("Invalid username or password"), status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-        login(request, user)
-        return LoginStateSer({"user": request.user, "expires": request.session.get_expiry_date() or None}).data
+        login(cast(HttpRequest, request), user)
+        return LoginStateSer.make(request)
 
     @apischema()
     @action(methods=["post"], detail=False)
@@ -45,17 +46,17 @@ class AuthViewSet(ViewSet):
     def login_state(self, request: Request) -> Any:
         if not request.user.is_authenticated:
             return None
-        return LoginStateSer({"user": request.user, "expires": request.session.get_expiry_date() or None}).data
+        return LoginStateSer.make(request)
 
 
-@apischema_view()
+@apischema_view(destroy=apischema(permissions=[IsSuperUser]))
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSer
     permission_classes = [IsAuthenticated]
 
     def filter_queryset(self, queryset):
-        if not cast(User, self.request.user).is_superuser:
+        if not cast(User, self.request.user).is_superuser and self.action not in ("list", "retrieve"):
             queryset = queryset.filter(pk=self.request.user.pk)
         return super().filter_queryset(queryset)
 
@@ -67,7 +68,7 @@ class UserViewSet(ModelViewSet):
     @apischema(body=UserResetPwdSer)
     @action(methods=["post"], detail=True)
     def reset_password(self, request: ASRequest[UserResetPwdSer], pk: int) -> Any:
-        user: User = self.get_object()
+        user: User = cast(User, request.serializer.instance)
         if request.user.pk != user.pk and not cast(User, request.user).is_superuser:
             raise HttpError(_("Permission denied"), status=status.HTTP_403_FORBIDDEN)
         if user.check_password(request.validated_data["password"]):
@@ -78,4 +79,4 @@ class UserViewSet(ModelViewSet):
         user.set_password(request.validated_data["password"])
         user.save()
         if request.user.pk == user.pk:
-            logout(request)
+            logout(cast(HttpRequest, request))

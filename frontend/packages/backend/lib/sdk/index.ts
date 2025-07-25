@@ -11,7 +11,6 @@ export type { LoginSerRequest } from './models/LoginSerRequest';
 export type { LoginStateSer } from './models/LoginStateSer';
 export type { PatchedUserSerRequest } from './models/PatchedUserSerRequest';
 export type { UserResetPwdSerRequest } from './models/UserResetPwdSerRequest';
-export { UserRole } from './models/UserRole';
 export type { UserSer } from './models/UserSer';
 export type { UserSerRequest } from './models/UserSerRequest';
 
@@ -19,7 +18,6 @@ export { $LoginSerRequest } from './schemas/$LoginSerRequest';
 export { $LoginStateSer } from './schemas/$LoginStateSer';
 export { $PatchedUserSerRequest } from './schemas/$PatchedUserSerRequest';
 export { $UserResetPwdSerRequest } from './schemas/$UserResetPwdSerRequest';
-export { $UserRole } from './schemas/$UserRole';
 export { $UserSer } from './schemas/$UserSer';
 export { $UserSerRequest } from './schemas/$UserSerRequest';
 

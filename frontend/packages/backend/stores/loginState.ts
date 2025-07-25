@@ -10,7 +10,7 @@ export const useLoginState = defineStore('login-state', {
   }),
   actions: {
     get() {
-      return User.init(this.user || {})
+      return this.user!
     },
     set(user: UserSer) {
       this.user = user
@@ -25,7 +25,7 @@ export const useLoginState = defineStore('login-state', {
         return useCookie(key).value
       },
       setItem(key, value) {
-        useCookie(key).value = value
+        useCookie(key, { sameSite: 'lax', maxAge: 60 * 60 * 24 * 3650 }).value = value
       }
     }
   }

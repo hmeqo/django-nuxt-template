@@ -107,7 +107,7 @@ export class UsersService {
         });
     }
     /**
-     * **Permissions:** `IsAuthenticated`
+     * **Permissions:** `IsAuthenticated` `IsSuperUser`
      *
      *
      * @param id A unique integer value identifying this User.

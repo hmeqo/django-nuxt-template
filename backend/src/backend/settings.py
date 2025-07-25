@@ -13,15 +13,14 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from django.utils.translation import gettext_lazy as _
 
 from project.dirs import app_base_dir, app_data_dir
-from project.settings import db_settings, django_settings
+from project.config import db_cfg, app_cfg
 
-from .recieper import disable_csrf
+# from .recipes.disable_csrf import disable_csrf
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-# BASE_DIR = Path(__file__).resolve().parent.parent.parent
 BASE_DIR = app_base_dir
 
-DIST_DIR = BASE_DIR.joinpath("..", "frontend", ".output", "public").resolve()
+DIST_DIR = BASE_DIR.joinpath("..", "frontend", "src-pc", ".output", "public").resolve()
 
 RESOURCES_DIR = BASE_DIR / "resources"
 
@@ -35,7 +34,7 @@ ASSETS_DIR = RESOURCES_DIR / "assets"
 SECRET_KEY = "django-insecure-0$(n^h270d#qbmgy%$08iaka57y*=ci1t=nta4$cr5t)$nt5c3"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = django_settings.debug
+DEBUG = app_cfg.debug
 
 ALLOWED_HOSTS = ["*"]
 
@@ -64,6 +63,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -102,22 +102,22 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": app_data_dir / db_settings.sqlite_file,
+        "NAME": app_data_dir / db_cfg.sqlite_file,
     }
-    if db_settings.engine.endswith("sqlite3")
+    if db_cfg.engine.endswith("sqlite3")
     else {
-        "ENGINE": db_settings.engine
-        if db_settings.engine.startswith("django.db.backends")
-        else f"django.db.backends.{db_settings.engine}",
-        "NAME": db_settings.name,
-        "USER": db_settings.user,
-        "PASSWORD": db_settings.password,
-        "HOST": db_settings.host,
-        "PORT": str(db_settings.port),
+        "ENGINE": db_cfg.engine
+        if db_cfg.engine.startswith("django.db.backends")
+        else f"django.db.backends.{db_cfg.engine}",
+        "NAME": db_cfg.name,
+        "USER": db_cfg.user,
+        "PASSWORD": db_cfg.password,
+        "HOST": db_cfg.host,
+        "PORT": str(db_cfg.port) if db_cfg.port else None,
     },
 }
 
-if db_settings.use_cache:
+if db_cfg.use_cache:
     CACHES = {
         "default": {
             "BACKEND": "django_redis.cache.RedisCache",
@@ -184,7 +184,7 @@ LOCALE_PATHS = [
 
 LANGUAGES = (
     ("en", _("English")),
-    ("zh-CN", _("Chinese (simplified)")),
+    ("zh-Hans", _("Chinese (simplified)")),
 )
 
 LANGUAGE_COOKIE_NAME = "language"
@@ -219,24 +219,22 @@ MEDIA_ROOT = app_data_dir / "media"
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
-if db_settings.use_cache:
+if db_cfg.use_cache:
     SESSION_CACHE_ALIAS = "default"
+
+
+# CSRF
+
+CSRF_TRUSTED_ORIGINS = [
+    *app_cfg.allowed_origins,
+    *app_cfg.extra_allowed_origins,
+]
 
 
 # CORS
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://localhost:3001",
-    "tauri://localhost",
-    "https://tauri.localhost",
-]
+CORS_ALLOWED_ORIGINS = CSRF_TRUSTED_ORIGINS
 CORS_ALLOW_CREDENTIALS = True
-
-
-# Csrf
-
-CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
 
 
 # Django rest framework
@@ -259,9 +257,7 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
     "SCHEMA_PATH_PREFIX": "/api",
     "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
-    "ENUM_NAME_OVERRIDES": {
-        "UserRole": "apps.main.choices.UserRole",
-    },
+    "ENUM_NAME_OVERRIDES": {},
     "COMPONENT_SPLIT_REQUEST": True,
     "COMPONENT_NO_READ_ONLY_REQUIRED": False,
     "COMPONENT_SPLIT_PATCH": True,
@@ -271,7 +267,7 @@ SPECTACULAR_SETTINGS = {
 # drf-apischema
 
 DRF_APISCHEMA_SETTINGS = {
-    "SQL_LOGGING": True,
+    # "SQL_LOGGING": False,
 }
 
 
@@ -298,4 +294,4 @@ WHITENOISE_INDEX_FILE = True
 LOGIN_URL = "/login"
 
 
-disable_csrf(MIDDLEWARE)
+# disable_csrf(MIDDLEWARE)

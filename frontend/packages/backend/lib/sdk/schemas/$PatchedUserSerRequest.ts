@@ -4,11 +4,12 @@
 /* eslint-disable */
 export const $PatchedUserSerRequest = {
     properties: {
-        roles: {
-            type: 'array',
-            contains: {
-                type: 'UserRole',
-            },
+        username: {
+            type: 'string',
+            description: `Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.`,
+            maxLength: 150,
+            minLength: 1,
+            pattern: '^[\\w.@+-]+$',
         },
         password: {
             type: 'string',
@@ -16,16 +17,9 @@ export const $PatchedUserSerRequest = {
             minLength: 8,
             pattern: '^[\\w\\d`\\-=!@#$%^&*()_+[\\]{}():;\\\'",<.>/?\\\\|]{8,32}$',
         },
-        is_superuser: {
-            type: 'boolean',
-            description: `Designates that this user has all permissions without explicitly assigning them.`,
-        },
-        username: {
+        display_name: {
             type: 'string',
-            description: `Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.`,
             maxLength: 150,
-            minLength: 1,
-            pattern: '^[\\w.@+-]+$',
         },
         first_name: {
             type: 'string',
@@ -35,6 +29,10 @@ export const $PatchedUserSerRequest = {
             type: 'string',
             maxLength: 150,
         },
+        is_superuser: {
+            type: 'boolean',
+            description: `Designates that this user has all permissions without explicitly assigning them.`,
+        },
         is_staff: {
             type: 'boolean',
             description: `Designates whether the user can log into this admin site.`,
@@ -42,10 +40,6 @@ export const $PatchedUserSerRequest = {
         is_active: {
             type: 'boolean',
             description: `Designates whether this user should be treated as active. Unselect this instead of deleting accounts.`,
-        },
-        display_name: {
-            type: 'string',
-            maxLength: 150,
         },
     },
 } as const;

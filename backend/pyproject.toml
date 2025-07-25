@@ -39,7 +39,6 @@ build = ["nuitka", "patchelf; platform_system == 'Linux'"]
 [project.scripts]
 dev = "project.scripts.dev:dev"
 serve = "project.scripts.serve:serve"
-app = "project.app:main"
 build = "project.scripts.build:build"
 
 [build-system]

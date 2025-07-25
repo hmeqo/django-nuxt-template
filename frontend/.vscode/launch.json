@@ -8,7 +8,7 @@
             "type": "node-terminal",
             "name": "Frontend: dev",
             "request": "launch",
-            "command": "pnpm dev",
+            "command": "pnpm dev:pc",
             "cwd": "${workspaceFolder}",
             "internalConsoleOptions": "neverOpen"
         }
