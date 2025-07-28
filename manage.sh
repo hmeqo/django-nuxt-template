@@ -47,7 +47,7 @@ start_backend() {
 start_frontend() {
     cd frontend/apps/web || exit
     env $(cat .env) node .output/server/index.mjs
-    cd ../..
+    cd ../../..
 }
 
 start() {
