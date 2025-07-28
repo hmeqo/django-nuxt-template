@@ -6,9 +6,9 @@
     "configurations": [
         {
             "type": "node-terminal",
-            "name": "Frontend: dev",
+            "name": "Frontend: dev-web",
             "request": "launch",
-            "command": "pnpm dev:pc",
+            "command": "pnpm dev:web",
             "cwd": "${workspaceFolder}",
             "internalConsoleOptions": "neverOpen"
         }

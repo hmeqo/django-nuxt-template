@@ -1,4 +1,5 @@
 def disable_csrf(middlewares: list[str]):
+    """Disable CSRF"""
     from rest_framework.authentication import SessionAuthentication
 
     SessionAuthentication.enforce_csrf = lambda x, r: None  # type: ignore

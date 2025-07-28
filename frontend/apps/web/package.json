@@ -1,5 +1,5 @@
 {
-  "name": "django-nuxt-template",
+  "name": "django-nuxt-template-pc",
   "private": true,
   "type": "module",
   "main": "dist/server/index.js",

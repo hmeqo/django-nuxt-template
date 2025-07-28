@@ -10,7 +10,7 @@
             "path": "./frontend"
         },
         {
-            "path": "./frontend/src-pc"
+            "path": "./frontend/apps/web"
         }
     ],
     "settings": {

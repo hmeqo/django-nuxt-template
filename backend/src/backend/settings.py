@@ -20,7 +20,7 @@ from project.config import db_cfg, app_cfg
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = app_base_dir
 
-DIST_DIR = BASE_DIR.joinpath("..", "frontend", "src-pc", ".output", "public").resolve()
+DIST_DIR = BASE_DIR.joinpath("..", "frontend", "apps", "web", ".output", "public").resolve()
 
 RESOURCES_DIR = BASE_DIR / "resources"
 

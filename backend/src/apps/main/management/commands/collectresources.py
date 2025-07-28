@@ -1,4 +1,5 @@
 import logging
+import os
 import shutil
 import subprocess
 
@@ -29,6 +30,7 @@ class Command(BaseCommand):
         all = options["all"]
         verbosity = options["verbosity"]
 
+        os.makedirs(settings.ASSETS_DIR, exist_ok=True)
         try:
             rsync_path = shutil.which("rsync")
             if rsync_path:
