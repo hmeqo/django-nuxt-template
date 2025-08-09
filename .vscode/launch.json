@@ -7,7 +7,7 @@
     "compounds": [
         {
             "name": "Website",
-            "configurations": ["Backend: Django", "Frontend: dev-web"]
+            "configurations": ["Backend: Django", "Frontend: dev-admin"]
         }
     ]
 }

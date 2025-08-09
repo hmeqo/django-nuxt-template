@@ -12,7 +12,7 @@ definePageMeta({
 
 const { data: users, loading } = useRequest(() => UserSrv.list(), { initialData: [] })
 
-const chosen = ref<UserSer>()
+const selected = ref<UserSer>()
 
 const columns = computed(
   (): DataTableColumns<UserSer> => [
@@ -71,7 +71,7 @@ const columns = computed(
 
 const dropmenuVisible = ref(false)
 const dropmenuOptions = computed((): DropdownProps['options'] =>
-  chosen.value
+  selected.value
     ? [
         {
           label: '修改',
@@ -103,9 +103,9 @@ const dropmenuOptions = computed((): DropdownProps['options'] =>
             class: '!text-red-500',
             onClick: () => {
               dropmenuVisible.value = false
-              useRequest(UserSrv.destroy(chosen.value!.id), {
+              useRequest(UserSrv.destroy(selected.value!.id), {
                 middleware: dialogMiddleware(naiveDialogOptionPresets.delete)
-              }).onSuccess(() => (users.value = users.value.filter((x) => x.id !== chosen.value!.id)))
+              }).onSuccess(() => (users.value = users.value.filter((x) => x.id !== selected.value!.id)))
             }
           },
           show: IsSuperUser.verify()
@@ -121,16 +121,13 @@ const resetPasswordVisible = ref(false)
 
 <template>
   <PageBase>
-    <NCard class="h-full">
-      <template #header>
-        <div class="truncate">用户管理</div>
-      </template>
+    <NCard class="h-full" title=" ">
       <template #header-extra>
         <NFlex>
           <NButton
             @click="
               () => {
-                chosen = undefined
+                selected = undefined
                 createVisible = true
               }
             "
@@ -139,7 +136,7 @@ const resetPasswordVisible = ref(false)
         </NFlex>
       </template>
       <NaiveDataTable
-        v-model:selected="chosen"
+        v-model:selected="selected"
         v-model:show-menu="dropmenuVisible"
         state-key="user"
         :loading="loading"
@@ -162,10 +159,10 @@ const resetPasswordVisible = ref(false)
         />
       </NaiveModal>
       <NaiveModal v-model:show="updateVisible" width="200" title="更新">
-        <UserUpdateForm v-if="chosen" v-model:model="chosen" @updated="updateVisible = false" />
+        <UserUpdateForm v-if="selected" v-model:model="selected" @updated="updateVisible = false" />
       </NaiveModal>
       <NaiveModal v-model:show="resetPasswordVisible" width="100" title="重置密码">
-        <UserResetPwdForm v-if="chosen" :user="chosen" @success="resetPasswordVisible = false" />
+        <UserResetPwdForm v-if="selected" :user="selected" @success="resetPasswordVisible = false" />
       </NaiveModal>
     </Teleport>
   </PageBase>

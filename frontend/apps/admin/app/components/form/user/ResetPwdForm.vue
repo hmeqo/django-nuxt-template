@@ -7,13 +7,13 @@ const emit = defineEmits<{
 
 const loginState = useLoginState()
 
-const user = computed(() => props.user || loginState.get())
+const user = computed(() => props.user || loginState.getUser())
 
 const { send, loading } = useRequest(() => UserSrv.resetPassword(user.value.id, model), {
   immediate: false,
   middleware: middlewares([formValidationMiddleware(() => formRef.value)])
 }).onSuccess(() => {
-  if (user.value?.id === loginState.get().id) {
+  if (user.value?.id === loginState.getUser().id) {
     loginState.$reset()
     navigateTo(getLoginUrl())
   }

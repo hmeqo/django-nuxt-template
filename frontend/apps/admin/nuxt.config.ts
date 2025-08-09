@@ -55,6 +55,9 @@ export default defineNuxtConfig({
     buildAssetsDir: 'static',
     rootAttrs: {
       id: 'root'
+    },
+    head: {
+      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
     }
   },
 
@@ -67,34 +70,6 @@ export default defineNuxtConfig({
     }
   },
 
-  site: {
-    url: 'https://example.com',
-    indexable: false
-  },
-  seo: {
-    meta: {
-      description: 'Django Nuxt Template'
-    }
-  },
-  sitemap: {
-    exclude: ['/a/**']
-  },
-
-  nitro: {
-    compressPublicAssets: true,
-    prerender: {
-      routes: ['/', '/login', '/sitemap.xml']
-    }
-  },
-
-  pwa: {
-    manifest: {
-      name: 'Django Nuxt Template',
-      short_name: 'Django Nuxt Template',
-      theme_color: '#0a0a0a',
-      description: 'Django Nuxt Template'
-    }
-  },
   colorMode: {
     preference: 'dark'
   },
@@ -112,6 +87,33 @@ export default defineNuxtConfig({
     defaultLocale: 'zh-Hans'
   },
 
+  site: {
+    url: 'https://example.com',
+    indexable: false
+  },
+  seo: {
+    meta: {
+      description: 'Django Nuxt Template'
+    }
+  },
+  sitemap: {
+    enabled: false
+  },
+  pwa: {
+    manifest: {
+      name: 'Django Nuxt Template',
+      short_name: 'Django Nuxt Template',
+      theme_color: '#0a0a0a',
+      description: 'Django Nuxt Template'
+    }
+  },
+
+  nitro: {
+    compressPublicAssets: true,
+    prerender: {
+      routes: ['/', '/login', '/sitemap.xml']
+    }
+  },
   vite: {
     build: {
       terserOptions: {

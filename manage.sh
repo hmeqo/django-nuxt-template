@@ -45,7 +45,7 @@ start_backend() {
 }
 
 start_frontend() {
-    cd frontend/apps/web || exit
+    cd frontend/apps/admin || exit
     env $(cat .env) node .output/server/index.mjs
     cd ../../..
 }
@@ -121,7 +121,7 @@ dev() {
     sleep 0.5
 
     tmux send-keys -t $session_name:0 'uv run dev' C-m
-    tmux send-keys -t $session_name:1 'pnpm dev:web' C-m
+    tmux send-keys -t $session_name:1 'pnpm dev:admin' C-m
 
     tmux attach -t $session_name
 }

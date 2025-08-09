@@ -1,6 +1,6 @@
 packages:
+  - apps/*
   - packages/*
   - packages/hmeqo/*
-  - apps/*
 patchedDependencies:
   "@nuxtjs/color-mode": patches/@nuxtjs__color-mode.patch

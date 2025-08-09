@@ -26,7 +26,7 @@ const menuValue = computed(() => {
 
 <template>
   <main class="fixed flex flex-col w-full h-full">
-    <LayoutAdminTemplateHeader v-model:collapsed="collapsed" v-model:show-drawer="showDrawer" bordered />
+    <LayoutAdminTemplateHeader v-model:collapsed="collapsed" v-model:show-drawer="showDrawer" show-icon bordered />
     <NLayout has-sider>
       <NLayoutSider
         v-model:collapsed="collapsed"

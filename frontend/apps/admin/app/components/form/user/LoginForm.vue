@@ -7,7 +7,7 @@ const { send, loading } = useRequest(() => AuthSrv.login(model), {
   immediate: false,
   middleware: formValidationMiddleware(() => formRef.value)
 }).onSuccess(({ data }) => {
-  loginState.set(data.user)
+  loginState.setState(data)
 })
 const { lockedSend } = useLockedSend(send, { once: true })
 

@@ -6,6 +6,14 @@ export default defineNuxtModule({
     name: '@workspace/backend'
   },
 
+  hooks: {
+    'prepare:types': ({ references }) => {
+      references.push({
+        types: '@workspace/backend/types'
+      })
+    }
+  },
+
   async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
 

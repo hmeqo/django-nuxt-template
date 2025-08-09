@@ -23,7 +23,7 @@ export function formValidationMiddleware(getForm: () => any): Middleware {
 export function dialogMiddleware(options?: DialogOptions): Middleware {
   return (context, next) =>
     new Promise((resolve, reject) =>
-      createNaiveDialog({
+      naiveCreateDialog({
         ...options,
         onPositiveClick(event) {
           options?.onPositiveClick?.(event)

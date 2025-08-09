@@ -68,15 +68,6 @@ class LoginStateSer(serializers.Serializer):
     user = UserSer(read_only=True)
     expires = serializers.DateTimeField(read_only=True)
 
-    @classmethod
-    def make(cls, request: Request):
-        return cls(
-            {
-                "user": request.user,
-                "expires": request.session.get_expiry_date(),
-            }
-        ).data
-
 
 class UserResetPwdSer(serializers.ModelSerializer):
     class Meta:

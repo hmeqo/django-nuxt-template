@@ -2,6 +2,11 @@
 import { UserInfo } from '#components'
 import type { DropdownOption } from 'naive-ui'
 
+defineProps<{
+  showIcon?: boolean
+  bordered?: boolean
+}>()
+
 const collapsed = defineModel<boolean>('collapsed', { default: false })
 const showDrawer = defineModel<boolean>('showDrawer', { default: false })
 
@@ -29,12 +34,12 @@ const userMenuOptions = computed((): DropdownOption[] => [
   {
     label: naiveRenderLink('个人中心', Urls.admin.profile.index),
     key: 'profile',
-    icon: renderIcon({ attr: { class: 'i-material-symbols:person-outline w-5 h-5' } })
+    icon: naiveRenderIcon({ attr: { class: 'i-material-symbols:person-outline w-5 h-5' } })
   },
   {
     label: '重置密码',
     key: 'reset-password',
-    icon: renderIcon({ attr: { class: 'i-material-symbols:lock-outline w-5 h-5' } }),
+    icon: naiveRenderIcon({ attr: { class: 'i-material-symbols:lock-outline w-5 h-5' } }),
     props: {
       onClick: () => {
         resetPasswordVisible.value = true
@@ -44,7 +49,7 @@ const userMenuOptions = computed((): DropdownOption[] => [
   {
     label: '退出登录',
     key: 'logout',
-    icon: renderIcon({ attr: { class: 'i-material-symbols:logout w-5 h-5' } }),
+    icon: naiveRenderIcon({ attr: { class: 'i-material-symbols:logout w-5 h-5' } }),
     props: { onClick: () => logout() }
   }
 ])
@@ -56,12 +61,14 @@ function menuButton() {
 </script>
 
 <template>
-  <NLayoutHeader class="flex items-center px-4 py-1">
+  <NLayoutHeader class="flex items-center px-4 py-1" :bordered="bordered">
     <div class="flex flex-1 grow items-center gap-1 overflow-hidden" data-tauri-drag-region>
-      <img v-if="isTauri" src="/favicon.ico" class="no-drag w-6 h-6" data-tauri-drag-region />
-      <NuxtLink v-else class="shrink-0 mr-2" :to="getHomeUrl()">
-        <img src="/favicon.ico" class="no-drag w-6 h-6" />
-      </NuxtLink>
+      <template v-if="showIcon">
+        <img v-if="isTauri" src="/favicon.ico" class="no-drag w-6 h-6" data-tauri-drag-region />
+        <NuxtLink v-else class="shrink-0 mr-2" :to="getHomeUrl()">
+          <img src="/favicon.ico" class="no-drag w-6 h-6" />
+        </NuxtLink>
+      </template>
       <NPopover trigger="hover" :disabled="!responsive.small">
         <template #trigger>
           <NButton :focusable="false" quaternary @click="menuButton">

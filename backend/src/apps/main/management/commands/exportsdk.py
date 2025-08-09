@@ -84,6 +84,8 @@ class Command(BaseCommand):
                 check=True,
             )
             self.stdout.write(self.style.SUCCESS("SDK exported successfully"))
+            self.stdout.write(
+                "You may need to run 'npm run postinstall' or restart dev server for the changes to take effect"
+            )
         except subprocess.CalledProcessError as e:
             self.stdout.write(self.style.ERROR(f"Failed to export SDK: {e}"))
-        subprocess.run(["pnpm", "postinstall"], cwd=str(frontend_path))

@@ -21,6 +21,7 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet, ViewSet
 from .models import *
 from .permissions import *
 from .serializers import *
+from .services import *
 
 # Create your views here.
 
@@ -30,11 +31,11 @@ class AuthViewSet(ViewSet):
     @apischema(body=LoginSer, transaction=False, response=LoginStateSer)
     @action(methods=["post"], detail=False)
     def login(self, request: ASRequest[LoginSer]) -> Any:
-        user = cast(Optional[User], authenticate(cast(HttpRequest, request), **request.validated_data))
+        user = authenticate(request, **request.validated_data)
         if not user:
             raise HttpError(_("Invalid username or password"), status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-        login(cast(HttpRequest, request), user)
-        return LoginStateSer.make(request)
+        login(request, user)
+        return UserSrv.login_state(request)
 
     @apischema()
     @action(methods=["post"], detail=False)
@@ -43,10 +44,8 @@ class AuthViewSet(ViewSet):
 
     @apischema(response=LoginStateSer)
     @action(methods=["get"], detail=False)
-    def login_state(self, request: Request) -> Any:
-        if not request.user.is_authenticated:
-            return None
-        return LoginStateSer.make(request)
+    def login_state(self, request: Request):
+        return UserSrv.login_state(request)
 
 
 @apischema_view(destroy=apischema(permissions=[IsSuperUser]))
@@ -68,15 +67,15 @@ class UserViewSet(ModelViewSet):
     @apischema(body=UserResetPwdSer)
     @action(methods=["post"], detail=True)
     def reset_password(self, request: ASRequest[UserResetPwdSer], pk: int) -> Any:
-        user: User = cast(User, request.serializer.instance)
-        if request.user.pk != user.pk and not cast(User, request.user).is_superuser:
+        target_user = cast(User, request.serializer.instance)
+        if request.user.pk != target_user.pk and not cast(User, request.user).is_superuser:
             raise HttpError(_("Permission denied"), status=status.HTTP_403_FORBIDDEN)
-        if user.check_password(request.validated_data["password"]):
+        if target_user.check_password(request.validated_data["password"]):
             raise HttpError(
                 _("The new password cannot be the same as the old password."),
                 status=status.HTTP_422_UNPROCESSABLE_ENTITY,
             )
-        user.set_password(request.validated_data["password"])
-        user.save()
-        if request.user.pk == user.pk:
-            logout(cast(HttpRequest, request))
+        target_user.set_password(request.validated_data["password"])
+        target_user.save()
+        if request.user.pk == target_user.pk:
+            logout(request)

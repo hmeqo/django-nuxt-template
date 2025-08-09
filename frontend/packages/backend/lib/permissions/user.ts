@@ -1,25 +1,24 @@
-let authCached = false
+const IsLoggedIn = createPermission(
+  (() => {
+    let authCached = false
+    return () => {
+      const loginState = useLoginState()
 
-const checkLoginState = createPermission(() => {
-  const loginState = useLoginState()
+      if (!authCached)
+        AuthSrv.loginState()
+          .then((data) => loginState.setState(data))
+          .catch((res) => {
+            if (res.status !== 401) return
+            loginState.$reset()
+            if (useRoute().path !== getLoginUrl()) redirectTo(getLoginUrl())
+          })
+          .finally(() => (authCached = true))
 
-  if (!authCached)
-    AuthSrv.loginState()
-      .then((data) => {
-        if (data) {
-          loginState.set(data.user)
-        } else {
-          loginState.$reset()
-          if (useRoute().path !== getLoginUrl()) redirectTo(getLoginUrl())
-        }
-      })
-      .catch(() => {})
-      .finally(() => (authCached = true))
+      return loginState.isLoggedIn()
+    }
+  })()
+)
 
-  return loginState.isLoggedIn()
-})
-
-export const IsLoggedIn = createPermission(() => checkLoginState.verify() && useLoginState().isLoggedIn())
 export const IsAuthenticated = IsLoggedIn
-export const IsSuperUser = createPermission(() => checkLoginState.verify() && !!useLoginState().user?.is_superuser)
+export const IsSuperUser = createPermission(() => IsLoggedIn.verify() && !!useLoginState().user?.is_superuser)
 export const IsStaff = createPermission(() => IsSuperUser.verify() || !!useLoginState().user?.is_staff)

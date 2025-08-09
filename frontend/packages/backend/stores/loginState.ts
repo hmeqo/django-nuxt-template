@@ -9,11 +9,11 @@ export const useLoginState = defineStore('login-state', {
     user: null
   }),
   actions: {
-    get() {
+    getUser() {
       return this.user!
     },
-    set(user: UserSer) {
-      this.user = user
+    setState(state: LoginStateSer) {
+      this.user = state.user
     },
     isLoggedIn() {
       return !!this.user

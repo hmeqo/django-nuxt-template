@@ -24,12 +24,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-types = [
-    "django-stubs-ext",
-    "django-stubs[compatible-mypy]",
-    "django-types",
-    "djangorestframework-stubs[compatible-mypy]",
-]
+types = ["django-types", "djangorestframework-types"]
 cache = ["django-redis"]
 postgresql = ["psycopg"]
 mysql = ["mysqlclient"]
@@ -58,9 +53,3 @@ ignore = ["F401", "F403", "F405"]
 
 [tool.ruff.format]
 quote-style = "double"
-
-[tool.mypy]
-plugins = ["mypy_django_plugin.main"]
-
-[tool.django-stubs]
-django_settings_module = "backend.settings"
