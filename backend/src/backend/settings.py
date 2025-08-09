@@ -114,6 +114,9 @@ DATABASES = {
         "PASSWORD": db_cfg.password,
         "HOST": db_cfg.host,
         "PORT": str(db_cfg.port) if db_cfg.port else None,
+        "OPTIONS": {
+            "pool": db_cfg.engine.endswith("postgresql") or db_cfg.engine.endswith("oracle") and db_cfg.pool,
+        },
     },
 }
 

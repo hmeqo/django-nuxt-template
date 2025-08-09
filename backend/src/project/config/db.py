@@ -12,5 +12,6 @@ class DBCfg(BaseSettings):
     password: str = ""
     host: str = "127.0.0.1"
     port: int | None = None
+    pool: bool = False
 
     use_cache: bool = False
