@@ -33,6 +33,7 @@ class UserSer(serializers.ModelSerializer):
             "display_name",
             "first_name",
             "last_name",
+            "email",
             "is_superuser",
             "is_staff",
             "is_active",

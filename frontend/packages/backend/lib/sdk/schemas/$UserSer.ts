@@ -28,6 +28,11 @@ export const $UserSer = {
             type: 'string',
             maxLength: 150,
         },
+        email: {
+            type: 'string',
+            format: 'email',
+            maxLength: 254,
+        },
         is_superuser: {
             type: 'boolean',
             description: `Designates that this user has all permissions without explicitly assigning them.`,

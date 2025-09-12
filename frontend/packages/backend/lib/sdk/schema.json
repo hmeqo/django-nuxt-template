@@ -99,7 +99,7 @@
                     {}
                 ],
                 "responses": {
-                    "204": {
+                    "200": {
                         "description": "No response body"
                     }
                 }
@@ -417,8 +417,15 @@
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "No response body"
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserSer"
+                                }
+                            }
+                        },
+                        "description": ""
                     }
                 }
             }
@@ -575,6 +582,12 @@
                         "type": "string",
                         "maxLength": 150
                     },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "title": "Email address",
+                        "maxLength": 254
+                    },
                     "is_superuser": {
                         "type": "boolean",
                         "title": "Superuser status",
@@ -631,6 +644,12 @@
                         "type": "string",
                         "maxLength": 150
                     },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "title": "Email address",
+                        "maxLength": 254
+                    },
                     "is_superuser": {
                         "type": "boolean",
                         "title": "Superuser status",
@@ -680,6 +699,12 @@
                     "last_name": {
                         "type": "string",
                         "maxLength": 150
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "title": "Email address",
+                        "maxLength": 254
                     },
                     "is_superuser": {
                         "type": "boolean",

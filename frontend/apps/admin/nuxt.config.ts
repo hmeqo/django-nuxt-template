@@ -33,6 +33,8 @@ export default defineNuxtConfig({
   modules: [
     '@workspace-hmeqo/i18n',
     '@workspace-hmeqo/common',
+    '@workspace-hmeqo/openapi',
+    '@workspace-hmeqo/alova',
     '@workspace-hmeqo/backend',
     '@workspace-hmeqo/naive-ui',
     '@workspace-hmeqo/pwa',
@@ -61,17 +63,31 @@ export default defineNuxtConfig({
     }
   },
 
-  routeRules: {
-    '/**': {
-      // cache: {
-      //   swr: true,
-      //   maxAge: 60
-      // }
+  naiveui: {
+    themeConfig: {
+      shared: {
+        // common: {
+        //   primaryColor: '#2080f0',
+        //   primaryColorHover: '#4098fc',
+        //   primaryColorPressed: '#1060c9',
+        //   primaryColorSuppl: '#4098fc'
+        // },
+        // Checkbox: {
+        //   textColorDisabled: 'black',
+        //   checkMarkColorDisabled: 'black',
+        //   checkMarkColorDisabledChecked: 'black'
+        // },
+        // Image: {
+        //   toolbarColor: 'rgba(0, 0, 0, 0.6)'
+        // }
+      },
+      mobileOrTablet: {
+        defaults: false
+      }
     }
   },
-
   colorMode: {
-    preference: 'dark'
+    preference: 'light'
   },
   i18n: {
     locales: [
@@ -108,10 +124,20 @@ export default defineNuxtConfig({
     }
   },
 
+  routeRules: {
+    '/**': {
+      // cache: {
+      //   swr: true,
+      //   maxAge: 60
+      // }
+    }
+  },
+
   nitro: {
     compressPublicAssets: true,
     prerender: {
-      routes: ['/', '/login', '/sitemap.xml']
+      routes: ['/', '/login']
+      // routes: ['/', '/login', '/sitemap.xml']
     }
   },
   vite: {
@@ -136,5 +162,5 @@ export default defineNuxtConfig({
     }
   },
 
-  watch: ['./packages/*', './package/core/*']
+  watch: []
 })

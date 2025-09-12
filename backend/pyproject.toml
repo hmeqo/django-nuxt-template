@@ -25,9 +25,7 @@ dependencies = [
 
 [dependency-groups]
 types = ["django-types", "djangorestframework-types"]
-cache = ["django-redis"]
-postgresql = ["psycopg[pool]"]
-mysql = ["mysqlclient"]
+db = ["psycopg[pool]", "django-redis"]
 prod = ["granian"]
 build = ["nuitka", "patchelf; platform_system == 'Linux'"]
 

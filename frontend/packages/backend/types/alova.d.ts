@@ -1,6 +1,6 @@
-import type { AlovaCustomTypeMeta } from '@workspace-hmeqo/backend/types'
+import type { AlovaCustomTypeMeta } from '@workspace-hmeqo/alova/types'
 
-declare module '@workspace-hmeqo/backend/types' {
+declare module '@workspace-hmeqo/alova/types' {
   export interface AlovaCustomTypeMeta {
     noMessage?: boolean
   }

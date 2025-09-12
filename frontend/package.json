@@ -2,16 +2,18 @@
   "name": "django-nuxt-template",
   "private": true,
   "scripts": {
-    "build": "nuxt build apps/admin",
+    "build": "set -e; for app in apps/*; do nuxt build $app; done",
     "build:admin": "nuxt build apps/admin",
     "dev:admin": "nuxt dev apps/admin",
-    "generate": "nuxt generate apps/admin",
+    "generate": "set -e; for app in apps/*; do nuxt generate $app; done",
     "generate:admin": "nuxt generate apps/admin",
     "preview:admin": "nuxt preview apps/admin",
-    "postinstall": "nuxt prepare apps/admin",
+    "serve:admin": "cd apps/admin && node -r dotenv/config .output/server/index.mjs ",
+    "postinstall": "set -e; for app in apps/*; do nuxt prepare $app; done",
     "lint": "eslint .",
-    "openapi": "openapi",
     "format": "prettier --write .",
-    "setup-ssl": "./scripts/generate-ssl.sh"
+    "openapi": "openapi",
+    "generate:sdk": "./scripts/generate-sdk.sh",
+    "generate:ssl": "./scripts/generate-ssl.sh"
   }
 }

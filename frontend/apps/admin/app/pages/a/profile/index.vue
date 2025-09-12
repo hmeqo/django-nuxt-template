@@ -4,7 +4,7 @@ definePageMeta({
   layout: 'admin',
   title: '个人中心',
   icon: 'i-material-symbols:person-outline',
-  tags: [Urls.admin.profile.index]
+  tags: [PP.admin.profile.index]
 })
 
 const { user } = useLoginState()

@@ -7,7 +7,7 @@ definePageMeta({
   layout: 'admin',
   title: '用户管理',
   icon: 'i-material-symbols:person-outline',
-  tags: [Urls.admin.user.index]
+  tags: [PP.admin.user.index]
 })
 
 const { data: users, loading } = useRequest(() => UserSrv.list(), { initialData: [] })

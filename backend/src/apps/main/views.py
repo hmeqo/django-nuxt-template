@@ -30,14 +30,14 @@ from .services import *
 class AuthViewSet(ViewSet):
     @apischema(body=LoginSer, transaction=False, response=LoginStateSer)
     @action(methods=["post"], detail=False)
-    def login(self, request: ASRequest[LoginSer]) -> Any:
-        user = authenticate(request, **request.validated_data)
+    def login(self, request: ASRequest[LoginSer]):
+        user = cast(Optional[User], authenticate(cast(HttpRequest, request), **request.validated_data))
         if not user:
             raise HttpError(_("Invalid username or password"), status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-        login(request, user)
+        login(cast(HttpRequest, request), user)
         return UserSrv.login_state(request)
 
-    @apischema()
+    @apischema(response=None)
     @action(methods=["post"], detail=False)
     def logout(self, request) -> Any:
         logout(request)
@@ -45,6 +45,8 @@ class AuthViewSet(ViewSet):
     @apischema(response=LoginStateSer)
     @action(methods=["get"], detail=False)
     def login_state(self, request: Request):
+        if not request.user.is_authenticated:
+            raise HttpError(_("Not logged in"), status=status.HTTP_401_UNAUTHORIZED)
         return UserSrv.login_state(request)
 
 

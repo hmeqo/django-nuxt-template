@@ -2,16 +2,11 @@
 definePageMeta({
   layout: 'login',
   title: '登录',
-  tags: [Urls.login]
+  tags: [PP.login],
+  middleware: checkLoginPagePerm
 })
 
 const { isMobile } = useNaiveDevice()
-
-watch(
-  computed(() => useLoginState().user),
-  () => clientOnly(routeAuth([{ auth: [IsStaff], to: Urls.admin.index }])),
-  { immediate: true }
-)
 </script>
 
 <template>

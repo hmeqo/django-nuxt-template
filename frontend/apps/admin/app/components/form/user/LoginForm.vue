@@ -8,6 +8,7 @@ const { send, loading } = useRequest(() => AuthSrv.login(model), {
   middleware: formValidationMiddleware(() => formRef.value)
 }).onSuccess(({ data }) => {
   loginState.setState(data)
+  checkLoginPagePerm?.()
 })
 const { lockedSend } = useLockedSend(send, { once: true })
 
@@ -27,14 +28,14 @@ const formRef = useTemplateRef('form')
     <NFormItem path="username" label="用户名" first>
       <NInput v-model:value="model.username">
         <template #prefix>
-          <NIcon class="i-material-symbols:person-outline mr-1" />
+          <NIcon class="i-ic:outline-person-outline mr-1" />
         </template>
       </NInput>
     </NFormItem>
     <NFormItem path="password" label="密码" first>
       <NInput v-model:value="model.password" type="password" show-password-on="click">
         <template #prefix>
-          <NIcon class="i-material-symbols:lock-outline mr-1" />
+          <NIcon class="i-ic:outline-lock mr-1" />
         </template>
       </NInput>
     </NFormItem>

@@ -2,33 +2,44 @@
 
 set -e
 
+cd "$(dirname "${BASH_SOURCE[0]}")" || exit
+
+[ -f .env ] && . .env
+
+BASE_DIR=$(pwd)
+
+SERVICE_NAME="${SERVICE_NAME:-"website"}"
+SESSION_NAME="${SESSION_NAME:-"$SERVICE_NAME-dev"}"
+
+BACKEND_PATH="${BACKEND_PATH:-"$BASE_DIR/backend"}"
+
+FRONTEND_PATH="${FRONTEND_PATH:-"$BASE_DIR/frontend"}"
+FRONTEND_APPS=$(ls "${FRONTEND_APPS_DIR:-"$FRONTEND_PATH/apps"}")
+
 # database
 
 backupdb() {
+    cd "$BACKEND_PATH" || exit
     echo "Backing up database..."
-    cd backend || exit
     uv run ./manage.py dbbackup --clean
     uv run ./manage.py mediabackup --clean
-    cd ..
     echo "Backup complete!"
 }
 
 # sync
 
 sync_backend() {
-    cd backend || exit
-    uv sync --frozen --group=types --group=cache --group=postgresql --group=prod
+    cd "$BACKEND_PATH" || exit
+    uv sync --frozen --group=db --group=prod
     uv run ./manage.py migrate
     uv run ./manage.py compilemessages --ignore=.venv
     uv run ./manage.py collectresources --all
-    cd ..
 }
 
 sync_frontend() {
-    cd frontend || exit
+    cd "$FRONTEND_PATH" || exit
     pnpm install --frozen-lockfile
     pnpm build
-    cd ..
 }
 
 sync() {
@@ -36,102 +47,59 @@ sync() {
     sync_backend
 }
 
-# batch
-
-start_backend() {
-    cd backend || exit
-    uv run serve
-    cd ..
-}
-
-start_frontend() {
-    cd frontend/apps/admin || exit
-    env $(cat .env) node .output/server/index.mjs
-    cd ../../..
-}
-
-start() {
-    start_backend &
-    start_frontend &
-    wait
-}
-
-# service
-
-install_service() {
-    sudo bash -c "
-        cp -f ./website.service /etc/systemd/system/website.service
-        systemctl daemon-reload
-        systemctl enable website
-    "
-}
-
-uninstall_service() {
-    sudo bash -c "
-        systemctl disable website
-        rm /etc/systemd/system/website.service
-        systemctl daemon-reload
-    "
-}
-
-start_service() {
-    sudo systemctl start website
-}
-
-stop_service() {
-    sudo systemctl stop website
-}
-
-restart_service() {
-    sudo systemctl restart website
-}
-
 # launch scripts
 
 dev() {
-    local session_name="dev"
-    local backend_port=8000
-    local frontend_port=3000
+    BACKEND_PORT=${BACKEND_PORT:-"8000"}
+    FRONTEND_PORT=${FRONTEND_PORT:-"3000"}
 
-    while getopts ":n:b:f:" opt; do
-        case $opt in
-        n)
-            session_name="$OPTARG"
-            ;;
-        b)
-            backend_port="$OPTARG"
-            ;;
-        f)
-            frontend_port="$OPTARG"
-            ;;
-        \?)
-            echo "Invalid option: -$OPTARG" >&2
-            exit 1
-            ;;
-        :)
-            echo "Option -$OPTARG requires an argument." >&2
-            exit 1
-            ;;
-        esac
+    tmux new-session -d -s "$SESSION_NAME" -n backend -c backend -e APP_PORT="$BACKEND_PORT"
+
+    local frontend_no=1
+    local i=0
+    for app in $FRONTEND_APPS; do
+        tmux new-window -t "$SESSION_NAME:$((i + frontend_no))" -n "frontend:$app" -c frontend -e PORT=$((FRONTEND_PORT + i)) -e NUXT_PUBLIC_API_BASE="http://127.0.0.1:$BACKEND_PORT/api"
+        i=$((i + 1))
     done
-
-    tmux new-session -d -s $session_name -n backend -c backend -e DJANGO_PORT=$backend_port
-    tmux new-window -t $session_name:1 -n frontend -c frontend -e PORT=$frontend_port -e NUXT_PUBLIC_API_BASE=http://127.0.0.1:$backend_port
 
     sleep 0.5
 
-    tmux send-keys -t $session_name:0 'uv run dev' C-m
-    tmux send-keys -t $session_name:1 'pnpm dev:admin' C-m
+    tmux send-keys -t "$SESSION_NAME:0" 'uv run dev' C-m
 
-    tmux attach -t $session_name
+    local i=0
+    for app in $FRONTEND_APPS; do
+        tmux send-keys -t "$SESSION_NAME:$((i + frontend_no))" "pnpm dev:$app" C-m
+        i=$((i + 1))
+    done
+
+    tmux attach -t "$SESSION_NAME"
 }
 
-deploy() {
-    sync
-    install_service
-    restart_service
+serve_backend() {
+    cd "$BACKEND_PATH" || exit
+    uv run serve &
+    wait
 }
 
-cd "$(dirname "${BASH_SOURCE[0]}")" || exit
+serve_frontend() {
+    cd "$FRONTEND_PATH" || exit
+    for app in $FRONTEND_APPS; do
+        pnpm "serve:$app" &
+    done
+    wait
+}
+
+serve() {
+    serve_backend &
+    serve_frontend &
+    wait
+}
+
+# extra commands
+
+[ -d "$BASE_DIR"/scripts ] &&
+for f in "$BASE_DIR"/scripts/*; do
+    [[ ".sh" == "${f##*.}" ]] && source "$f"
+done
 
 "$@"

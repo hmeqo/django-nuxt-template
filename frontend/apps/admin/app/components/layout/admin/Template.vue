@@ -26,29 +26,27 @@ const menuValue = computed(() => {
 
 <template>
   <main class="fixed flex flex-col w-full h-full">
-    <LayoutAdminTemplateHeader v-model:collapsed="collapsed" v-model:show-drawer="showDrawer" show-icon bordered />
     <NLayout has-sider>
-      <NLayoutSider
-        v-model:collapsed="collapsed"
-        class="hidden sm:flex"
-        collapse-mode="width"
-        :width="width"
-        :native-scrollbar="false"
-        bordered
-      >
-        <NMenu :value="menuValue" :options="menus" :default-expand-all="true" />
-        <NDrawer
-          v-if="!responsive.small"
-          v-model:show="showDrawer"
-          placement="left"
-          :default-expand-all="true"
-          @click="showDrawer = false"
+      <NaiveConfigProvider force-color-mode="dark">
+        <NLayoutSider
+          v-model:collapsed="collapsed"
+          class="hidden sm:flex h-full"
+          collapse-mode="width"
+          :width="width"
+          :native-scrollbar="false"
+          bordered
         >
-          <NMenu :value="route.path" :options="menus" />
-        </NDrawer>
-      </NLayoutSider>
+          <NMenu :value="menuValue" :options="menus" default-expand-all />
+        </NLayoutSider>
+        <Teleport to="#teleports">
+          <NDrawer v-model:show="showDrawer" placement="left" :default-expand-all="true" @click="showDrawer = false">
+            <NMenu :value="route.path" :options="menus" default-expand-all />
+          </NDrawer>
+        </Teleport>
+      </NaiveConfigProvider>
       <NLayout content-class="flex flex-col w-full h-full">
-        <NLayoutContent class="w-full h-full bg-transparent">
+        <LayoutAdminTemplateHeader v-model:collapsed="collapsed" v-model:show-drawer="showDrawer" bordered />
+        <NLayoutContent class="w-full h-full">
           <slot />
         </NLayoutContent>
       </NLayout>

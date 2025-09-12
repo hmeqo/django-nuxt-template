@@ -1,8 +1,10 @@
-import { alovaInst } from '@workspace-hmeqo/backend/lib/alova'
+import { createPaths, pathsEnsureEndSlash } from '@hmeqo/paths'
+import { alovaInst } from '@workspace-hmeqo/alova/lib/core'
+import type { LoginSerRequest, LoginStateSer } from '../sdk'
 
-const urls = urlsEnsureEndSlash(
-  createUrls('api', {
-    auth: createUrls('auth', {
+const urls = pathsEnsureEndSlash(
+  createPaths('', {
+    auth: createPaths('auth', {
       login: 'login',
       logout: 'logout',
       loginState: 'login_state'
@@ -20,6 +22,6 @@ export const AuthSrv = {
   },
 
   loginState: () => {
-    return alovaInst.Get<LoginStateSer>(urls.auth.loginState)
+    return alovaInst.Get<LoginStateSer>(urls.auth.loginState, { meta: { noMessage: true } })
   }
 }

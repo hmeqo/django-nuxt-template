@@ -11,6 +11,7 @@ export type UserSer = {
     display_name?: string;
     first_name?: string;
     last_name?: string;
+    email?: string;
     /**
      * Designates that this user has all permissions without explicitly assigning them.
      */

@@ -131,13 +131,13 @@ export class UsersService {
      *
      * @param id A unique integer value identifying this User.
      * @param requestBody
-     * @returns void
+     * @returns UserSer
      * @throws ApiError
      */
     public static usersResetPasswordCreate(
         id: number,
         requestBody: UserResetPwdSerRequest,
-    ): CancelablePromise<void> {
+    ): CancelablePromise<UserSer> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/users/{id}/reset_password/',

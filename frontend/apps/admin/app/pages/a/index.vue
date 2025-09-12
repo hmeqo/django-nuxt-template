@@ -4,7 +4,7 @@ definePageMeta({
   layout: 'admin',
   title: '仪表盘',
   icon: 'i-material-symbols:dashboard-outline',
-  tags: [Urls.admin.index]
+  tags: [PP.admin.index]
 })
 </script>
 

@@ -34,10 +34,10 @@ export class AuthService {
         });
     }
     /**
-     * @returns void
+     * @returns any No response body
      * @throws ApiError
      */
-    public static authLogoutCreate(): CancelablePromise<void> {
+    public static authLogoutCreate(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/auth/logout/',

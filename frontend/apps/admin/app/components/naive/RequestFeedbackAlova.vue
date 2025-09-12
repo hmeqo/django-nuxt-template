@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Event } from '@workspace-hmeqo/backend/lib/alova'
+import type { Event } from '@workspace-hmeqo/alova/lib/core'
 import {
   RequestErrorEvent,
   RequestInternetErrorEvent,
@@ -7,7 +7,7 @@ import {
   RequestSuccessEvent,
   subscribe,
   unsubscribe
-} from '@workspace-hmeqo/backend/lib/alova'
+} from '@workspace-hmeqo/alova/lib/core'
 
 const { loadingBar, message, notification } = useNaiveApi()
 

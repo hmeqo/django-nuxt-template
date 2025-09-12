@@ -114,9 +114,8 @@ DATABASES = {
         "PASSWORD": db_cfg.password,
         "HOST": db_cfg.host,
         "PORT": str(db_cfg.port) if db_cfg.port else None,
-        "OPTIONS": {
-            "pool": db_cfg.engine.endswith("postgresql") or db_cfg.engine.endswith("oracle") and db_cfg.pool,
-        },
+        "OPTIONS": {}
+        | ({"pool": db_cfg.pool} if (db_cfg.engine.endswith("postgresql") or db_cfg.engine.endswith("oracle")) else {}),
     },
 }
 
@@ -278,8 +277,8 @@ DRF_APISCHEMA_SETTINGS = {
 
 DBBACKUP_STORAGE = "django.core.files.storage.FileSystemStorage"
 DBBACKUP_STORAGE_OPTIONS = {"location": app_data_dir / "backups"}
-DBBACKUP_CLEANUP_KEEP = 10
-DBBACKUP_CLEANUP_KEEP_MEDIA = 10
+DBBACKUP_CLEANUP_KEEP = 3
+DBBACKUP_CLEANUP_KEEP_MEDIA = 3
 
 
 # Whitenoise
