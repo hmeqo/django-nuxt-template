@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export const $LoginStateSer = {
+export const $AuthStateSer = {
     properties: {
         user: {
             type: 'all-of',
@@ -11,12 +11,6 @@ export const $LoginStateSer = {
             }],
             isReadOnly: true,
             isRequired: true,
-        },
-        expires: {
-            type: 'string',
-            isReadOnly: true,
-            isRequired: true,
-            format: 'date-time',
         },
     },
 } as const;

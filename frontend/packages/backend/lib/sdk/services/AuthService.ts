@@ -2,35 +2,25 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { AuthStateSer } from '../models/AuthStateSer';
 import type { LoginSerRequest } from '../models/LoginSerRequest';
-import type { LoginStateSer } from '../models/LoginStateSer';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class AuthService {
     /**
      * @param requestBody
-     * @returns LoginStateSer
+     * @returns AuthStateSer
      * @throws ApiError
      */
     public static authLoginCreate(
         requestBody: LoginSerRequest,
-    ): CancelablePromise<LoginStateSer> {
+    ): CancelablePromise<AuthStateSer> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/auth/login/',
             body: requestBody,
             mediaType: 'application/json',
-        });
-    }
-    /**
-     * @returns LoginStateSer
-     * @throws ApiError
-     */
-    public static authLoginStateRetrieve(): CancelablePromise<LoginStateSer> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/auth/login_state/',
         });
     }
     /**
@@ -41,6 +31,16 @@ export class AuthService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/auth/logout/',
+        });
+    }
+    /**
+     * @returns AuthStateSer
+     * @throws ApiError
+     */
+    public static authStateRetrieve(): CancelablePromise<AuthStateSer> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/auth/state/',
         });
     }
 }

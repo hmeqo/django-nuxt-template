@@ -34,11 +34,6 @@ class CustomUserAdmin(UserAdmin):
         "is_superuser",
         "is_staff",
         "is_active",
-        "roles",
     )
     search_fields = ("username", "display_name", "first_name", "last_name", "email")
     ordering = ("username",)
-
-    @admin.display(description=_("Roles"))
-    def roles(self, obj):
-        return list(obj.roles)

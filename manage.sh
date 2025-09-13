@@ -52,13 +52,18 @@ sync() {
 dev() {
     BACKEND_PORT=${BACKEND_PORT:-"8000"}
     FRONTEND_PORT=${FRONTEND_PORT:-"3000"}
+    BACKEND_API_BASE=${BACKEND_API_BASE:-"http://127.0.0.1:$BACKEND_PORT/api"}
+    BACKEND_MEDIA_BASE=${MEDIA_API_BASE:-"http://127.0.0.1:$BACKEND_PORT/media"}
 
     tmux new-session -d -s "$SESSION_NAME" -n backend -c backend -e APP_PORT="$BACKEND_PORT"
 
     local frontend_no=1
     local i=0
     for app in $FRONTEND_APPS; do
-        tmux new-window -t "$SESSION_NAME:$((i + frontend_no))" -n "frontend:$app" -c frontend -e PORT=$((FRONTEND_PORT + i)) -e NUXT_PUBLIC_API_BASE="http://127.0.0.1:$BACKEND_PORT/api"
+        tmux new-window -t "$SESSION_NAME:$((i + frontend_no))" -n "frontend:$app" -c frontend \
+            -e PORT=$((FRONTEND_PORT + i)) \
+            -e BACKEND_API_BASE="$BACKEND_API_BASE" \
+            -e MEDIA_API_BASE="$BACKEND_MEDIA_BASE"
         i=$((i + 1))
     done
 
@@ -99,7 +104,7 @@ serve() {
 
 [ -d "$BASE_DIR"/scripts ] &&
 for f in "$BASE_DIR"/scripts/*; do
-    [[ ".sh" == "${f##*.}" ]] && source "$f"
+    [[ $f == *".sh" ]] && source "$f"
 done
 
 "$@"

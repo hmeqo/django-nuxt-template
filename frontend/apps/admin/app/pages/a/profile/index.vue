@@ -7,7 +7,7 @@ definePageMeta({
   tags: [PP.admin.profile.index]
 })
 
-const { user } = useLoginState()
+const { user } = useAuthState()
 </script>
 
 <template>

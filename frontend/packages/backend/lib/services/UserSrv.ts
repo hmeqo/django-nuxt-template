@@ -1,5 +1,5 @@
 import { createPaths, pathsEnsureEndSlash, rFormat } from '@hmeqo/paths'
-import { alovaInst } from '@workspace-hmeqo/alova/lib/core'
+import { alovaInst } from '@workspace/alova/lib/core'
 import type { UserResetPwdSerRequest, UserSer, UserSerRequest } from '../sdk'
 
 const urls = pathsEnsureEndSlash(

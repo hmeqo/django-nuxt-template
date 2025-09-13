@@ -10,7 +10,7 @@ defineProps<{
 const collapsed = defineModel<boolean>('collapsed', { default: false })
 const showDrawer = defineModel<boolean>('showDrawer', { default: false })
 
-const loginState = useLoginState()
+const loginState = useAuthState()
 
 const { send: logout } = useRequest(() => AuthSrv.logout(), {
   middleware: dialogMiddleware(naiveDialogOptionPresets.logout),

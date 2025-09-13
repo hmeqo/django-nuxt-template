@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const model = reactive(schemaToDefaults<LoginSerRequest>($LoginSerRequest))
 
-const loginState = useLoginState()
+const loginState = useAuthState()
 
 const { send, loading } = useRequest(() => AuthSrv.login(model), {
   immediate: false,

@@ -10,12 +10,12 @@
     "@iconify-json/lucide": "^1.2.67",
     "@iconify-json/material-symbols": "^1.2.29",
     "@iconify-json/tabler": "^1.2.22",
-    "@workspace-hmeqo/alova": "workspace:^",
     "@workspace-hmeqo/common": "workspace:^",
     "@workspace-hmeqo/i18n": "workspace:^",
     "@workspace-hmeqo/naive-ui": "workspace:^",
     "@workspace-hmeqo/pwa": "workspace:^",
     "@workspace-hmeqo/unocss": "workspace:^",
+    "@workspace/alova": "workspace:^",
     "@workspace/backend": "workspace:^",
     "@workspace/tauri": "workspace:^",
     "zxcvbn": "^4.4.2"

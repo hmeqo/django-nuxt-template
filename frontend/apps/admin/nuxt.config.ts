@@ -34,11 +34,11 @@ export default defineNuxtConfig({
     '@workspace-hmeqo/i18n',
     '@workspace-hmeqo/common',
     '@workspace-hmeqo/openapi',
-    '@workspace-hmeqo/alova',
     '@workspace-hmeqo/backend',
     '@workspace-hmeqo/naive-ui',
     '@workspace-hmeqo/pwa',
     '@workspace-hmeqo/unocss',
+    '@workspace/alova',
     '@workspace/backend',
     '@workspace/tauri'
   ],

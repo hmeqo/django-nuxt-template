@@ -1,5 +1,3 @@
-from typing import Optional
-
 from django.http import HttpRequest
 
 from .models import *
@@ -8,12 +6,9 @@ from .serializers import *
 
 class UserSrv:
     @staticmethod
-    def login_state(request: HttpRequest):
-        assert isinstance(request.user, User)
-        return LoginStateSer(
+    def login_state(user: User):
+        return AuthStateSer(
             {
-                "user": request.user,
-                "expires": request.session.get_expiry_date(),
-                "permissions": request.user.get_all_permissions(),
+                "user": user,
             }
         ).data

@@ -3,8 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { UserSer } from './UserSer';
-export type LoginStateSer = {
+export type AuthStateSer = {
     readonly user: UserSer;
-    readonly expires: string;
 };
 

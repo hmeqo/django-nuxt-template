@@ -45,36 +45,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/LoginStateSer"
-                                }
-                            }
-                        },
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/auth/login_state/": {
-            "get": {
-                "operationId": "auth_login_state_retrieve",
-                "tags": [
-                    "auth"
-                ],
-                "security": [
-                    {
-                        "cookieAuth": []
-                    },
-                    {
-                        "basicAuth": []
-                    },
-                    {}
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/LoginStateSer"
+                                    "$ref": "#/components/schemas/AuthStateSer"
                                 }
                             }
                         },
@@ -101,6 +72,35 @@
                 "responses": {
                     "200": {
                         "description": "No response body"
+                    }
+                }
+            }
+        },
+        "/api/auth/state/": {
+            "get": {
+                "operationId": "auth_state_retrieve",
+                "tags": [
+                    "auth"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {
+                        "basicAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthStateSer"
+                                }
+                            }
+                        },
+                        "description": ""
                     }
                 }
             }
@@ -509,6 +509,22 @@
     },
     "components": {
         "schemas": {
+            "AuthStateSer": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/UserSer"
+                            }
+                        ],
+                        "readOnly": true
+                    }
+                },
+                "required": [
+                    "user"
+                ]
+            },
             "LoginSerRequest": {
                 "type": "object",
                 "properties": {
@@ -529,28 +545,6 @@
                 "required": [
                     "password",
                     "username"
-                ]
-            },
-            "LoginStateSer": {
-                "type": "object",
-                "properties": {
-                    "user": {
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/UserSer"
-                            }
-                        ],
-                        "readOnly": true
-                    },
-                    "expires": {
-                        "type": "string",
-                        "format": "date-time",
-                        "readOnly": true
-                    }
-                },
-                "required": [
-                    "expires",
-                    "user"
                 ]
             },
             "PatchedUserSerRequest": {

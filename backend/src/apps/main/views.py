@@ -28,26 +28,26 @@ from .services import *
 
 @apischema_view()
 class AuthViewSet(ViewSet):
-    @apischema(body=LoginSer, transaction=False, response=LoginStateSer)
+    @apischema(body=LoginSer, transaction=False, response=AuthStateSer)
     @action(methods=["post"], detail=False)
     def login(self, request: ASRequest[LoginSer]):
-        user = cast(Optional[User], authenticate(cast(HttpRequest, request), **request.validated_data))
+        user = cast(Optional[User], authenticate(request, **request.validated_data))
         if not user:
             raise HttpError(_("Invalid username or password"), status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         login(cast(HttpRequest, request), user)
-        return UserSrv.login_state(request)
+        return UserSrv.login_state(cast(User, request.user))
 
     @apischema(response=None)
     @action(methods=["post"], detail=False)
     def logout(self, request) -> Any:
         logout(request)
 
-    @apischema(response=LoginStateSer)
+    @apischema(response=AuthStateSer)
     @action(methods=["get"], detail=False)
-    def login_state(self, request: Request):
+    def state(self, request: Request):
         if not request.user.is_authenticated:
             raise HttpError(_("Not logged in"), status=status.HTTP_401_UNAUTHORIZED)
-        return UserSrv.login_state(request)
+        return UserSrv.login_state(cast(User, request.user))
 
 
 @apischema_view(destroy=apischema(permissions=[IsSuperUser]))

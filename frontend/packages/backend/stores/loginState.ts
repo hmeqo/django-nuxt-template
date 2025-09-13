@@ -1,6 +1,6 @@
 import type { StorageLike } from 'pinia-plugin-persistedstate'
 
-export const useLoginState = defineStore('login-state', {
+export const useAuthState = defineStore('auth-state', {
   state: () => ({
     user: <UserSer | null>null
   }),
@@ -8,7 +8,7 @@ export const useLoginState = defineStore('login-state', {
     getUser() {
       return this.user!
     },
-    setState(state: LoginStateSer) {
+    setState(state: AuthStateSer) {
       this.user = state.user
     },
     isLoggedIn() {

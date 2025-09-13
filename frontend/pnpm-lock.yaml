@@ -30,9 +30,6 @@ importers:
       '@iconify-json/tabler':
         specifier: ^1.2.22
         version: 1.2.22
-      '@workspace-hmeqo/alova':
-        specifier: workspace:^
-        version: link:../../packages/hmeqo/alova
       '@workspace-hmeqo/common':
         specifier: workspace:^
         version: link:../../packages/hmeqo/common
@@ -48,6 +45,9 @@ importers:
       '@workspace-hmeqo/unocss':
         specifier: workspace:^
         version: link:../../packages/hmeqo/unocss
+      '@workspace/alova':
+        specifier: workspace:^
+        version: link:../../packages/alova
       '@workspace/backend':
         specifier: workspace:^
         version: link:../../packages/backend
@@ -62,13 +62,7 @@ importers:
         specifier: ^4.4.5
         version: 4.4.5
 
-  packages/backend:
-    dependencies:
-      '@hmeqo/paths':
-        specifier: ^0.1.1
-        version: 0.1.1
-
-  packages/hmeqo/alova:
+  packages/alova:
     dependencies:
       alova:
         specifier: ^3.3.4
@@ -86,6 +80,12 @@ importers:
       '@types/string-format':
         specifier: ^2.0.3
         version: 2.0.3
+
+  packages/backend:
+    dependencies:
+      '@hmeqo/paths':
+        specifier: ^0.1.1
+        version: 0.1.1
 
   packages/hmeqo/backend: {}
 
@@ -14940,7 +14940,7 @@ snapshots:
 
   nuxt-csurf@1.6.5(magicast@0.3.5):
     dependencies:
-      '@nuxt/kit': 3.17.7(magicast@0.3.5)
+      '@nuxt/kit': 3.19.1(magicast@0.3.5)
       defu: 6.1.4
       uncsrf: 1.2.0
     transitivePeerDependencies:

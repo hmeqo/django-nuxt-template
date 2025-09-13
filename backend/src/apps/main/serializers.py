@@ -65,9 +65,8 @@ class UserSer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 
-class LoginStateSer(serializers.Serializer):
+class AuthStateSer(serializers.Serializer):
     user = UserSer(read_only=True)
-    expires = serializers.DateTimeField(read_only=True)
 
 
 class UserResetPwdSer(serializers.ModelSerializer):

@@ -1,27 +1,27 @@
 import { createPaths, pathsEnsureEndSlash } from '@hmeqo/paths'
-import { alovaInst } from '@workspace-hmeqo/alova/lib/core'
-import type { LoginSerRequest, LoginStateSer } from '../sdk'
+import { alovaInst } from '@workspace/alova/lib/core'
+import type { AuthStateSer, LoginSerRequest } from '../sdk'
 
 const urls = pathsEnsureEndSlash(
   createPaths('', {
     auth: createPaths('auth', {
       login: 'login',
       logout: 'logout',
-      loginState: 'login_state'
+      state: 'state'
     })
   })
 )
 
 export const AuthSrv = {
   login: (data: LoginSerRequest, opts?: { noMessage?: boolean }) => {
-    return alovaInst.Post<LoginStateSer>(urls.auth.login, data, { meta: { noMessage: opts?.noMessage } })
+    return alovaInst.Post<AuthStateSer>(urls.auth.login, data, { meta: { noMessage: opts?.noMessage } })
   },
 
   logout: () => {
     return alovaInst.Post(urls.auth.logout)
   },
 
-  loginState: () => {
-    return alovaInst.Get<LoginStateSer>(urls.auth.loginState, { meta: { noMessage: true } })
+  state: () => {
+    return alovaInst.Get<AuthStateSer>(urls.auth.state, { meta: { noMessage: true } })
   }
 }

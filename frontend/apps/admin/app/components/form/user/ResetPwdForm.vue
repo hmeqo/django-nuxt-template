@@ -5,7 +5,7 @@ const emit = defineEmits<{
   (e: 'success'): void
 }>()
 
-const loginState = useLoginState()
+const loginState = useAuthState()
 
 const user = computed(() => props.user || loginState.getUser())
 
